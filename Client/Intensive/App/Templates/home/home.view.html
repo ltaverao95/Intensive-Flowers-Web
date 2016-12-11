@@ -52,8 +52,8 @@
                 <strong>ZONA DE COMENTARIOS</strong>
             </h2>
             <hr>
-            <div style="width: 100%; height:390px; overflow: scroll;">
-                <div class="panel panel-default" ng-repeat="user in vm.messageDTOModel.MessagesList">
+            <div style="width: 100%; height:390px; overflow-y: auto;">
+                <div class="panel panel-default" ng-repeat="user in vm.messageModel.MessagesList">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{user.Name}}</h3>
                     </div>
@@ -83,7 +83,8 @@
                   <input type="text"
                          id="home_name" 
                          class="form-control" 
-                         ng-model="vm.messageDTOModel.Name" 
+                         name="name"
+                         ng-model="vm.messageModel.Name" 
                          required 
                          placeholder="Nombre">
                 </div>
@@ -95,7 +96,8 @@
                               class="form-control" 
                               cols="30" 
                               rows="3"
-                              ng-model="vm.messageDTOModel.Message" 
+                              name="message"
+                              ng-model="vm.messageModel.Message" 
                               required 
                               placeholder="Comentario">
                     </textarea>
@@ -106,7 +108,9 @@
                   <button type="button" 
                           class="btn btn-default" 
                           ng-click="vm.SaveMessage()" 
-                          ng-disabled="!messageForm.$valid">Enviar Comentario</button>
+                          ng-disabled="!messageForm.$valid">
+                          Enviar Comentario
+                  </button>
                 </div>
               </div>
             </form>

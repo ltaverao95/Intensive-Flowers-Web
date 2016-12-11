@@ -1,6 +1,6 @@
 <?php 
 
-    interface IMessage
+    interface IAdministrationBLL
     {
         public function SaveMessage();
         public function GetAllMessages();

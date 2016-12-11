@@ -1,5 +1,7 @@
 <div class="brand">INTENSIVE FLOWERS</div>
-    <div class="address-bar">Cadena de Floristerías <?php session_start(); if(isset($_SESSION['admin'])){ echo "- ". $_SESSION['admin']; } ?> </div>
+    <div class="address-bar">
+        Cadena de Floristerías <?php session_start(); if(isset($_SESSION['admin'])){ echo "- ". $_SESSION['admin']; } ?> 
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
@@ -13,22 +15,22 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <a class="navbar-brand" ui-sref="intensive.home">Inicio</a>
+                <a class="navbar-brand" ui-sref="intensive.home" ui-sref-active="active">Inicio</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a ui-sref="intensive.home">Inicio</a>
+                        <a ui-sref="intensive.home" ui-sref-active="active">Inicio</a>
                     </li>
                     <li>
-                        <a ui-sref="intensive.store">Tiendas</a>
+                        <a ui-sref="intensive.store" ui-sref-active="active">Tiendas</a>
                     </li>
                     <li>
-                        <a ui-sref="intensive.bouquet">Ramos</a>
+                        <a ui-sref="intensive.bouquet" ui-sref-active="active">Ramos</a>
                     </li>
                     <li>
-                        <a ui-sref="intensive.contact">Contacto</a>
+                        <a ui-sref="intensive.contact" ui-sref-active="active">Contacto</a>
                     </li>
                     
                     <?php 
@@ -37,7 +39,7 @@
                         {
                     ?>
                         <li>
-                            <a ui-sref="intensive.activities">Admin</a>
+                            <a ui-sref="intensive.activities" ui-sref-active="active">Admin</a>
                         </li>
                         <li>
                             <a href="Server/DAL/UserServices/login/logout.php">Cerrar Sesión</a>
@@ -49,7 +51,7 @@
                         {
                     ?>
                         <li>
-                            <a ui-sref="intensive.loginuser">Login</a>
+                            <a ui-sref="intensive.loginuser" ui-sref-active="active">Login</a>
                         </li>
                     <?php 
                         }

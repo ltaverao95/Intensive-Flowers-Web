@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('')
-        .factory('', ModelName);
+        .module('Intensive.Core')
+        .factory('Intensive.Core.Models.BouquetModel', BouquetModel);
 
-    ModelName.$inject = [
+    BouquetModel.$inject = [
 
     ];
 
-    function ModelName()
+    function BouquetModel()
     {
         var Model = function (dataDTO) 
         {

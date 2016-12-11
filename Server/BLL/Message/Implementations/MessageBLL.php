@@ -1,54 +1,59 @@
 <?php 
 
-    include_once("IMessageBLL.php");
-    include_once('../../DTO/ActionResultDTO/ActionResultDTO.php');
-
     class MessageBLL implements IMessageBLL
     {
-        //##### Atributes Methods #####
-
-
         //##### Public Methods #####
 
         public function SaveMessage($messageDTO)
         {
+            $responseDTO = new ResponseDTO();
+
             try
             {
-                $actionResultDTO = $this->ValidateMessageDTO($messageDTO);
-                if($actionResultDTO->HasError)
-                {
-                    return $actionResultDTO;
-                }
-
-                $actionResultDTO = 
+                
             }
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
             }
+
+            return $responseDTO;
         }
 
         public function GetAllMessages()
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_messageDAL = new MessageDAL();
+
+                $responseDTO = $_messageDAL->GetAllMessages();
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
-        public function UpdateMessage()
+        public function UpdateMessageByID($messageDTO)
         {
 
         }
 
-        public function DeleteAllMessages()
+        public function DeleteAllMessages($messageDTO)
         {
 
         }
 
-        public function DeleteMessageByID()
+        public function DeleteMessageByID($messageDTO)
         {
 
         }
         
-        public function DeleteMessagesSelectedByID()
+        public function DeleteMessagesSelected($messageDTO)
         {
 
         }
@@ -59,15 +64,13 @@
         {
             $actionResultDTO = new ActionResultDTO();
 
-            if($messageDTO->Name == undefined ||
-               $messageDTO->Name == null)
+            if($messageDTO->Name == null)
             {
                 $actionResultDTO->SetError("El campo Nombre no puede estar vacío");
                 return $actionResultDTO;
             }
 
-            if($messageDTO->Message == undefined ||
-               $messageDTO->Message == null)
+            if($messageDTO->Message == null)
             {
                 $actionResultDTO->SetError("El campo Mensaje no puede estar vacío");
                 return $actionResultDTO;

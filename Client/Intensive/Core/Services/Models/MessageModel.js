@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('Intensive.App')
-        .factory('Intensive.App.Models.MessageDTOModel', MessageDTOModel);
+        .module('Intensive.Core')
+        .factory('Intensive.Core.Models.MessageModel', MessageModel);
 
-    MessageDTOModel.$inject = [
+    MessageModel.$inject = [
         '$q',
         '$http',
         'Intensive.Blocks.Utils.UtilitiesFactory',
@@ -13,11 +13,11 @@
         'Intensive.Core.Constants'
     ];
 
-    function MessageDTOModel($q,
-                            $http,
-                            UtilitiesFactory,
-                            ActionResultModel,
-                            CoreConstants)
+    function MessageModel($q,
+                          $http,
+                          UtilitiesFactory,
+                          ActionResultModel,
+                          CoreConstants)
     {
         var Model = function (dataDTO) 
         {
@@ -38,7 +38,6 @@
                 DeleteMessagesSelected: DeleteMessagesSelected,
                 EditMessageById: EditMessageById,
                 ViewMessageById: ViewMessageById,
-
 
                 //Model Validations
                 ValidateMessage: ValidateMessage
@@ -120,24 +119,19 @@
             {
                 var deferred = $q.defer();
 
-                $http(requestObj)
-                    .success(
-                        function(data)
-                        {
-                            deferred.resolve(data);
-                        }
-                    )
-                    .error(
-                        function(error)
-                        {
-                            deferred.reject(error);
-                        }
-                    );
+                $http(requestObj).then(
+                    d => {
+                        deferred.resolve(d.Data);
+                    },
+                    error => {
+                        deferred.reject(error);
+                    }
+                );
 
                 return deferred.promise;
             }
 
-            function Activate() {
+            function Initialize() {
 
                 _self.GetAllMessages();
 
@@ -147,7 +141,7 @@
                 }
             }
 
-            Activate();
+            Initialize();
         };
 
         return Model;

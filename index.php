@@ -11,19 +11,6 @@
 
     <title>Intensive Flowers</title>
 
-    <!--Angular Libraries-->
-    <script src="Client/Intensive/App/lib/angular/angular.min.js"></script>
-    <script src="Client/Intensive/App/lib/angular-ui-router/release/angular-ui-router.js"></script>   
-    <script src="Client/Intensive/App/lib/angular-animate/angular-animate.js"></script>
-    <script src="Client/Intensive/App/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="Client/Intensive/App/lib/AngularJS-Toaster/toaster.min.js"></script>
-
-    <!-- jQuery -->
-    <script src="Client/Intensive/App/lib/jquery/dist/jquery.js"></script>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="Client/Intensive/App/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-
     <!-- Custom CSS -->
     <link href="Client/Intensive/App/css/business-casual.css" rel="stylesheet">
 
@@ -34,6 +21,22 @@
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="Client/Intensive/App/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+
+    <!--Angular Libraries-->
+    <script src="Client/Intensive/App/lib/angular/angular.min.js"></script>
+    <script src="Client/Intensive/App/lib/angular-ui-router/release/angular-ui-router.js"></script>   
+    <script src="Client/Intensive/App/lib/angular-animate/angular-animate.js"></script>
+    <script src="Client/Intensive/App/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="Client/Intensive/App/lib/AngularJS-Toaster/toaster.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="Client/Intensive/App/lib/jquery/dist/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="Client/Intensive/App/lib/bootstrap/dist/js/bootstrap.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -108,51 +111,46 @@
     <script src="Client/Intensive/Core/constants.js"></script>
 
     <!-- App/Components Controllers-->
-    <script src="Client/Intensive/App/Components/header/header.controller.js"></script>
-    <script src="Client/Intensive/App/Components/home/home.controller.js"></script>
-    <script src="Client/Intensive/App/Components/store/store.controller.js"></script>
-    <script src="Client/Intensive/App/Components/bouquet/bouquet.controller.js"></script>
-    <script src="Client/Intensive/App/Components/contact/contact.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginUser/login.user.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/header/header.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/home/home.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/store/store.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/bouquet/bouquet.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/contact/contact.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginUser/login.user.controller.js"></script>
 
     <!-- App/Components/loginAdmin Controllers -->
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.home.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.query.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.order.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.order.modal.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.message.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.message.modal.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.contact.controller.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.contact.modal.controller.js"></script>
-
-    <!--App/Components Services-->
-    <script src="Client/Intensive/App/Components/home/services/home.service.js"></script>
-    <script src="Client/Intensive/App/Components/store/store.service.js"></script>
-    <script src="Client/Intensive/App/Components/bouquet/bouquet.service.js"></script>
-    <script src="Client/Intensive/App/Components/contact/contact.service.js"></script>
-    <script src="Client/Intensive/App/Components/loginUser/login.user.service.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.home.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.query.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.order.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.order.modal.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.message.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.message.modal.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.contact.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.contact.modal.controller.js"></script>
 
     <!-- App/Components Models-->
-    <script src="Client/Intensive/App/Components/home/models/home.models.messageDTOModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/MessageModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/StoreModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/BouquetModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/ContactModel.js"></script>
 
     <!-- App/Components/loginAdmin Services -->
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.query.service.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.query.service.QueryDataModel.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.order.service.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.message.service.js"></script>
-    <script src="Client/Intensive/App/Components/loginAdmin/login.admin.contact.service.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.query.service.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.query.service.QueryDataModel.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.order.service.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.message.service.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.contact.service.js"></script>
 
     <!-- Filters -->
     <script src="Client/Intensive/Core/Filters/paginator.filter.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="Client/Intensive/App/lib/bootstrap/dist/js/bootstrap.js"></script>
-
     <!-- Script to Activate the Carousel -->
     <script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
+    $('.carousel').carousel(
+        {
+            interval: 5000 //changes the speed
+        }
+    );
     </script>
 </body>
 

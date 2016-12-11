@@ -7,31 +7,19 @@
 		.controller('Intensive.App.HomeController', HomeController);
 
 	HomeController.$inject = [
-		'GetAllMessages',
-		'Intensive.App.Models.MessageDTOModel',
+		'Intensive.Core.Models.MessageModel',
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function HomeController(GetAllMessages,
-							MessageDTOModel, 
+	function HomeController(MessageModel, 
 							UtilsConstants,
 							UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
 		var vm = this;
 
-		vm.messageDTOModel = new MessageDTOModel();
-
-		if(GetAllMessages.Result == UtilsConstants.EnumResult.ERROR && 
-		   GetAllMessages.ResponseMessage != "")
-		{
-			UserMessagesFactory.ShowInfoMessage({ Message: GetAllMessages.ResponseMessage});
-		} 
-		else 
-		{
-			vm.messageDTOModel.MessagesList = GetAllMessages.ObjData;
-		}
+		vm.messageModel = new MessageModel();
 
 		vm.SaveMessage = SaveMessage;
 
@@ -39,14 +27,14 @@
 
 		function SaveMessage()
 		{
-			var actionResultModel = vm.messageDTOModel.ValidateMessage();
+			var actionResultModel = vm.messageModel.ValidateMessage();
 			if(actionResultModel.HasError)
 			{
 				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage});
 				return;
 			}
 
-			vm.messageDTOModel.SaveMessage().then(
+			vm.messageModel.SaveMessage().then(
 				function (data)
 				{
 					if(data.Result === UtilsConstants.EnumResult.ERROR)
@@ -63,6 +51,30 @@
 				}
 			);			
 		}
+
+		//##### Private Methods #####
+
+		function Initialize()
+		{
+			vm.messageModel.GetAllMessages().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+						return;
+					}
+
+					vm.messageModel.MessagesList = responseDTO.ResponseData;
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
+					console.log(error);
+				}
+			);
+		}
+
+		Initialize();
 	}
 
 })();

@@ -1,36 +1,37 @@
 <?php  
 	
-	class ActionResultDTO
+	class ResponseDTO
 	{
-		public $Result = 1;
-		public $ResultData = null;
-		public $UIMessage = null;
-		public $StackTrace = null;
-		public $HasError = false;
+		public $Result = 1; //1: Success, 0: Error
+		public $UIMessage = "";
+		public $StackTrace = "";
 		public $IsOk = true;
+		public $HasError = false;
+		public $ResponseData = null;
 
-		public function SetAsOk($message)
+		public function SetAsOk()
 		{
 			$this->Result = 1;
 			$this->IsOk = true;
 			$this->HasError = false;
-			$this->UIMessage = $message;
-			return this;
 		}
 
 		public function SetError($errorMessage)
 		{
 			$this->Result = 0;
+			$this->UIMessage = $errorMessage;
 			$this->IsOk = false;
 			$this->HasError = true;
-			$this->UIMessage = $errorMessage;
-			return $this;
+
+			return $this;		
 		}
 
 		public function SetErrorAndStackTrace($errorMessage, $stackTrace)
 		{
 			$this->StackTrace = $stackTrace;
-            return $this->SetError($errorMessage);
+			$this->SetError($errorMessage);
+
+			return $this;		
 		}
 	}
 ?>

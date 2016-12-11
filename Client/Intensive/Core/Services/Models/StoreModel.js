@@ -2,17 +2,18 @@
     'use strict';
 
     angular
-        .module('')
-        .factory('', ModelName);
+        .module('Intensive.Core')
+        .factory('Intensive.Core.Models.StoreModel', StoreModel);
 
-    ModelName.$inject = [
+    StoreModel.$inject = [
 
     ];
 
-    function ModelName()
+    function StoreModel()
     {
         var Model = function (dataDTO) 
         {
+
             var _self = this;
 
             angular.extend(this, {

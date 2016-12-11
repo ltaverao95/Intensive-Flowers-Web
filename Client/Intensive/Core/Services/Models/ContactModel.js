@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('')
-        .factory('', ModelName);
+        .module('Intensive.Core')
+        .factory('Intensive.Core.Models.ContactModel', ContactModel);
 
-    ModelName.$inject = [
+    ContactModel.$inject = [
 
     ];
 
-    function ModelName()
+    function ContactModel()
     {
         var Model = function (dataDTO) 
         {
@@ -25,6 +25,7 @@
 
 
             //######## Private
+
 
         }
 
