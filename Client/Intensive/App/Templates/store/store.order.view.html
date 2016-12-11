@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                <strong>Pedidos</strong>
+            </h2>
+            <hr>
+        </div>
+        <div class="col-md-6">
+            <img class="img-responsive" ng-src="{{vm.storeDetail.img}}" alt="Store">
+            <h3>
+                {{vm.storeDetail.name}} - {{vm.storeDetail.address}}
+            </h3>
+        </div>
+        <div class="col-md-6">
+            <form name="orderForm">
+              <div class="form-group">
+                <label for="name">Nombres</label>
+                <input type="text" class="form-control" id="name" ng-model="vm.rootDataStore.name">
+              </div>
+              <div class="form-group">
+                <label for="surname">Apellidos</label>
+                <input type="text" class="form-control" id="surname" ng-model="vm.rootDataStore.surname">
+              </div>
+              <div class="form-group">
+                <label for="address">Dirección de Envío</label>
+                <input type="text" class="form-control" id="address" ng-model="vm.rootDataStore.addressToSend">
+              </div>
+              <div class="form-group">
+                <label for="phone">Teléfono</label>
+                <input type="number" class="form-control" id="phone" ng-model="vm.rootDataStore.phone">
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" ng-model="vm.rootDataStore.email">
+              </div>
+              <div class="form-group">
+                <label for="orderDescription">Descripción del Pedido</label>
+                <textarea id="orderDescription" 
+                          class="form-control" 
+                          cols="30" 
+                          rows="5"
+                          ng-model="vm.rootDataStore.orderDescription">
+                </textarea>
+              </div>
+              <div class="form-group">
+                  <label>Tienda</label>
+                  <select class="form-control"
+                          ng-model="vm.rootDataStore.store" 
+                          ng-options="store.name as store.name for store in vm.storesToSelect">
+                      <option value="">Seleccionar</option>
+                  </select>
+              </div> 
+              <div class="form-group">
+                  <label>Forma de Pago</label>
+                  <select class="form-control"
+                          ng-model="vm.rootDataStore.wayToPay" 
+                          ng-options="wayToPay.name as wayToPay.name for wayToPay in vm.wayToPaySelect">
+                      <option value="">Seleccionar</option>
+                  </select>
+              </div> 
+              <div class="form-group">
+                <label>Fecha del Pedido</label>
+                <input type="date" class="form-control" ng-model="vm.rootDataStore.dateOrder">
+              </div>  
+              <div class="form-group">
+                <label>Fecha de entrega</label>
+                <input type="date" class="form-control" ng-model="vm.rootDataStore.dateToSend">
+              </div>  
+              <div class="form-group"> 
+                <label>Hora de Entrega</label>
+                <input type="time" class="form-control" ng-model="vm.rootDataStore.timeToSend">
+              </div>
+              <a ui-sref="intensive.store.detail({id: vm.storeDetail.id})" class="btn btn-default">
+                Volver
+              </a> 
+              <button class="btn btn-primary" ng-click="vm.NewOrder()">Realizar Pedido</button>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

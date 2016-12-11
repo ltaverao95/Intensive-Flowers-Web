@@ -1,0 +1,104 @@
+<style>
+    .modal-body{
+        height: 400px;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+</style>
+
+<div class="modal-header">
+    <h3 class="modal-title">Información del Pedido</h3>
+</div>
+<div class="modal-body">
+    
+    <form>
+        <div>
+            <label>Id: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.id" 
+                   class="form-control" 
+                   readonly>
+        </div>
+        <div>
+            <label>Nombre: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.name" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Apellido: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.surname" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Dirección de Envío: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.addressToSend" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Teléfono: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.phone" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Email: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.email" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Descripción del Pedido: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.orderDescription" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Tienda: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.store" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Forma de Pago: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.wayToPay" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Fecha del Pedido: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.dateOrder" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Fecha de Entrega: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.dateToSend" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Hora de Entrega: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalOrder.orderData.timeToSend" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="vm.UpdateOrder()" ng-show="!vm.rootModalOrder.orderData.IsReadOnlyMode">Guardar</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.CloseModal()">Cerrar</button>
+</div>

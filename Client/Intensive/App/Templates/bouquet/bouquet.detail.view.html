@@ -1,0 +1,16 @@
+<div class="row" id="formularioTiendas">
+  <div class="container">
+    <div class="thumbnail">
+      <img ng-src="{{vm.bouquetDetail.img}}" alt="Ramos">
+      <div class="caption">
+        <h3 class="centrado"><strong>{{vm.bouquetDetail.name}}</strong></h3>
+        <p class="centrado"><strong>Precio: </strong>{{vm.bouquetDetail.price | currency: "$" : 0}}</p>
+        <p class="centrado"><strong>Código: </strong>{{vm.bouquetDetail.code}}</p>
+        <p class="centrado"><strong>Característica: </strong>{{vm.bouquetDetail.description}}</p>
+        <p class="centrado">
+    		  <a ui-sref="intensive.bouquet" class="btn btn-primary">Volver a la Galería</a>
+	 	     </p>
+      </div>
+    </div>
+  </div>
+</div>

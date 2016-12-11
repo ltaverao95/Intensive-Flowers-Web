@@ -1,0 +1,58 @@
+<style>
+    .modal-body{
+        height: 400px;
+    }
+</style>
+
+<div class="modal-header">
+    <h3 class="modal-title">Información del Contacto</h3>
+</div>
+<div class="modal-body">
+    
+    <form>
+        <div>
+            <label>Id: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalContact.contactData.id" 
+                   class="form-control" 
+                   readonly>
+        </div>
+        <div>
+            <label>Nombre: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalContact.contactData.name" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Email: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalContact.contactData.email" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Celular: </label>
+            <input type="text" 
+                   ng-model="vm.rootModalContact.contactData.phone" 
+                   class="form-control" 
+                   ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+        </div>
+        <div>
+            <label>Mensaje: </label>
+            <textarea cols="50" 
+                      rows="3" 
+                      ng-model="vm.rootModalContact.contactData.message" 
+                      class="form-control" 
+                      ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+            </textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" 
+            type="button" 
+            ng-click="vm.SaveUserContact()" 
+            ng-show="!vm.rootModalContact.contactData.IsReadOnlyMode">Guardar</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.CloseModal()">Cerrar</button>
+</div>
