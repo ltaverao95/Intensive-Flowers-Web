@@ -1,6 +1,7 @@
 <?php  
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
+	include_once("../../Utils/Libraries/MessageLibraries.php");
 
 	$responseDTO = new ResponseDTO();
 	
@@ -8,7 +9,7 @@
 	{
 		$messageBLL = new MessageBLL();
 
-		$responseDTO = $messageBLL->GetAllMessages();
+		$responseDTO = $messageBLL->GetAllItems();
 	} 
 	catch (Exception $e) 
 	{

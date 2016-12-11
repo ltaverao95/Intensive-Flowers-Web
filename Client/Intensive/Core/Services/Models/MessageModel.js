@@ -26,6 +26,7 @@
             angular.extend(this, {
 
                 //Properties
+                Id: null,
                 Name: null,
                 Message: null,
                 MessagesList: [],

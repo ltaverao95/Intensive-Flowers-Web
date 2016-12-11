@@ -1,10 +1,10 @@
 <?php 
 
-    class MessageBLL implements IMessageBLL
+    class MessageBLL implements ICommonServicesBLL
     {
         //##### Public Methods #####
 
-        public function SaveMessage($messageDTO)
+        public function SaveItem($messageDTO)
         {
             $responseDTO = new ResponseDTO();
             $_messageDAL = new MessageDAL();
@@ -17,7 +17,7 @@
                     return $responseDTO;
                 }
 
-                $responseDTO = $_messageDAL->SaveMessage($messageDTO);
+                $responseDTO = $_messageDAL->SaveItem($messageDTO);
             }
             catch (Exception $e)
             {
@@ -27,7 +27,7 @@
             return $responseDTO;
         }
 
-        public function GetAllMessages()
+        public function GetAllItems()
         {
             $responseDTO = new ResponseDTO();
 
@@ -35,7 +35,7 @@
             {
                 $_messageDAL = new MessageDAL();
 
-                $responseDTO = $_messageDAL->GetAllMessages();
+                $responseDTO = $_messageDAL->GetAllItems();
             }
             catch (Exception $e)
             {
@@ -45,22 +45,22 @@
             return $responseDTO;
         }
 
-        public function UpdateMessageByID($messageDTO)
+        public function UpdateItemByID($messageDTO)
         {
 
         }
 
-        public function DeleteAllMessages($messageDTO)
+        public function DeleteAllItems($messageDTO)
         {
 
         }
 
-        public function DeleteMessageByID($messageDTO)
+        public function DeleteItemByID($messageDTO)
         {
 
         }
         
-        public function DeleteMessagesSelected($messageDTO)
+        public function DeleteItemsSelected($messageDTO)
         {
 
         }

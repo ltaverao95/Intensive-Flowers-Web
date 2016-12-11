@@ -4,19 +4,17 @@
 
 	angular
 		.module('Intensive.App')
-		.controller('Intensive.App.StoreController', storeController);
+		.controller('Intensive.App.StoreController', StoreController);
 
-	storeController.$inject = [
+	StoreController.$inject = [
 		'$stateParams',
-		'GetStoresInfo',
-		'Intensive.App.StoreService',
+		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function storeController($stateParams,
-							 GetStoresInfo,
-							 StoreService,
+	function StoreController($stateParams,
+							 StoreModel,
 							 UtilsConstants,
 							 UserMessagesFactory)
 	{
@@ -24,36 +22,19 @@
 
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
+		vm.storeModel = new StoreModel();
 
-		vm.rootDataStore = {
-			name: '',
-			surname: '',
-			addressToSend: '',
-			phone: '',
-			email: '',
-			orderDescription: '',
-			store: '',
-			wayToPay: '',
-			dateOrder: new Date(),
-			dateToSend: new Date(),
-			timeToSend: new Date()
-		};
+		vm.storesList = UtilsConstants.StoresList;
+		vm.wayToPayList = UtilsConstants.WayToPayList;
 
-		vm.storesToSelect = GetStoresInfo.storesCompleteInfo;
-		vm.wayToPaySelect = GetStoresInfo.wayToPay;
-		vm.storeNumberToSelect = GetStoresInfo.storeNumber;
-
-		vm.storeDetail = vm.storesToSelect[$stateParams.id];		
+		vm.storeDetail = vm.storesList[$stateParams.Id];		
 
 		vm.NewOrder = NewOrder;
 
-		//####################### Public Functions #######################
+		//####################### Public Methods #######################
 
-		function NewOrder(){
-
+		function NewOrder()
+		{
 			StoreService.NewOrderMessage(vm.rootDataStore).then(
 				function (data){
 
@@ -71,7 +52,14 @@
 					console.log(error);
 				}
 			);
-		};
-	};
+		}
+
+		function Initialize()
+		{
+			
+		}
+
+		Initialize();
+	}
 
 })();

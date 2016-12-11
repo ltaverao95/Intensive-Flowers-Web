@@ -1,10 +1,10 @@
 <?php 
 
-    class MessageDAL implements IMessageDAL
+    class MessageDAL implements ICommonServicesDAL
     {
         //##### Public Methods #####
 
-        public function SaveMessage($messageDTO)
+        public function SaveItem($messageDTO)
         {
             $responseDTO = new ResponseDTO();
 
@@ -20,7 +20,7 @@
             return $responseDTO;
         }
 
-        public function GetAllMessages()
+        public function GetAllItems()
         {
             $responseDTO = new ResponseDTO();
             
@@ -36,22 +36,22 @@
             return $responseDTO;
         }
 
-        public function UpdateMessageByID($messageDTO)
+        public function UpdateItemByID($messageDTO)
         {
 
         }
 
-        public function DeleteAllMessages($messageDTO)
+        public function DeleteAllItems($messageDTO)
         {
 
         }
 
-        public function DeleteMessageByID($messageDTO)
+        public function DeleteItemByID($messageDTO)
         {
 
         }
         
-        public function DeleteMessagesSelected($messageDTO)
+        public function DeleteItemsSelected($messageDTO)
         {
 
         }
