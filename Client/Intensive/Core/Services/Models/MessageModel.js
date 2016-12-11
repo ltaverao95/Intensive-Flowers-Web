@@ -121,7 +121,7 @@
 
                 $http(requestObj).then(
                     d => {
-                        deferred.resolve(d.Data);
+                        deferred.resolve(d.data);
                     },
                     error => {
                         deferred.reject(error);
@@ -130,19 +130,7 @@
 
                 return deferred.promise;
             }
-
-            function Initialize() {
-
-                _self.GetAllMessages();
-
-                if (UtilitiesFactory.IsUndefinedOrNull(dataDTO)) 
-                {
-                    return;
-                }
-            }
-
-            Initialize();
-        };
+        }
 
         return Model;
     }
