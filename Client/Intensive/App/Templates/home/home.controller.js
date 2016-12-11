@@ -35,18 +35,18 @@
 			}
 
 			vm.messageModel.SaveMessage().then(
-				function (data)
-				{
-					if(data.Result === UtilsConstants.EnumResult.ERROR)
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						UserMessagesFactory.ShowErrorMessage({ Message: data.ResponseMessage});
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					UserMessagesFactory.ShowSuccessMessage({ Message: data.ResponseMessage});
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
 					console.log(error);
 				}
 			);			

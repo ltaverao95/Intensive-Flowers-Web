@@ -10,11 +10,11 @@
 
             try
             {
-                
+                $responseDTO = $this->SaveCurrentMessage($messageDTO);
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -96,6 +96,36 @@
                 } 
                 
                 $responseDTO->ResponseData = $messagesList;
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function SaveCurrentMessage($messageDTO)
+        {
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+
+                $responseDTO = $dataBaseServicesBLL->InitializeDataBaseConnection();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $query = "INSERT INTO message (id, name, message) VALUES (:id, :name, :message)";
+		        $q = $dataBaseServicesBLL->connection->prepare($query);
+		        $q->execute(array(':id' => NULL, 
+				        		  ':name' => $messageDTO->Name,
+						          ':message' => $messageDTO->Message));
+
+        		$responseDTO->UIMessage = "Mensaje enviado!";
 
                 $dataBaseServicesBLL->connection = null;
             }

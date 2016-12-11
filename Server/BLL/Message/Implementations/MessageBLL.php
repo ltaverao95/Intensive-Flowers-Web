@@ -7,14 +7,21 @@
         public function SaveMessage($messageDTO)
         {
             $responseDTO = new ResponseDTO();
+            $_messageDAL = new MessageDAL();
 
             try
             {
-                
+                $responseDTO = $this->ValidateMessageDTO($messageDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_messageDAL->SaveMessage($messageDTO);
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -32,7 +39,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -62,21 +69,28 @@
 
         private function ValidateMessageDTO($messageDTO)
         {
-            $actionResultDTO = new ActionResultDTO();
+            $responseDTO = new ResponseDTO();
 
-            if($messageDTO->Name == null)
+            try
             {
-                $actionResultDTO->SetError("El campo Nombre no puede estar vacío");
-                return $actionResultDTO;
+                if($messageDTO->Name == null)
+                {
+                    $responseDTO->SetError("El campo Nombre no puede estar vacío");
+                    return $responseDTO;
+                }
+
+                if($messageDTO->Message == null)
+                {
+                    $responseDTO->SetError("El campo Mensaje no puede estar vacío");
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
             }
 
-            if($messageDTO->Message == null)
-            {
-                $actionResultDTO->SetError("El campo Mensaje no puede estar vacío");
-                return $actionResultDTO;
-            }
-
-            return $actionResultDTO;
+            return $responseDTO;
         }
     }
 
