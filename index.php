@@ -11,6 +11,13 @@
 
     <title>Intensive Flowers</title>
 
+    <!--Angular Libraries-->
+    <script src="Client/Intensive/App/lib/angular/angular.min.js"></script>
+    <script src="Client/Intensive/App/lib/angular-ui-router/release/angular-ui-router.js"></script>   
+    <script src="Client/Intensive/App/lib/angular-animate/angular-animate.js"></script>
+    <script src="Client/Intensive/App/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="Client/Intensive/App/lib/AngularJS-Toaster/toaster.min.js"></script>
+
     <!-- Custom CSS -->
     <link href="Client/Intensive/App/css/business-casual.css" rel="stylesheet">
 
@@ -24,13 +31,6 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="Client/Intensive/App/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-
-    <!--Angular Libraries-->
-    <script src="Client/Intensive/App/lib/angular/angular.min.js"></script>
-    <script src="Client/Intensive/App/lib/angular-ui-router/release/angular-ui-router.js"></script>   
-    <script src="Client/Intensive/App/lib/angular-animate/angular-animate.js"></script>
-    <script src="Client/Intensive/App/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="Client/Intensive/App/lib/AngularJS-Toaster/toaster.min.js"></script>
 
     <!-- jQuery -->
     <script src="Client/Intensive/App/lib/jquery/dist/jquery.js"></script>

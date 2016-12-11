@@ -122,7 +122,9 @@
                 $http(requestObj).then(
                     d => {
                         deferred.resolve(d.data);
-                    },
+                    }
+                )
+                .catch(
                     error => {
                         deferred.reject(error);
                     }
