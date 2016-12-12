@@ -35,26 +35,37 @@
 
         function NewOrder()
 		{
-			StoreService.NewOrderMessage(vm.rootDataStore).then(
-				function (data){
+            var actionResultModel = vm.storeModel.ValidateOrder();
+			if(actionResultModel.HasError)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage});
+				return;
+			}
 
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
+			vm.storeModel.SaveOrder().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 				},
-				function (error){
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de guardar los datos"});
 					console.log(error);
 				}
 			);
 		}
 
         //####################### Private Methods #######################
+
+        function ClearStoreModel()
+        {
+            vm.storeModel = new StoreModel();
+        }
 
 		function Initialize()
 		{
