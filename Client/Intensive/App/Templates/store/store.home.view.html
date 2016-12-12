@@ -29,13 +29,13 @@
             </h2>
             <hr>
         </div>
-        <div class="col-sm-4 text-center" ng-repeat="store in vm.storesList">
-            <img class="img-responsive" ng-src="{{store.Img}}" alt="">
+        <div class="col-sm-4 text-center" ng-repeat="store in vm.UtilsConstants.StoresList">
+            <img class="img-responsive" ng-src="{{store.Img}}" alt="{{store.Name}}">
             <h3>
                 {{store.Name}}
             </h3>
             <p>{{store.Address}}</p>
-            <a ui-sref="intensive.store.detail({id: detail.Id})" class="btn btn-default">Ver</a><br>
+            <a ui-sref="intensive.store.detail({id: store.Id})" class="btn btn-default">Ver</a><br>
             <hr>
         </div>
         <div class="clearfix"></div>

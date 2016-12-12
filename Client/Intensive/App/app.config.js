@@ -60,22 +60,22 @@
 			})
 
 			.state('intensive.store.detail', {
-				url: 'store/detail/:id',
+				url: '/detail/:id',
 				views: {
 					'currentView@': {
 						templateUrl: folderTemplatesPath + 'store/store.detail.view.html',
-						controller: 'Intensive.App.StoreController',
+						controller: 'Intensive.App.StoreDetailController',
 						controllerAs: 'vm'		
 					}
 				}
 			})
 
 			.state('intensive.store.order', {
-				url: 'store/order/:id',
+				url: '/order/:id',
 				views: {
 					'currentView@': {
 						templateUrl: folderTemplatesPath + 'store/store.order.view.html',
-						controller: 'Intensive.App.StoreController',
+						controller: 'Intensive.App.StoreOrderController',
 						controllerAs: 'vm'
 					}
 				}	
@@ -93,7 +93,7 @@
 			})
 
 			.state('intensive.bouquet.detail', {
-				url: 'bouquet/detail/:id',
+				url: '/detail/:id',
 				views: {
 					'currentView@': {
 						templateUrl: folderTemplatesPath + 'bouquet/bouquet.detail.view.html',

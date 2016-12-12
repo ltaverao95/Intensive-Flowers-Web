@@ -1,14 +1,14 @@
 <div class="row">
   <div class="container">
     <div class="thumbnail">
-      <img ng-src="{{vm.storeDetail.img}}" alt="Tiendas">
+      <img ng-src="{{vm.storeDetail.Img}}" alt="Tiendas">
       <div class="caption">
-        <h3 class="centrado">{{vm.storeDetail.name}}</h3>
-        <p class="centrado">Dirección: {{vm.storeDetail.address}}</p>
-        <p class="centrado">Barrio: {{vm.storeDetail.neighborhood}}</p>
-        <p class="centrado">Teléfono: {{vm.storeDetail.phone}}</p>
+        <h3 class="centrado">{{vm.storeDetail.Name}}</h3>
+        <p class="centrado">Dirección: {{vm.storeDetail.Address}}</p>
+        <p class="centrado">Barrio: {{vm.storeDetail.Neighborhood}}</p>
+        <p class="centrado">Teléfono: {{vm.storeDetail.Phone}}</p>
         <p class="centrado">
-        	<a ui-sref="intensive.store.order({id: vm.storeDetail.id})" class="btn btn-primary">Realizar un Pedido</a>
+        	<a ui-sref="intensive.store.order({id: vm.storeDetail.Id})" class="btn btn-primary">Realizar un Pedido</a>
     		  <a ui-sref="intensive.store" class="btn btn-default">Volver a la Tienda</a>
 		    </p>
       </div>

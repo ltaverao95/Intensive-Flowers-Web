@@ -32,7 +32,7 @@
                 Phone: '',
                 Email: '',
                 OrderDescription: '',
-                Store: '',
+                Store: UtilsConstants.EnumStores.INTENSIVE_FLOWERS_1,
                 WayToPay: UtilsConstants.EnumWayToPay.CREDIT_CARD,
                 DateOrder: '',
                 DateToSend: '',

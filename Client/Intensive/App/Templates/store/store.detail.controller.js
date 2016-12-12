@@ -4,24 +4,26 @@
 
 	angular
 		.module('Intensive.App')
-		.controller('Intensive.App.StoreController', StoreController);
+		.controller('Intensive.App.StoreDetailController', StoreDetailController);
 
-	StoreController.$inject = [
+	StoreDetailController.$inject = [
+		'$stateParams',
 		'Intensive.Blocks.Utils.Constants'
 	];	
 
-	function StoreController(UtilsConstants)
+	function StoreDetailController($stateParams,
+								   UtilsConstants)
 	{
 		//####################### Instance Properties #######################
 
 		var vm = this;
 
-		vm.UtilsConstants = UtilsConstants;
+		vm.storeDetail = UtilsConstants.StoresList[$stateParams.id];	
 
 		//####################### Public Methods #######################
 
 		//####################### Private Methods #######################
-		
+
 		function Initialize()
 		{
 			

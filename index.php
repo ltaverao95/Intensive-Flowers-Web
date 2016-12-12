@@ -114,6 +114,8 @@
     <script src="Client/Intensive/App/Templates/header/header.controller.js"></script>
     <script src="Client/Intensive/App/Templates/home/home.controller.js"></script>
     <script src="Client/Intensive/App/Templates/store/store.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/store/store.detail.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/store/store.order.controller.js"></script>
     <script src="Client/Intensive/App/Templates/bouquet/bouquet.controller.js"></script>
     <script src="Client/Intensive/App/Templates/contact/contact.controller.js"></script>
     <script src="Client/Intensive/App/Templates/loginUser/login.user.controller.js"></script>
