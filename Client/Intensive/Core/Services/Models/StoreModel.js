@@ -120,7 +120,7 @@
 
             function Initialize()
             {
-                _self.OperationsModel.GetAllItemsURL = CoreConstants.StoreServiceURL.GET_ALL_ORDERS_FILE;
+                _self.OperationsModel.GetAllItemsURL = CoreConstants.StoreServiceURL.GET_ALL_ORDERS_URL;
                 _self.OperationsModel.SaveItemURL = CoreConstants.StoreServiceURL.SAVE_ORDER_URL;
                 _self.OperationsModel.DeleteAllItemsURL = null;
                 _self.OperationsModel.DeleteItemByIDURL = null;

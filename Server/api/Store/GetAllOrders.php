@@ -1,15 +1,15 @@
 <?php  
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
-	include_once("../../Utils/Libraries/MessageLibraries.php");
+	include_once("../../Utils/Libraries/StoreLibraries.php");
 
 	$responseDTO = new ResponseDTO();
 	
 	try 
 	{
-		$messageBLL = new MessageBLL();
+		$storeBLL = new StoreBLL();
 
-		$responseDTO = $messageBLL->GetAllMessages();
+		$responseDTO = $storeBLL->GetAllItems();
 	} 
 	catch (Exception $e) 
 	{

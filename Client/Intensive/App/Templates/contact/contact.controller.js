@@ -20,10 +20,6 @@
 
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
-
 		vm.contactModel = new ContactModel();
 
 		vm.AddNewMessageContact = AddNewMessageContact;
@@ -32,7 +28,7 @@
 
 		function AddNewMessageContact()
 		{
-			var actionResultModel = vm.storeModel.ValidateContact();
+			var actionResultModel = vm.contactModel.ValidateContact();
 			if(actionResultModel.HasError)
 			{
 				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage});
@@ -63,5 +59,12 @@
 		{
 			vm.contactModel = new ContactModel();
 		}
+
+		function Initialize()
+		{
+			
+		}
+
+		Initialize();
 	}
 })();

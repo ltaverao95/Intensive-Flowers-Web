@@ -64,18 +64,15 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
 
-                $responseDTO = $dataBaseServicesBLL->InitializeDataBaseConnection();
+                $query = "SELECT * FROM message ORDER BY id";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
                 if($responseDTO->HasError)
                 {
                     return $responseDTO;
                 }
 
-                $query = "SELECT * FROM message ORDER BY id";
-                $q = $dataBaseServicesBLL->connection->prepare($query);
-                $q->execute();
-
                 //Recuperar los registros de la BD
-                $result = $q->fetchAll();	
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
 
                 $messagesList = array();
                 while ($row = array_shift($result)) 
@@ -113,17 +110,17 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
 
-                $responseDTO = $dataBaseServicesBLL->InitializeDataBaseConnection();
+                $query = "INSERT INTO message (id, name, message) VALUES (:id, :name, :message)";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id' => NULL, 
+				    ':name' => $messageDTO->Name,
+					':message' => $messageDTO->Message);
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
                 if($responseDTO->HasError)
                 {
                     return $responseDTO;
                 }
-
-                $query = "INSERT INTO message (id, name, message) VALUES (:id, :name, :message)";
-		        $q = $dataBaseServicesBLL->connection->prepare($query);
-		        $q->execute(array(':id' => NULL, 
-				        		  ':name' => $messageDTO->Name,
-						          ':message' => $messageDTO->Message));
 
         		$responseDTO->UIMessage = "Mensaje enviado!";
 

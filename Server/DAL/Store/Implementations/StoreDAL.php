@@ -64,18 +64,15 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
 
-                $responseDTO = $dataBaseServicesBLL->InitializeDataBaseConnection();
+                $query = "SELECT * FROM bouquet_order ORDER BY id";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
                 if($responseDTO->HasError)
                 {
                     return $responseDTO;
                 }
 
-                $query = "SELECT * FROM bouquet_order ORDER BY id";
-                $q = $dataBaseServicesBLL->connection->prepare($query);
-                $q->execute();
-
                 //Recuperar los registros de la BD
-                $result = $q->fetchAll();	
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
 
                 $ordersList = array();
                 while ($row = array_shift($result)) 
@@ -122,27 +119,27 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
 
-                $responseDTO = $dataBaseServicesBLL->InitializeDataBaseConnection();
+                $query = "INSERT INTO bouquet_order (id, name, surname, addressToSend, phone, email, orderDescription, store, wayToPay, dateOrder, dateToSend, timeToSend) VALUES (:id, :name, :surname, :addressToSend, :phone, :email, :orderDescription, :store, :wayToPay, :dateOrder, :dateToSend, :timeToSend)";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id' => NULL, 
+                    ':name' =>$orderDTO->Name,
+                    ':surname' =>$orderDTO->Surname,
+                    ':addressToSend' =>$orderDTO->AddressToSend,
+                    ':phone' =>$orderDTO->Phone,
+                    ':email' =>$orderDTO->Email,
+                    ':orderDescription' =>$orderDTO->OrderDescription,
+                    ':store' =>$orderDTO->Store,
+                    ':wayToPay' =>$orderDTO->WayToPay,
+                    ':dateOrder' =>$orderDTO->DateOrder,
+                    ':dateToSend' =>$orderDTO->DateToSend,
+                    ':timeToSend' =>$orderDTO->TimeToSend
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
                 if($responseDTO->HasError)
                 {
                     return $responseDTO;
                 }
-
-                $query = "INSERT INTO bouquet_order (id, name, surname, addressToSend, phone, email, orderDescription, store, wayToPay, dateOrder, dateToSend, timeToSend) VALUES (:id, :name, :surname, :addressToSend, :phone, :email, :orderDescription, :store, :wayToPay, :dateOrder, :dateToSend, :timeToSend)";
-		        $q = $dataBaseServicesBLL->connection->prepare($query);
-		        $q->execute(
-                    array(':id' => NULL, 
-				  		  ':name' =>$orderDTO->Name,
-				  		  ':surname' =>$orderDTO->Surname,
-				  		  ':addressToSend' =>$orderDTO->AddressToSend,
-				  		  ':phone' =>$orderDTO->Phone,
-				  		  ':email' =>$orderDTO->Email,
-				  		  ':orderDescription' =>$orderDTO->OrderDescription,
-				  		  ':store' =>$orderDTO->Store,
-				  		  ':wayToPay' =>$orderDTO->WayToPay,
-				  		  ':dateOrder' =>$orderDTO->DateOrder,
-				  		  ':dateToSend' =>$orderDTO->DateToSend,
-				  		  ':timeToSend' =>$orderDTO->TimeToSend));
 
         		$responseDTO->UIMessage = "Pedido enviado!";
 

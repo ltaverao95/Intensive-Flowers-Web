@@ -6,11 +6,15 @@
         .factory('Intensive.Core.Models.ContactModel', ContactModel);
 
     ContactModel.$inject = [
+        'Intensive.Core.Constants',
+        'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
         'Intensive.Core.Models.OperationsModel'
     ];
 
-    function ContactModel(ActionResultModel,
+    function ContactModel(CoreConstants,
+                          UtilitiesFactory,
+                          ActionResultModel,
                           OperationsModel)
     {
         var Model = function (dataDTO) 
