@@ -55,7 +55,7 @@
                         <a ui-sref="intensive.activities" ui-sref-active="active">Admin</a>
                     </li>
                     <li>
-                        <a href="Server/DAL/UserServices/login/logout.php">Cerrar Sesión</a>
+                        <a style="cursor: pointer" ng-click="vm.LogOut()">Cerrar Sesión</a>
                     </li>
 
                 <?php  
@@ -64,7 +64,7 @@
                     {
                 ?>
                     <li>
-                        <a ui-sref="intensive.loginuser" ui-sref-active="active">Login</a>
+                        <a ui-sref="intensive.login" ui-sref-active="active">Login</a>
                     </li>
                 <?php 
                     }

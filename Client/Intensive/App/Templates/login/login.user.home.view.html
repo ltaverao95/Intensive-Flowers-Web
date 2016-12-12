@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                <strong>Iniciar Sesión</strong>
+            </h2>
+            <hr>
+        </div>
+        <div class="col-lg-12 text-center">
+            <div id="form">
+
+                <form class="form-horizontal" 
+                      method="POST" 
+                      name="loginForm">
+
+                    <div class="form-group">
+                        <label for="login_form_user_name" class="col-sm-2 control-label">Usuario</label>
+                        <div class="col-sm-10">
+                            <input type="text" 
+                                   id="login_form_user_name" 
+                                   name="user_name" 
+                                   class="form-control" 
+                                   ng-model="vm.loginModel.UserName" 
+                                   placeholder="Nombre de Usuario" 
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login_form_password" class="col-sm-2 control-label">Contraseña</label>
+                        <div class="col-sm-10">
+                            <input type="password" 
+                                   id="login_form_password" 
+                                   name="password" 
+                                   class="form-control" 
+                                   ng-model="vm.loginModel.Password" 
+                                   placeholder="Contraseña" 
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" 
+                                    class="btn btn-default" 
+                                    ng-click="vm.ValidateUser()" 
+                                    ng-disabled="!loginForm.$valid">
+                                    Iniciar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+            <hr>
+        </div>
+    </div>
+</div>

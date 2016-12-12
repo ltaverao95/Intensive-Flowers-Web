@@ -119,7 +119,7 @@
     <script src="Client/Intensive/App/Templates/bouquet/bouquet.controller.js"></script>
     <script src="Client/Intensive/App/Templates/bouquet/bouquet.detail.controller.js"></script>
     <script src="Client/Intensive/App/Templates/contact/contact.controller.js"></script>
-    <script src="Client/Intensive/App/Templates/loginUser/login.user.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/login/login.user.controller.js"></script>
 
     <!-- App/Components/loginAdmin Controllers -->
     <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.home.controller.js"></script>
@@ -137,6 +137,7 @@
     <script src="Client/Intensive/Core/Services/Models/StoreModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/BouquetModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/ContactModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/LoginModel.js"></script>
 
     <!-- App/Components/loginAdmin Services -->
     <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.query.service.js"></script>

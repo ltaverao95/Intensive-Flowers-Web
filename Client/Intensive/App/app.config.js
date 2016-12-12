@@ -114,10 +114,10 @@
 				}						
 			})
 
-			.state('intensive.loginuser', {
+			.state('intensive.login', {
 				views: {
 					'currentView@': {
-						templateUrl: folderTemplatesPath + 'loginUser/login.user.home.view.html',
+						templateUrl: folderTemplatesPath + 'login/login.user.home.view.html',
 						controller: 'Intensive.App.LoginUserController',
 						controllerAs: 'vm'		
 					}

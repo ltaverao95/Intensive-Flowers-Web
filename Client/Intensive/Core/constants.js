@@ -55,7 +55,8 @@
 	};
 
 	CoreConstants.LOGIN_FILES_NAMES = {
-		
+		SIGN_IN_FILE: CoreConstants.LOGIN_FILES_BASE_PATH + 'SignIn.php',
+		LOG_OUT_FILE: CoreConstants.LOGIN_FILES_BASE_PATH + 'LogOut.php'
 	};
 
 	CoreConstants.ADMIN_FILES_NAMES = {
@@ -91,7 +92,8 @@
 	};
 
 	CoreConstants.LoginServiceURL = {
-		
+		SIGN_IN_URL: CoreConstants.SERVER_API_RELATIVE_PATH + CoreConstants.LOGIN_FILES_NAMES.SIGN_IN_FILE,
+		LOG_OUT_URL: CoreConstants.SERVER_API_RELATIVE_PATH + CoreConstants.LOGIN_FILES_NAMES.LOG_OUT_FILE,
 	};
 
 	CoreConstants.AdminServiceURL = {

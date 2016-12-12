@@ -1,16 +1,16 @@
 <?php  
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
-	include_once("../../Utils/Libraries/CrudLibraries.php");
-	include_once("../../Utils/Libraries/StoreLibraries.php");
+	include_once("../../Utils/Libraries/AdministrationLibraries.php");
+	include_once("../../Utils/Libraries/LoginLibraries.php");
 
 	$responseDTO = new ResponseDTO();
 	
 	try 
 	{
-		$storeBLL = new StoreBLL();
+		$loginBLL = new LoginBLL();
 
-		$responseDTO = $storeBLL->GetAllItems();
+		$responseDTO = $loginBLL->SignOut();
 	} 
 	catch (Exception $e) 
 	{

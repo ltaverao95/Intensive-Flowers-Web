@@ -1,6 +1,7 @@
 <?php  
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
+	include_once("../../Utils/Libraries/CrudLibraries.php");
 	include_once("../../Utils/Libraries/ContactLibraries.php");
 
 	$responseDTO = new ResponseDTO();
