@@ -28,8 +28,8 @@
 	};
 
 	CoreConstants.STORE_FILES_NAMES = {
-		GET_ALL_ORDERS_FILE: CoreConstants.STORE_FILES_BASE_PATH + '.php',
-		SAVE_ORDER_FILE: CoreConstants.STORE_FILES_BASE_PATH + '.php',
+		GET_ALL_ORDERS_FILE: CoreConstants.STORE_FILES_BASE_PATH + 'GetAllOrders.php',
+		SAVE_ORDER_FILE: CoreConstants.STORE_FILES_BASE_PATH + 'SaveOrder.php',
 		DELETE_ALL_ORDERS_FILE: CoreConstants.STORE_FILES_BASE_PATH + '.php',
 		DELETE_ORDER_BY_ID_FILE: CoreConstants.STORE_FILES_BASE_PATH + '.php',
 		DELETE_ORDERS_SELECTED_FILE: CoreConstants.STORE_FILES_BASE_PATH + '.php',

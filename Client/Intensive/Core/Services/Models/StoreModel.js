@@ -10,14 +10,16 @@
         '$http',
         'Intensive.Blocks.Utils.Constants',
         'Intensive.Core.Constants',
-        'Intensive.Blocks.Utils.UtilitiesFactory'
+        'Intensive.Blocks.Utils.UtilitiesFactory',
+        'Intensive.Blocks.Utils.ActionResultModel'
     ];
 
     function StoreModel($q,
                         $http,
                         UtilsConstants,
                         CoreConstants,
-                        UtilitiesFactory)
+                        UtilitiesFactory,
+                        ActionResultModel)
     {
         var Model = function (dataDTO) 
         {
@@ -26,17 +28,17 @@
             angular.extend(this, {
 
                 Id: null,
-                Name: '',
-                Surname: '',
-                AddressToSend: '',
-                Phone: '',
-                Email: '',
-                OrderDescription: '',
+                Name: 'Felipe',
+                Surname: 'Tavera',
+                AddressToSend: 'Cra 36 a # 97 b 17',
+                Phone: 8916391,
+                Email: 'lftavera@hotmail.com',
+                OrderDescription: 'Rosas',
                 Store: UtilsConstants.EnumStores.INTENSIVE_FLOWERS_1,
                 WayToPay: UtilsConstants.EnumWayToPay.CREDIT_CARD,
-                DateOrder: '',
-                DateToSend: '',
-                TimeToSend: '',
+                DateOrder: '12/12/2016',
+                DateToSend: '12/12/2016',
+                TimeToSend: '11:00',
                 OrdersList: [],
 
                 //CRUD Operations
@@ -59,7 +61,7 @@
             {
                 var requestParamsObj = 
                 {
-                    url: CoreConstants.STORE_FILES_NAMES.GET_ALL_ORDERS_FILE,
+                    url: CoreConstants.StoreServiceURL.GET_ALL_ORDERS_FILE,
                     method: 'GET'
                 };
 
@@ -70,7 +72,7 @@
             {
                 var requestParamsObj = 
                 {
-                    url: CoreConstants.MessageServiceURL.SAVE_MESSAGE_URL,
+                    url: CoreConstants.StoreServiceURL.SAVE_ORDER_URL,
                     method: 'POST',
                     data: angular.toJson(_self)
                 };
@@ -145,13 +147,13 @@
 
                 if(!UtilitiesFactory.IsStringValid(_self.Store))
                 {
-                    actionResultModel.SetError("La tienda no puede estar vacía");
+                    actionResultModel.SetError("Debes seleccionar una tienda");
                     return actionResultModel;
                 }
 
-                if(!UtilitiesFactory.IsUndefinedOrNull(_self.WayToPay))
+                if(UtilitiesFactory.IsUndefinedOrNull(_self.WayToPay))
                 {
-                    actionResultModel.SetError("El teléfono no puede estar vacío");
+                    actionResultModel.SetError("Debes seleccionar Una forma de pago");
                     return actionResultModel;
                 }
 
@@ -192,9 +194,6 @@
 
             function Initialize()
             {
-                _self.DateOrder = UtilitiesFactory.GetFormatedDate(new Date());
-                _self.DateToSend = UtilitiesFactory.GetFormatedDate(new Date());
-                _self.TimeToSend = UtilitiesFactory.GetFormatedTime(new Date());
             }
 
             Initialize();
