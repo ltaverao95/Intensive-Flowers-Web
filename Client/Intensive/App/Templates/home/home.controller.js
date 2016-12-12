@@ -34,7 +34,7 @@
 				return;
 			}
 
-			vm.messageModel.SaveMessage().then(
+			vm.messageModel.OperationsModel.SaveItem(vm.messageModel).then(
 				responseDTO => {
 
 					if(responseDTO.HasError)
@@ -56,7 +56,7 @@
 
 		function Initialize()
 		{
-			vm.messageModel.GetAllMessages().then(
+			vm.messageModel.OperationsModel.GetAllItems().then(
 				responseDTO => {
 
 					if(responseDTO.HasError)

@@ -7,13 +7,13 @@
 		.controller('Intensive.App.ContactController', ContactController);
 
 	ContactController.$inject = [
-		'Intensive.App.ContactService',
 		'Intensive.Blocks.Utils.Constants',
+		'Intensive.Core.Models.ContactModel',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function ContactController(ContactService,
-							   UtilsConstants,
+	function ContactController(UtilsConstants,
+							   ContactModel,
 							   UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
@@ -24,46 +24,44 @@
 			Message: ''
 		};
 
-		vm.rootDataContact = {
-			name: '',
-			email: '',
-			phone: '',
-			message: ''
-		};
+		vm.contactModel = new ContactModel();
 
 		vm.AddNewMessageContact = AddNewMessageContact;
 
-		//####################### Public Functions #######################
+		//####################### Public Methods #######################
 
-		function AddNewMessageContact(){
+		function AddNewMessageContact()
+		{
+			var actionResultModel = vm.storeModel.ValidateContact();
+			if(actionResultModel.HasError)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage});
+				return;
+			}
 
-			ContactService.NewContactMessage(vm.rootDataContact).then(
-				function (data)
-				{	
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
+			vm.contactModel.OperationsModel.SaveItem(vm.contactModel).then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-					
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de guardar los datos"});
 					console.log(error);
 				}
 			);
+		}
 
-			vm.rootDataContact = {
-				name: '',
-				email: '',
-				phone: '',
-				message: ''
-			};
-		};
-	};
+		//####################### Private Methods #######################
 
+		function ClearContactModel()
+		{
+			vm.contactModel = new ContactModel();
+		}
+	}
 })();

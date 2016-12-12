@@ -97,7 +97,7 @@
 				views: {
 					'currentView@': {
 						templateUrl: folderTemplatesPath + 'bouquet/bouquet.detail.view.html',
-						controller: 'Intensive.App.BouquetController',
+						controller: 'Intensive.App.BouquetDetailController',
 						controllerAs: 'vm'
 					}
 				}

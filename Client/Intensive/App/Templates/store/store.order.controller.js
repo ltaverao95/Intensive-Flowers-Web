@@ -42,7 +42,7 @@
 				return;
 			}
 
-			vm.storeModel.SaveOrder().then(
+			vm.storeModel.OperationsModel.SaveItem(vm.storeModel).then(
 				responseDTO => {
 
 					if(responseDTO.HasError)

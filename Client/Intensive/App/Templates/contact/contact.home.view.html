@@ -38,31 +38,67 @@
             <p>
                 ¿Tienes alguna duda, queja o reclamo ? No dudes en contactarnos, nosotros te responderémos en la menor brevedad posible.
             </p>
-            <form role="form" name="contactoFormulario">
+            <form role="form" name="contactForm">
                 <div class="row">
+
                     <div class="form-group col-lg-4">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" ng-model="vm.rootDataContact.name" required>
+                        <label for="contact_form_name">Nombre</label>
+                        <input type="text" 
+                               id="contact_form_name"
+                               name="name"
+                               class="form-control" 
+                               ng-model="vm.rootDataContact.Name" 
+                               required>
                     </div>
+
                     <div class="form-group col-lg-4">
-                        <label>Email</label>
-                        <input type="email" class="form-control" ng-model="vm.rootDataContact.email" required>
+                        <label for="contact_form_email">Email</label>
+                        <input type="email"
+                               id="contact_form_email"
+                               name="email" 
+                               class="form-control" 
+                               ng-model="vm.rootDataContact.Email" 
+                               required>
                     </div>
+
                     <div class="form-group col-lg-4">
-                        <label>Celular</label>
-                        <input type="number" class="form-control" ng-model="vm.rootDataContact.phone" required>
+                        <label for="contact_form_phone">Celular</label>
+                        <input type="text" 
+                               id="contact_form_phone" 
+                               name="phone" 
+                               class="form-control" 
+                               ng-model="vm.rootDataContact.Phone" 
+                               required>
                     </div>
+
                     <div class="clearfix"></div>
+
                     <div class="form-group col-lg-12">
-                        <label>Mensaje</label>
-                        <textarea class="form-control" rows="6" ng-model="vm.rootDataContact.message" required></textarea>
+                        <label for="contact_form_message">Mensaje</label>
+                        <textarea id="contact_form_message"
+                                  name="message" 
+                                  class="form-control" 
+                                  rows="6" 
+                                  ng-model="vm.rootDataContact.Message" 
+                                  required>
+                        </textarea>
                     </div>
+
                     <div class="form-group col-lg-12">
-                        <input type="hidden" name="save" value="contact">
-                        <button type="submit" class="btn btn-primary" ng-click="vm.AddNewMessageContact()" ng-disabled="!contactoFormulario.$valid">Enviar</button>
+                        <button type="button" 
+                                class="btn btn-primary" 
+                                ng-click="vm.AddNewMessageContact()" 
+                                ng-disabled="!contactForm.$valid">
+                                Enviar
+                        </button>
                     </div>
+
                 </div>
             </form>
         </div>
     </div>
+
 </div>
+
+
+

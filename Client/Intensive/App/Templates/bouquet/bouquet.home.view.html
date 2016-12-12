@@ -30,13 +30,13 @@
             <input type="text" class="form-control" placeholder="Búsqueda" ng-model="vm.searchBouquet">
             <hr>
         </div>
-        <div class="col-sm-4 text-center" ng-repeat="bouquet in vm.arrBouquetData | filter: vm.searchBouquet">
-            <img class="img-responsive" ng-src="{{bouquet.img}}" alt="Ramos">
-            <h3>{{bouquet.name}}
-                <small>{{bouquet.code}}</small>
+        <div class="col-sm-4 text-center" ng-repeat="bouquet in vm.UtilsConstants.BouquetsList | filter: vm.searchBouquet">
+            <img class="img-responsive" ng-src="{{bouquet.Img}}" alt="Ramos">
+            <h3>{{bouquet.Name}}
+                <small>{{bouquet.Code}}</small>
             </h3>
             <hr>
-            <a ui-sref="intensive.bouquet.detail({ id: bouquet.id })" class="btn btn-primary">
+            <a ui-sref="intensive.bouquet.detail({ id: bouquet.Id })" class="btn btn-primary">
                 Ver
             </a>
             <hr>

@@ -7,21 +7,15 @@
 		.controller('Intensive.App.BouquetController', BouquetController);
 
 	BouquetController.$inject = [
-		'$stateParams',
-		'GetAllBouquets'
+		'Intensive.Blocks.Utils.Constants'
 	];	
 
-	function BouquetController($stateParams,
-							   GetAllBouquets)
+	function BouquetController(UtilsConstants)
 	{
 		//####################### Instance Properties #######################
 		var vm = this;
 
+		vm.UtilsConstants = UtilsConstants;
 		vm.searchBouquet = '';
-
-		vm.arrBouquetData = GetAllBouquets.bouquetData;
-
-		vm.bouquetDetail = vm.arrBouquetData[$stateParams.id];
-	};
-
+	}
 })();

@@ -6,20 +6,18 @@
         .factory('Intensive.Core.Models.StoreModel', StoreModel);
 
     StoreModel.$inject = [
-        '$q',
-        '$http',
         'Intensive.Blocks.Utils.Constants',
         'Intensive.Core.Constants',
         'Intensive.Blocks.Utils.UtilitiesFactory',
-        'Intensive.Blocks.Utils.ActionResultModel'
+        'Intensive.Blocks.Utils.ActionResultModel',
+        'Intensive.Core.Models.OperationsModel'
     ];
 
-    function StoreModel($q,
-                        $http,
-                        UtilsConstants,
+    function StoreModel(UtilsConstants,
                         CoreConstants,
                         UtilitiesFactory,
-                        ActionResultModel)
+                        ActionResultModel,
+                        OperationsModel)
     {
         var Model = function (dataDTO) 
         {
@@ -42,13 +40,7 @@
                 OrdersList: [],
 
                 //CRUD Operations
-                GetAllOrders: GetAllOrders,
-                SaveOrder: SaveOrder,
-                DeleteAllOrders: DeleteAllOrders,
-                DeleteOrderByID: DeleteOrderByID,
-                DeleteOrdersSelected: DeleteOrdersSelected,
-                EditOrderById: EditOrderById,
-                ViewOrderById: ViewOrderById,
+                OperationsModel: new OperationsModel(),
 
                 //Model Validations
                 ValidateOrder: ValidateOrder     
@@ -56,54 +48,6 @@
             }, dataDTO);
 
             //######## Public
-
-            function GetAllOrders()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.StoreServiceURL.GET_ALL_ORDERS_FILE,
-                    method: 'GET'
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function SaveOrder()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.StoreServiceURL.SAVE_ORDER_URL,
-                    method: 'POST',
-                    data: angular.toJson(_self)
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function DeleteAllOrders()
-            {
-
-            }
-
-            function DeleteOrderByID()
-            {
-
-            }
-
-            function DeleteOrdersSelected()
-            {
-                
-            }
-
-            function EditOrderById()
-            {
-
-            }
-
-            function ViewOrderById()
-            {
-
-            }
 
             function ValidateOrder()
             {
@@ -174,26 +118,14 @@
 
             //######## Private
 
-            function DoRequestToServer(requestObj)
-            {
-                var deferred = $q.defer();
-
-                $http(requestObj).then(
-                    d => {
-                        deferred.resolve(d.data);
-                    }
-                )
-                .catch(
-                    error => {
-                        deferred.reject(error);
-                    }
-                );
-
-                return deferred.promise;
-            }
-
             function Initialize()
             {
+                _self.OperationsModel.GetAllItemsURL = CoreConstants.StoreServiceURL.GET_ALL_ORDERS_FILE;
+                _self.OperationsModel.SaveItemURL = CoreConstants.StoreServiceURL.SAVE_ORDER_URL;
+                _self.OperationsModel.DeleteAllItemsURL = null;
+                _self.OperationsModel.DeleteItemByIDURL = null;
+                _self.OperationsModel.DeleteItemsSelectedURL = null;
+                _self.OperationsModel.EditItemURL = null;
             }
 
             Initialize();

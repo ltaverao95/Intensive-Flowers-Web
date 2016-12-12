@@ -6,17 +6,15 @@
         .factory('Intensive.Core.Models.MessageModel', MessageModel);
 
     MessageModel.$inject = [
-        '$q',
-        '$http',
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
+        'Intensive.Core.Models.OperationsModel',
         'Intensive.Core.Constants'
     ];
 
-    function MessageModel($q,
-                          $http,
-                          UtilitiesFactory,
+    function MessageModel(UtilitiesFactory,
                           ActionResultModel,
+                          OperationsModel,
                           CoreConstants)
     {
         var Model = function (dataDTO) 
@@ -32,13 +30,7 @@
                 MessagesList: [],
 
                 //CRUD Operations
-                GetAllMessages: GetAllMessages,
-                SaveMessage: SaveMessage,
-                DeleteAllMessages: DeleteAllMessages,
-                DeleteMessageByID: DeleteMessageByID,
-                DeleteMessagesSelected: DeleteMessagesSelected,
-                EditMessageById: EditMessageById,
-                ViewMessageById: ViewMessageById,
+                OperationsModel: new OperationsModel(),
 
                 //Model Validations
                 ValidateMessage: ValidateMessage
@@ -46,54 +38,6 @@
             }, dataDTO);
 
             //######## Public
-
-            function GetAllMessages()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.MessageServiceURL.GET_ALL_MESSAGES_URL,
-                    method: 'GET'
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function SaveMessage()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.MessageServiceURL.SAVE_MESSAGE_URL,
-                    method: 'POST',
-                    data: angular.toJson(_self)
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function DeleteAllMessages()
-            {
-
-            }
-
-            function DeleteMessageByID()
-            {
-
-            }
-
-            function DeleteMessagesSelected()
-            {
-                
-            }
-
-            function EditMessageById()
-            {
-
-            }
-
-            function ViewMessageById()
-            {
-
-            }
 
             function ValidateMessage()
             {
@@ -116,23 +60,17 @@
 
             //######## Private
 
-            function DoRequestToServer(requestObj)
+            function Initialize()
             {
-                var deferred = $q.defer();
-
-                $http(requestObj).then(
-                    d => {
-                        deferred.resolve(d.data);
-                    }
-                )
-                .catch(
-                    error => {
-                        deferred.reject(error);
-                    }
-                );
-
-                return deferred.promise;
+                _self.OperationsModel.GetAllItemsURL = CoreConstants.MessageServiceURL.GET_ALL_MESSAGES_URL;
+                _self.OperationsModel.SaveItemURL = CoreConstants.MessageServiceURL.SAVE_MESSAGE_URL;
+                _self.OperationsModel.DeleteAllItemsURL = null;
+                _self.OperationsModel.DeleteItemByIDURL = null;
+                _self.OperationsModel.DeleteItemsSelectedURL = null;
+                _self.OperationsModel.EditItemURL = null;
             }
+
+            Initialize();
         }
 
         return Model;
