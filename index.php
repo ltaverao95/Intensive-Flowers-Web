@@ -18,6 +18,12 @@
     <script src="Client/Intensive/App/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="Client/Intensive/App/lib/AngularJS-Toaster/toaster.min.js"></script>
 
+    <!-- jQuery -->
+    <script src="Client/Intensive/App/lib/jquery/dist/jquery.js"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="Client/Intensive/App/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+
     <!-- Custom CSS -->
     <link href="Client/Intensive/App/css/business-casual.css" rel="stylesheet">
 
@@ -28,12 +34,6 @@
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core CSS -->
-    <link href="Client/Intensive/App/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-
-    <!-- jQuery -->
-    <script src="Client/Intensive/App/lib/jquery/dist/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="Client/Intensive/App/lib/bootstrap/dist/js/bootstrap.js"></script>
