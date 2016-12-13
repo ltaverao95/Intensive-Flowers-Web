@@ -50,7 +50,7 @@
 				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
 			}
 
-			if(!ShowDeleteConfirm())
+			if(!ShowDeleteCurrentUserConfirm())
 			{
 				return;
 			}
@@ -235,6 +235,13 @@
 		function ShowDeleteConfirm()
 		{
 			var response = confirm("¿Estas seguro que deseas eliminar todos los pedidos?");
+
+			return response;	
+		}
+
+		function ShowDeleteCurrentUserConfirm()
+		{
+			var response = confirm("¿Estas seguro que deseas eliminar este registro?");
 
 			return response;	
 		}
