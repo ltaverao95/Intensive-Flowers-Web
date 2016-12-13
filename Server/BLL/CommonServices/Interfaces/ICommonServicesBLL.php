@@ -9,5 +9,4 @@
         public function DeleteItemByID($itemDTO);
         public function DeleteItemsSelected($itemDTO);
     }
-
 ?>

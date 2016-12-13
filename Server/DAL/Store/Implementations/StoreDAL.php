@@ -60,9 +60,12 @@
 
         private function GetOrders()
         {
+            $responseDTO = new ResponseDTO();
+
             try
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
 
                 $query = "SELECT * FROM bouquet_order ORDER BY id";
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
@@ -74,35 +77,7 @@
                 //Recuperar los registros de la BD
                 $result = $dataBaseServicesBLL->Q->fetchAll();	
 
-                $ordersList = array();
-                while ($row = array_shift($result)) 
-                {
-                    $storeDTO = new StoreDTO();
-
-                    $storeDTO->Id = $row['id'];
-                    $storeDTO->IdentityCard = $row['identity_card'];
-                    $storeDTO->Name = $row['name'];
-                    $storeDTO->Surname = $row['surname'];
-                    $storeDTO->AddressToSend = $row['addressToSend'];
-                    $storeDTO->Phone = $row['phone'];
-                    $storeDTO->Email = $row['email'];
-                    $storeDTO->OrderDescription = $row['orderDescription'];
-                    $storeDTO->Store = $row['store'];
-                    $storeDTO->WayToPay = $row['wayToPay'];
-                    $storeDTO->DateOrder = $row['dateOrder'];
-                    $storeDTO->DateToSend = $row['dateToSend'];
-                    $storeDTO->TimeToSend = $row['timeToSend'];
-
-                    array_push($ordersList, $storeDTO);
-                };
-
-                if($ordersList == null)
-                {
-                    $responseDTO->SetMessageError("No se encontraron registros para mostrar");
-                    return $responseDTO;
-                } 
-                
-                $responseDTO->ResponseData = $ordersList;
+                $responseDTO = $getDataServiceDAL->GetOrderItems($result);
 
                 $dataBaseServicesBLL->connection = null;
             }
@@ -116,6 +91,8 @@
 
         private function SaveCurrentOrder($orderDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
             try
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();

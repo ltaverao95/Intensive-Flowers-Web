@@ -60,9 +60,12 @@
 
         private function GetMessages()
         {
+            $responseDTO = new ResponseDTO();
+
             try
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
 
                 $query = "SELECT * FROM message ORDER BY id";
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
@@ -74,25 +77,7 @@
                 //Recuperar los registros de la BD
                 $result = $dataBaseServicesBLL->Q->fetchAll();	
 
-                $messagesList = array();
-                while ($row = array_shift($result)) 
-                {
-                    $message = new MessageDTO();
-
-                    $message->Id = $row['id'];
-                    $message->Name = $row['name'];
-                    $message->Message = $row['message'];
-
-                    array_push($messagesList, $message);
-                };
-
-                if($messagesList == null)
-                {
-                    $responseDTO->SetMessageError("No se encontraron registros para mostrar");
-                    return $responseDTO;
-                } 
-                
-                $responseDTO->ResponseData = $messagesList;
+                $responseDTO = $getDataServiceDAL->GetMessageItems($result);
 
                 $dataBaseServicesBLL->connection = null;
             }
@@ -106,6 +91,8 @@
 
         private function SaveCurrentMessage($messageDTO)
         {
+            $responseDTO = new ResponseDTO();
+
             try
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();

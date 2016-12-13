@@ -2,7 +2,7 @@
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
 	include_once("../../Utils/Libraries/AdministrationLibraries.php");
-	include_once("../../Utils/Libraries/StoreLibraries.php");
+	include_once("../../DTO/StoreDTO.php");
 
 	$responseDTO = new ResponseDTO();
 	
@@ -13,7 +13,7 @@
 		$requestJson = file_get_contents("php://input");
 	    $requestDTO = json_decode($requestJson);
 
-		$responseDTO = $queryServicesBLL->GetOrderByDateAndStoreName($requestDTO);
+		$responseDTO = $queryServicesBLL->GetOrderByName($requestDTO);
 	} 
 	catch (Exception $e) 
 	{

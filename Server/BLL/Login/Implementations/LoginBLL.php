@@ -51,6 +51,11 @@
             
         }
 
+        public function GetOrderByName($itemDTO)
+        {
+
+        }
+
         public function GetOrderByDateAndStoreName($itemDTO)
         {
             $responseDTO = new ResponseDTO();
@@ -65,6 +70,11 @@
             }
 
             return $responseDTO;
+        }
+
+        public function GetOrderByStoreName($itemDTO)
+        {
+            
         }
 
         //##### Private Methods #####

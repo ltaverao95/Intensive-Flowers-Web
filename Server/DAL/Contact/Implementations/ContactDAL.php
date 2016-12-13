@@ -60,9 +60,12 @@
 
         private function GetContacts()
         {
+            $responseDTO = new ResponseDTO();
+
             try
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
 
                 $query = "SELECT * FROM contact ORDER BY id";
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
@@ -74,27 +77,7 @@
                 //Recuperar los registros de la BD
                 $result = $dataBaseServicesBLL->Q->fetchAll();	
 
-                $contactsList = array();
-                while ($row = array_shift($result)) 
-                {
-                    $contactDTO = new ContactDTO();
-
-                    $contactDTO->Id = $row['id'];
-                    $contactDTO->Name = $row['name'];
-                    $contactDTO->Email = $row['email'];
-                    $contactDTO->Phone = $row['phone'];
-                    $contactDTO->Message = $row['message'];
-
-                    array_push($contactsList, $contactDTO);
-                };
-
-                if($contactsList == null)
-                {
-                    $responseDTO->SetMessageError("No se encontraron registros para mostrar");
-                    return $responseDTO;
-                } 
-                
-                $responseDTO->ResponseData = $contactsList;
+                $responseDTO = $getDataServiceDAL->GetContactItems($result);
 
                 $dataBaseServicesBLL->connection = null;
             }
@@ -108,6 +91,8 @@
 
         private function SaveCurrentContact($contactDTO)
         {
+            $responseDTO = new ResponseDTO();
+
             try
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();

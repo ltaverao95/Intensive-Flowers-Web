@@ -2,7 +2,7 @@
 
     class QueryServicesBLL implements IAdministrationServicesBLL
     {
-        //##### Public Methods #####
+        //########## IAdministrationServicesBLL implementations
 
         public function SignIn($itemDTO)
         {
@@ -35,6 +35,11 @@
             return $responseDTO;
         }
 
+        public function GetOrderByName($itemDTO)
+        {
+
+        }
+
         public function GetOrderByDateAndStoreName($itemDTO)
         {
             $responseDTO = new ResponseDTO();
@@ -49,6 +54,11 @@
             }
 
             return $responseDTO;
+        }
+
+        public function GetOrderByStoreName($itemDTO)
+        {
+            
         }
 
         //##### Private Methods #####
