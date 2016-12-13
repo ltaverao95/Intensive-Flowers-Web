@@ -139,10 +139,9 @@
             {
                 _self.OperationsModel.GetAllItemsURL = CoreConstants.StoreServiceURL.GET_ALL_ORDERS_URL;
                 _self.OperationsModel.SaveItemURL = CoreConstants.StoreServiceURL.SAVE_ORDER_URL;
-                _self.OperationsModel.DeleteAllItemsURL = null;
-                _self.OperationsModel.DeleteItemByIDURL = null;
-                _self.OperationsModel.DeleteItemsSelectedURL = null;
-                _self.OperationsModel.EditItemURL = null;
+                _self.OperationsModel.DeleteAllItemsURL = CoreConstants.StoreServiceURL.DELETE_ALL_ORDERS_URL;
+                _self.OperationsModel.DeleteItemByIDURL = CoreConstants.StoreServiceURL.DELETE_ORDER_BY_ID_URL;
+                _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.StoreServiceURL.DELETE_ORDERS_SELECTED_URL;
 
                 if(UtilitiesFactory.IsUndefinedOrNull(dataDTO))
                 {
