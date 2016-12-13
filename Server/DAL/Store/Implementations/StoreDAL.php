@@ -38,22 +38,66 @@
 
         public function UpdateItemByID($orderDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                   
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
 
+            return $responseDTO;
         }
 
-        public function DeleteAllItems($orderDTO)
+        public function DeleteAllItems()
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                   $responseDTO = $this->DeleteCurrentItems();
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
 
+            return $responseDTO;
         }
 
         public function DeleteItemByID($orderDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                   
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
 
+            return $responseDTO;
         }
         
         public function DeleteItemsSelected($orderDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                   
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
 
+            return $responseDTO;
         }
 
         //##### Private Methods #####
@@ -127,6 +171,34 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentItems()
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "Truncate table bouquet_order";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$responseDTO->UIMessage = "Registros eliminados!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
             }
 
             return $responseDTO;

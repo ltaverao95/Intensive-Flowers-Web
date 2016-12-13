@@ -50,9 +50,22 @@
 
         }
 
-        public function DeleteAllItems($storeDTO)
+        public function DeleteAllItems()
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_storeDAL = new StoreDAL();
+
+                $responseDTO = $_storeDAL->DeleteAllItems();
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteItemByID($storeDTO)
