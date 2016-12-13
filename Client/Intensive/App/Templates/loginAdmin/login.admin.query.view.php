@@ -1,67 +1,155 @@
 <?php
 	session_start();
 
-	if(isset($_SESSION['admin'])){
+	if(isset($_SESSION['admin']))
+    {
 ?>
 
 <div class="row">
     <div class="box">
-        <form>
+        <form name="search_name_form">
             <div class="form-group">
-                <label for="selectName">Buscar por Nombre</label>
-                <input type="text" 
-                       class="form-control" 
-                       ng-model="vm.rootObjQuery.NameToSearch" 
-                       placeholder="Nombre cliente a buscar">
+                <h4 class="intro-text">¿Qué desea hacer?</h4>
+                
+                <div class="col-lg-4">
+                    <select name="store_name"
+                            ng-model="vm.storeModel.QueryDataModel.QueryOption" 
+                            ng-options="queryOption.Id as queryOption.Label for queryOption in vm.UtilsConstants.QueryOptionsList"
+                            ng-change="vm.QueryOptionChanged()"
+                            class="form-control"
+                            required>
+                        <option value="">[--Seleccionar--]</option>                        
+                    </select>
+                </div>
             </div>
-            <button type="submit" 
-                    class="btn btn-default" 
+        </form>
+    </div>
+    <div class="box">
+
+        <!-- Search by Identity Card -->
+        <form name="search_identity_form" ng-if="vm.UtilsConstants.QueryOptionsList[vm.UtilsConstants.QueryOption.SEARCH_BY_IDENTY_CARD].IsVisible">
+            <div class="form-group">
+                <label for="search_identity_form_card">Buscar por Cédula</label>
+                <input type="text" 
+                       id="search_identity_form_card"
+                       name="name"
+                       class="form-control" 
+                       ng-model="vm.storeModel.QueryDataModel.IdentityCard" 
+                       placeholder="Digite la cédula"
+                       required>
+            </div>
+            <button type="button" 
+                    class="btn btn-default"
+                    ng-disabled="!search_name_form.$valid"
+                    ng-click="vm.SearchByIdentityCard()">
+                    Buscar
+            </button>
+
+            <button type="button" 
+                    class="btn btn-warning" 
+                    ng-click="vm.CleanStoreModel()">
+                    Limpiar Consulta
+            </button>
+        </form>
+
+        <!-- Search by Name -->
+        <form name="search_name_form" ng-if="vm.UtilsConstants.QueryOptionsList[vm.UtilsConstants.QueryOption.SEARCH_BY_NAME].IsVisible">
+            <div class="form-group">
+                <label for="search_name_form_name">Buscar por Nombre</label>
+                <input type="text" 
+                       id="search_name_form_name"
+                       name="name"
+                       class="form-control" 
+                       ng-model="vm.storeModel.QueryDataModel.NameToSearch" 
+                       placeholder="Nombre cliente a buscar"
+                       required>
+            </div>
+            <button type="button" 
+                    class="btn btn-default"
+                    ng-disabled="!search_name_form.$valid"
                     ng-click="vm.SearchByName()">
                     Buscar
             </button>
-            <hr>
 
+            <button type="button" 
+                    class="btn btn-warning" 
+                    ng-click="vm.CleanStoreModel()">
+                    Limpiar Consulta
+            </button>
+        </form>
+
+        <!-- Search by Date and Store -->
+        <form name="search_store_date_form" ng-if="vm.UtilsConstants.QueryOptionsList[vm.UtilsConstants.QueryOption.SEARCH_BY_DATE_AND_STORE].IsVisible">
             <div class="form-group">
-                <label for="exampleInputText2">Buscar por Fecha y Tienda</label>
+                <label for="search_store_date_form_store_name">Buscar por Fecha y Tienda</label>
                 <input type="date" 
-                       class="form-control" 
-                       id="exampleInputText2" 
-                       ng-model="vm.rootObjQuery.DateToSearch">
+                       class="form-control"
+                       name="date" 
+                       id="search_store_date_form_store_name" 
+                       ng-model="vm.storeModel.QueryDataModel.DateToSearch"
+                       required>
 
-                <select id="selectName" 
-                        ng-model="vm.rootObjQuery.StoreName" 
+                <select name="store_name"
+                        ng-model="vm.storeModel.QueryDataModel.StoreName" 
                         ng-options="store.name as store.name for store in vm.storeNameToSelect"
-                        class="form-control">
+                        class="form-control"
+                        required>
                     <option value="">[--Seleccionar--]</option>                        
                 </select>
             </div>
-            <button type="submit" class="btn btn-default" ng-click="vm.SearchByDateAndName()">Buscar</button>
-            <hr>
+            <button type="button" 
+                    class="btn btn-default" 
+                    ng-disabled="!search_store_date_form.$valid"
+                    ng-click="vm.SearchByDateAndStoreName()">
+                    Buscar
+            </button>
 
+            <button type="button" 
+                    class="btn btn-warning" 
+                    ng-click="vm.CleanStoreModel()">
+                    Limpiar Consulta
+            </button>
+        </form>
+
+        <!-- Search by Store -->
+        <form name="search_store_form" ng-if="vm.UtilsConstants.QueryOptionsList[vm.UtilsConstants.QueryOption.SEARCH_BY_STORE].IsVisible">
             <div class="form-group">
-                <label for="exampleInputText3">Buscar por Tienda</label>
-                <select id="selectName" 
-                        ng-model="vm.rootObjQuery.StoreName" 
+                <label for="search_store_form_store">Buscar por Tienda</label>
+                <select id="search_store_form_store"
+                        name="store_name_only" 
+                        ng-model="vm.storeModel.QueryDataModel.StoreName" 
                         ng-options="store.name as store.name for store in vm.storeNameToSelect"
-                        class="form-control">
+                        class="form-control"
+                        required>
                     <option value="">[--Seleccionar--]</option>                        
                 </select>
             </div>
-            <button type="submit" class="btn btn-default" ng-click="vm.SearchStore()">Buscar</button>
-            
-            <hr>
-            <button type="submit" class="btn btn-warning" ng-click="vm.CleanQuery()">Limpiar Consultas</button>
+            <button type="button" 
+                    class="btn btn-default"
+                    ng-disabled="!search_store_form.$valid" 
+                    ng-click="vm.SearchStore()">
+                    Buscar
+            </button>
+
+            <button type="button" 
+                    class="btn btn-warning" 
+                    ng-click="vm.CleanStoreModel()">
+                    Limpiar Consulta
+            </button>
 
         </form>
-        <hr>
-        <div class="clearfix">
-            <div style="width: 100%; height:390px; overflow: scroll;" ng-show="vm.showDataTableResult">
+
+        <hr ng-if="vm.showDataTableResult">
+
+        <div class="clearfix" ng-if="vm.showDataTableResult">
+            <div style="width: 100%; height:390px; overflow: auto;">
                 <div class="table-responsive">
-                    <table border="1">
+                    <table class="table table-bordered">
                         <caption>Información del Pedido</caption>
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Cédula</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Dirección Envío</th>
@@ -76,19 +164,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="order in vm.rootObjQuery.ResultData">
-                                <td>{{order.id}}</td>
-                                <td>{{order.name}}</td>
-                                <td>{{order.surname}}</td>
-                                <td>{{order.addressToSend}}</td>
-                                <td>{{order.phone}}</td>
-                                <td>{{order.email}}</td>
-                                <td>{{order.orderDescription}}</td>
-                                <td>{{order.store}}</td>
-                                <td>{{order.wayToPay}}</td>
-                                <td>{{order.dateOrder}}</td>
-                                <td>{{order.dateToSend}}</td>
-                                <td>{{order.timeToSend}}</td>
+                            <tr ng-repeat="order in vm.storeModel.QueryDataModel.QueryDataResult">
+                                <td>{{order.Id}}</td>
+                                <td>{{order.IdentityCard}}</td>
+                                <td>{{order.Name}}</td>
+                                <td>{{order.Surname}}</td>
+                                <td>{{order.AddressToSend}}</td>
+                                <td>{{order.Phone}}</td>
+                                <td>{{order.Email}}</td>
+                                <td>{{order.OrderDescription}}</td>
+                                <td>{{order.Store}}</td>
+                                <td>{{order.WayToPay}}</td>
+                                <td>{{order.DateOrder}}</td>
+                                <td>{{order.DateToSend}}</td>
+                                <td>{{order.TimeToSend}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -101,6 +190,6 @@
 <?php
 	}
 	else {
-		header('location: ../index.html');
+		header('location: ../index.php');
 	}
 ?>

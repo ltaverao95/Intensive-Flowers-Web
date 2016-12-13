@@ -20,6 +20,27 @@
             return $responseDTO;
         }
 
+        public function GetOrderByIdentityCard($itemDTO)
+        {
+
+        }
+
+        public function GetOrderByDateAndStoreName($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         //######### Private Methods
 
         private function ValidateCurrentUser($itemDTO)

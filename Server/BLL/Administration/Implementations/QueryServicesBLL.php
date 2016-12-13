@@ -1,54 +1,38 @@
 <?php 
 
-    class LoginBLL implements IAdministrationServicesBLL
+    class QueryServicesBLL implements IAdministrationServicesBLL
     {
         //##### Public Methods #####
 
         public function SignIn($itemDTO)
         {
+        }
+
+        public function SignOut()
+        {
+        }
+
+        public function GetOrderByIdentityCard($itemDTO)
+        {
             $responseDTO = new ResponseDTO();
-            $loginDAL = new LoginDAL();
+            $queryServicesDAL = new QueryServicesDAL();
 
             try
             {
-                $responseDTO = $this->ValidateCurrentUser($itemDTO);
+                $responseDTO = $this->ValidateIdentityCard($itemDTO);
                 if($responseDTO->HasError)
                 {
                     return $responseDTO;
                 }
 
-                $responseDTO = $loginDAL->SignIn($itemDTO);
+                $responseDTO = $queryServicesDAL->GetOrderByIdentityCard($itemDTO);
             }
             catch (Exception $e)
             {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
             }
 
             return $responseDTO;
-        }
-
-        public function SignOut()
-        {
-            $responseDTO = new ResponseDTO();
-
-            try
-            {
-                session_start();
-                session_destroy();
-
-                $responseDTO->UIMessage = "Sesión Finalizada con éxito!";
-            }
-            catch (Exception $e)
-            {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
-            }
-
-            return $responseDTO;
-        }
-
-        public function GetOrderByIdentityCard($itemDTO)
-        {
-            
         }
 
         public function GetOrderByDateAndStoreName($itemDTO)
@@ -90,6 +74,26 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateIdentityCard($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->IdentityCard == null)
+                {
+                    $responseDTO->SetError("La cédula no puede estar vacía");
+                    return $responseDTO;
+                }   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
             }
 
             return $responseDTO;

@@ -21,6 +21,13 @@
 			CREDIT_CARD: 0,
 			DEBIT_CARD: 1,
 			EFFECTIVE: 2
+		},
+
+		QueryOption: {
+			SEARCH_BY_IDENTY_CARD: 0,
+			SEARCH_BY_NAME: 1,
+			SEARCH_BY_DATE_AND_STORE: 2,
+			SEARCH_BY_STORE: 3
 		}
 	};
 
@@ -148,6 +155,29 @@
 			Img: "Client/Intensive/App/images/ramo7.jpg",
 			Description: "Que mejor que dar un ramo de flores a ese ser querido y aún más si ese ramo contiene unas deliciosas y frescas frutas."	
 		}						
+	];
+
+	UtilsConstants.QueryOptionsList = [
+		{
+			Id: UtilsConstants.QueryOption.SEARCH_BY_IDENTY_CARD,
+			Label: 'Buscar por cédula',
+			IsVisible: true
+		},
+		{
+			Id: UtilsConstants.QueryOption.SEARCH_BY_NAME,
+			Label: 'Buscar por nombre',
+			IsVisible: false
+		},
+		{
+			Id: UtilsConstants.QueryOption.SEARCH_BY_DATE_AND_STORE,
+			Label: 'Buscar por fecha y tienda',
+			IsVisible: false
+		},
+		{
+			Id: UtilsConstants.QueryOption.SEARCH_BY_STORE,
+			Label: 'Buscar por tienda',
+			IsVisible: false
+		}
 	];
 
 	angular

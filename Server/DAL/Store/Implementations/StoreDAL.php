@@ -80,6 +80,7 @@
                     $storeDTO = new StoreDTO();
 
                     $storeDTO->Id = $row['id'];
+                    $storeDTO->IdentityCard = $row['identity_card'];
                     $storeDTO->Name = $row['name'];
                     $storeDTO->Surname = $row['surname'];
                     $storeDTO->AddressToSend = $row['addressToSend'];
@@ -119,20 +120,21 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
 
-                $query = "INSERT INTO bouquet_order (id, name, surname, addressToSend, phone, email, orderDescription, store, wayToPay, dateOrder, dateToSend, timeToSend) VALUES (:id, :name, :surname, :addressToSend, :phone, :email, :orderDescription, :store, :wayToPay, :dateOrder, :dateToSend, :timeToSend)";
+                $query = "INSERT INTO bouquet_order (id, identity_card, name, surname, addressToSend, phone, email, orderDescription, store, wayToPay, dateOrder, dateToSend, timeToSend) VALUES (:id, :identity_card, :name, :surname, :addressToSend, :phone, :email, :orderDescription, :store, :wayToPay, :dateOrder, :dateToSend, :timeToSend)";
                 $dataBaseServicesBLL->ArrayParameters = array(
                     ':id' => NULL, 
-                    ':name' =>$orderDTO->Name,
-                    ':surname' =>$orderDTO->Surname,
-                    ':addressToSend' =>$orderDTO->AddressToSend,
-                    ':phone' =>$orderDTO->Phone,
-                    ':email' =>$orderDTO->Email,
-                    ':orderDescription' =>$orderDTO->OrderDescription,
-                    ':store' =>$orderDTO->Store,
-                    ':wayToPay' =>$orderDTO->WayToPay,
-                    ':dateOrder' =>$orderDTO->DateOrder,
-                    ':dateToSend' =>$orderDTO->DateToSend,
-                    ':timeToSend' =>$orderDTO->TimeToSend
+                    ':identity_card' => $orderDTO->IdentityCard,
+                    ':name' => $orderDTO->Name,
+                    ':surname' => $orderDTO->Surname,
+                    ':addressToSend' => $orderDTO->AddressToSend,
+                    ':phone' => $orderDTO->Phone,
+                    ':email' => $orderDTO->Email,
+                    ':orderDescription' => $orderDTO->OrderDescription,
+                    ':store' => $orderDTO->Store,
+                    ':wayToPay' => $orderDTO->WayToPay,
+                    ':dateOrder' => $orderDTO->DateOrder,
+                    ':dateToSend' => $orderDTO->DateToSend,
+                    ':timeToSend' => $orderDTO->TimeToSend
                 );
 
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);

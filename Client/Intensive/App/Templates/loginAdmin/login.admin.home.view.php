@@ -1,7 +1,8 @@
 <?php
 	session_start();
 
-	if(isset($_SESSION['admin'])){
+	if(isset($_SESSION['admin']))
+    {
 ?>
 <div class="row">
     <div class="box">
@@ -29,10 +30,10 @@
 <div class="row">
     <div class="box">
         <ul class="nav nav-tabs">
-            <li role="presentation"><a ui-sref="intensive.activities.querys">Consultas Tiendas</a></li>
-            <li role="presentation"><a ui-sref="intensive.activities.orders">Pedidos</a></li>
-            <li role="presentation"><a ui-sref="intensive.activities.messages">Mensajes</a></li>
-            <li role="presentation"><a ui-sref="intensive.activities.contact">Contactos</a></li>
+            <li role="presentation"><a ui-sref="intensive.activities.querys" ui-sref-active="active">Consultas Tiendas</a></li>
+            <li role="presentation"><a ui-sref="intensive.activities.orders" ui-sref-active="active">Pedidos</a></li>
+            <li role="presentation"><a ui-sref="intensive.activities.messages" ui-sref-active="active">Mensajes</a></li>
+            <li role="presentation"><a ui-sref="intensive.activities.contact" ui-sref-active="active">Contactos</a></li>
         </ul>
         <br>
         <div class="clearfix">

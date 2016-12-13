@@ -138,13 +138,9 @@
     <script src="Client/Intensive/Core/Services/Models/BouquetModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/ContactModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/LoginModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/QueryDataModel.js"></script>
 
     <!-- App/Components/loginAdmin Services -->
-    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.query.service.js"></script>
-    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.query.service.QueryDataModel.js"></script>
-    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.order.service.js"></script>
-    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.message.service.js"></script>
-    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.contact.service.js"></script>
 
     <!-- Filters -->
     <script src="Client/Intensive/Core/Filters/paginator.filter.js"></script>

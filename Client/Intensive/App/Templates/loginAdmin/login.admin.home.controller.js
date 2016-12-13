@@ -7,16 +7,22 @@
 		.controller('Intensive.App.LoginHomeAdminController', LoginHomeAdminController);
 
 	LoginHomeAdminController.$inject = [
-		
+		'$state'
 	];	
 
-	function LoginHomeAdminController(){
-
+	function LoginHomeAdminController($state)
+	{
 		//####################### Instance Properties #######################
 		
 		var vm = this;
 
-		//####################### Public Functions #######################
-	};
+		//####################### Public Methods #######################
 
+		function Initialize()
+		{
+			$state.go('intensive.activities.querys');
+		}
+
+		Initialize();
+	}
 })();

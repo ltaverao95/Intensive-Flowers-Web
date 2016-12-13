@@ -15,6 +15,15 @@
         </div>
         <div class="col-md-6">
             <form name="orderForm">
+                <div class="form-group">
+                    <label for="order_form_identity_card">Cédula</label>
+                    <input type="number" 
+                           class="form-control" 
+                           id="order_form_identity_card" 
+                           name="identity_card" 
+                           ng-model="vm.storeModel.IdentityCard"
+                           required>
+                </div>
 
               <div class="form-group">
                 <label for="order_form_name">Nombres</label>
@@ -103,7 +112,7 @@
                        id="order_form_date_to_send"
                        name="date_to_send" 
                        class="form-control" 
-                       ng-model="vm.storeModel.dateToSend"
+                       ng-model="vm.storeModel.DateToSend"
                        required>
               </div>  
               <div class="form-group"> 
@@ -112,7 +121,7 @@
                        id="order_form_time_to_send" 
                        name="time_to_send" 
                        class="form-control" 
-                       ng-model="vm.storeModel.timeToSend"
+                       ng-model="vm.storeModel.TimeToSend"
                        required>
               </div>
               <a ui-sref="intensive.store.detail({id: vm.storeDetail.Id})" class="btn btn-default">

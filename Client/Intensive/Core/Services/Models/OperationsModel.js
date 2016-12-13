@@ -101,7 +101,6 @@
 
                 return deferred.promise;
             }
-
         }
 
         return Model;

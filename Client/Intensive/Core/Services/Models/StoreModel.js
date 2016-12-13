@@ -10,14 +10,16 @@
         'Intensive.Core.Constants',
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
-        'Intensive.Core.Models.OperationsModel'
+        'Intensive.Core.Models.OperationsModel',
+        'Intensive.Core.Models.QueryDataModel'
     ];
 
     function StoreModel(UtilsConstants,
                         CoreConstants,
                         UtilitiesFactory,
                         ActionResultModel,
-                        OperationsModel)
+                        OperationsModel,
+                        QueryDataModel)
     {
         var Model = function (dataDTO) 
         {
@@ -26,21 +28,25 @@
             angular.extend(this, {
 
                 Id: null,
-                Name: 'Felipe',
-                Surname: 'Tavera',
-                AddressToSend: 'Cra 36 a # 97 b 17',
-                Phone: 8916391,
-                Email: 'lftavera@hotmail.com',
-                OrderDescription: 'Rosas',
+                IdentityCard: null,
+                Name: null,
+                Surname: null,
+                AddressToSend: null,
+                Phone: null,
+                Email: null,
+                OrderDescription: null,
                 Store: UtilsConstants.EnumStores.INTENSIVE_FLOWERS_1,
                 WayToPay: UtilsConstants.EnumWayToPay.CREDIT_CARD,
-                DateOrder: '12/12/2016',
-                DateToSend: '12/12/2016',
-                TimeToSend: '11:00',
+                DateOrder: new Date(),
+                DateToSend: null,
+                TimeToSend: null,
                 OrdersList: [],
 
                 //CRUD Operations
                 OperationsModel: new OperationsModel(),
+
+                //Query Operations
+                QueryDataModel: new QueryDataModel(),
 
                 //Model Validations
                 ValidateOrder: ValidateOrder     
@@ -52,6 +58,12 @@
             function ValidateOrder()
             {
                 var actionResultModel = new ActionResultModel();
+
+                if(!UtilitiesFactory.IsStringValid(_self.IdentityCard))
+                {
+                    actionResultModel.SetError("La cédula no puede estar vacía");
+                    return actionResultModel;
+                }
 
                 if(!UtilitiesFactory.IsStringValid(_self.Name))
                 {
@@ -126,6 +138,14 @@
                 _self.OperationsModel.DeleteItemByIDURL = null;
                 _self.OperationsModel.DeleteItemsSelectedURL = null;
                 _self.OperationsModel.EditItemURL = null;
+
+                if(UtilitiesFactory.IsUndefinedOrNull(dataDTO))
+                {
+                    return;
+                }
+
+                _self.OperationsModel = new OperationsModel(dataDTO.OperationsModel);
+                _self.QueryDataModel = new QueryDataModel(dataDTO.QueryDataModel);
             }
 
             Initialize();

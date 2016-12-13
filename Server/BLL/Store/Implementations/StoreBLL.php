@@ -73,6 +73,12 @@
 
             try
             {
+                if($storeDTO->IdentityCard == null)
+                {
+                    $responseDTO->SetError("La cédula no puede estar vacía");
+                    return $responseDTO;
+                }
+
                 if($storeDTO->Name == null)
                 {
                     $responseDTO->SetError("El campo Nombre no puede estar vacío");

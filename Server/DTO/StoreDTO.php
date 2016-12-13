@@ -3,6 +3,7 @@
     class StoreDTO
     {
         public $Id = 0;
+        public $IdentityCard = 0;
         public $Name = null;
         public $Surname = null;
         public $AddressToSend = null;
