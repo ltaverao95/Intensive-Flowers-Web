@@ -37,7 +37,7 @@
             var day = currentDate.getDate();
 
             year = year.toString();
-            currentDate = day + "/" + month + "/" + year;
+            currentDate = year + "-" + month + "-" + day; 
 
             return currentDate;
         }

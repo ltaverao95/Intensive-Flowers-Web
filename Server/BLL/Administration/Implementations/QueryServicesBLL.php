@@ -61,10 +61,17 @@
         public function GetOrderByDateAndStoreName($itemDTO)
         {
             $responseDTO = new ResponseDTO();
+            $queryServicesDAL = new QueryServicesDAL();
 
             try
             {
-                
+                $responseDTO = $this->ValidateDateAndStoreName($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $queryServicesDAL->GetOrderByDateAndStoreName($itemDTO);
             }
             catch (Exception $e)
             {
@@ -76,7 +83,25 @@
 
         public function GetOrderByStoreName($itemDTO)
         {
-            
+            $responseDTO = new ResponseDTO();
+            $queryServicesDAL = new QueryServicesDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateStoreName($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $queryServicesDAL->GetOrderByStoreName($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
         }
 
         //##### Private Methods #####
@@ -136,6 +161,52 @@
                 if($itemDTO->Name == null)
                 {
                     $responseDTO->SetError("El nombre no puede estar vacío");
+                    return $responseDTO;
+                }   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateDateAndStoreName($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->DateOrder == null)
+                {
+                    $responseDTO->SetError("La fecha no puede estar vacía");
+                    return $responseDTO;
+                }
+
+                if($itemDTO->Store == null)
+                {
+                    $responseDTO->SetError("La tienda no puede estar vacía");
+                    return $responseDTO;
+                }   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateStoreName($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->Store === null)
+                {
+                    $responseDTO->SetError("La tienda no puede estar vacía");
                     return $responseDTO;
                 }   
             }

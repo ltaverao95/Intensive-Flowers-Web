@@ -10,13 +10,15 @@
 		'$q',
 		'$http',
 		'Intensive.Core.Constants',
-		'Intensive.Blocks.Utils.Constants'
+		'Intensive.Blocks.Utils.Constants',
+		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function QueryDataModel($q,
 							$http,
 							CoreConstants,
-							UtilsConstants)
+							UtilsConstants,
+							UtilitiesFactory)
 	{
 		var Model = function(dataDTO)
 		{
@@ -30,7 +32,7 @@
 				IdentityCard: null,
 				NameToSearch: null,
 				DateToSearch: new Date(),
-				StoreName: null,
+				StoreName: UtilsConstants.EnumStores.INTENSIVE_FLOWERS_1,
 
 				SearchByIdentityCard: SearchByIdentityCard,
 				SearchByName: SearchByName,
@@ -80,7 +82,8 @@
                     method: 'POST',
                     data: angular.toJson(
 						{
-
+							DateOrder: UtilitiesFactory.GetFormatedDate(_self.DateToSearch),
+							Store: _self.StoreName
 						}
 					)
                 };
@@ -96,7 +99,7 @@
                     method: 'POST',
                     data: angular.toJson(
 						{
-
+							Store: _self.StoreName
 						}
 					)
                 };

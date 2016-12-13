@@ -91,7 +91,7 @@
 
                 <select name="store_name"
                         ng-model="vm.storeModel.QueryDataModel.StoreName" 
-                        ng-options="store.name as store.name for store in vm.storeNameToSelect"
+                        ng-options="store.Id as store.Name for store in vm.UtilsConstants.StoresList"
                         class="form-control"
                         required>
                     <option value="">[--Seleccionar--]</option>                        
@@ -118,7 +118,7 @@
                 <select id="search_store_form_store"
                         name="store_name_only" 
                         ng-model="vm.storeModel.QueryDataModel.StoreName" 
-                        ng-options="store.name as store.name for store in vm.storeNameToSelect"
+                        ng-options="store.Id as store.Name for store in vm.UtilsConstants.StoresList"
                         class="form-control"
                         required>
                     <option value="">[--Seleccionar--]</option>                        
@@ -127,7 +127,7 @@
             <button type="button" 
                     class="btn btn-default"
                     ng-disabled="!search_store_form.$valid" 
-                    ng-click="vm.SearchStore()">
+                    ng-click="vm.SearchByStore()">
                     Buscar
             </button>
 

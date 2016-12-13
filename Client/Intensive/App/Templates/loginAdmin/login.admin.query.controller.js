@@ -38,6 +38,8 @@
 
 		function QueryOptionChanged()
 		{
+			vm.showDataTableResult = false;
+
 			for(var i = 0; i < UtilsConstants.QueryOptionsList.length; i++)
 			{
 				UtilsConstants.QueryOptionsList[i].IsVisible = false;
@@ -53,6 +55,8 @@
 
 		function SearchByIdentityCard()
 		{
+			vm.showDataTableResult = false;
+			
 			vm.storeModel.QueryDataModel.SearchByIdentityCard().then(
 				responseDTO => {
 
@@ -74,6 +78,8 @@
 
 		function SearchByName()
 		{
+			vm.showDataTableResult = false;
+
 			vm.storeModel.QueryDataModel.SearchByName().then(
 				responseDTO => {
 
@@ -95,48 +101,46 @@
 
 		function SearchByDateAndStoreName()
 		{
-			var fullDate = SetFullDate(vm.queryDataModel.DateToSearch);
+			vm.showDataTableResult = false;
 
-			LoginQueryAdminService.SearchByDateAndStoreName({store: vm.queryDataModel.StoreName, dateToSend: fullDate}).then(
-				function (data)
-				{
-					if(data.ResponseMessage != "")
+			vm.storeModel.QueryDataModel.SearchByDateAndStoreName().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					vm.queryDataModel.ResultData = data.ObjData;
+					vm.storeModel.QueryDataModel.QueryDataResult = responseDTO.ResponseData;
 					vm.showDataTableResult = true;
 				},
-				function (error)
-				{
-					alert(error.ResponseMessage);
-					console.log(error.StackTrace);
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
+					console.log(error);
 				}
 			);
 		}
 
 		function SearchByStore()
 		{
-			LoginQueryAdminService.SearchByStore({store: vm.queryDataModel.StoreName}).then(
-				function (data)
-				{
-					if(data.ResponseMessage != "")
+			vm.showDataTableResult = false;
+
+			vm.storeModel.QueryDataModel.SearchByStore().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					vm.queryDataModel.ResultData = data.ObjData;
+					vm.storeModel.QueryDataModel.QueryDataResult = responseDTO.ResponseData;
 					vm.showDataTableResult = true;
 				},
-				function (error)
-				{
-					alert(error.ResponseMessage);
-					console.log(error.StackTrace);
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
+					console.log(error);
 				}
 			);
 		}
