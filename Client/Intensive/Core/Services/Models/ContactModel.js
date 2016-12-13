@@ -9,13 +9,15 @@
         'Intensive.Core.Constants',
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
-        'Intensive.Core.Models.OperationsModel'
+        'Intensive.Core.Models.OperationsModel',
+        'Intensive.Core.Models.PaginatorModel'
     ];
 
     function ContactModel(CoreConstants,
                           UtilitiesFactory,
                           ActionResultModel,
-                          OperationsModel)
+                          OperationsModel,
+                          PaginatorModel)
     {
         var Model = function (dataDTO) 
         {
@@ -32,6 +34,9 @@
 
                 //CRUD Operations
                 OperationsModel: new OperationsModel(),
+
+                //Pagination Operations
+                PaginatorModel: new PaginatorModel(),
 
                 //Model Validations
                 ValidateContact: ValidateContact

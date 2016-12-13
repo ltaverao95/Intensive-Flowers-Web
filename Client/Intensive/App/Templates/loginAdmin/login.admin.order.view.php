@@ -1,23 +1,23 @@
 <?php
 	session_start();
 
-	if(isset($_SESSION['admin'])){
-      
+	if(isset($_SESSION['admin']))
+    {  
 ?>
 
 <div class="row">
     <div class="box">
-        <input type="text" class="form-control" placeholder="Buscar..." ng-model="vm.rootOrdersObj.searchOrder">
+        <input type="text" class="form-control" placeholder="Buscar..." ng-model="vm.searchOrder">
         <br>
         <div class="clearfix">
-            <div style="width: 100%; height:390px; overflow: scroll;">
+            <div style="width: 100%; height:390px; overflow: auto;">
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <th>
-                                <input type="checkbox" ng-model="vm.rootOrdersObj.selectAllOrders" ng-click="vm.CheckAllOrders()">
+                                <input type="checkbox" ng-model="vm.storeModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllOrders()">
                             </th>
-                            <th>Id</th>
+                            <th>Cédula</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Dirección de Envío</th>
@@ -29,23 +29,25 @@
                             <th>Fecha del Pedido</th>
                             <th>Fecha de Entrega</th>
                             <th>Hora Entrega</th>
+                            <th>Acciones</th>
                         </thead>
-                        <tbody ng-repeat="order in vm.rootOrdersObj.allOrders | filter: vm.rootOrdersObj.searchOrder | pagination: vm.currentPage * vm.pageSize | limitTo: vm.pageSize" ng-class="{'tableTdColor': $index % 2 != 0}">
+                        <tbody ng-repeat="order in vm.storeModel.OrdersList | pagination: vm.storeModel.PaginatorModel.CurrentPage * vm.storeModel.PaginatorModel.PageSize | limitTo: vm.storeModel.PaginatorModel.PageSize | filter: vm.searchOrder" 
+                               ng-class="{'tableTdColor': $index % 2 != 0}">
                             <td>
                                 <input type="checkbox" ng-model="order.Selected" ng-change="vm.OrderSelectedChanged(order)">
                             </td>
-                            <td>{{order.id}}</td>
-                            <td>{{order.name}}</td>
-                            <td>{{order.surname}}</td>
-                            <td>{{order.addressToSend}}</td>
-                            <td>{{order.phone}}</td>
-                            <td>{{order.email}}</td>
-                            <td>{{order.orderDescription}}</td>
-                            <td>{{order.store}}</td>
-                            <td>{{order.wayToPay}}</td>
-                            <td>{{order.dateOrder}}</td>
-                            <td>{{order.dateToSend}}</td>
-                            <td>{{order.timeToSend}}</td>
+                            <td>{{order.IdentityCard}}</td>
+                            <td>{{order.Name}}</td>
+                            <td>{{order.Surname}}</td>
+                            <td>{{order.AddressToSend}}</td>
+                            <td>{{order.Phone}}</td>
+                            <td>{{order.Email}}</td>
+                            <td>{{order.OrderDescription}}</td>
+                            <td>{{order.Store}}</td>
+                            <td>{{order.WayToPay}}</td>
+                            <td>{{order.DateOrder}}</td>
+                            <td>{{order.DateToSend}}</td>
+                            <td>{{order.TimeToSend}}</td>
                             <td>
                                 <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="vm.DeleteOrderByID(order)"></button>
                                 <button class="btn btn-success glyphicon glyphicon-edit" ng-click="vm.UpdateOrder(order)"></button>
@@ -55,22 +57,23 @@
                     </table>
                 </div>
             </div>
+
             <div class="pagination-controle pagination">
                 <button type="button" 
                       class="btn btn-primary" 
-                      ng-disabled="vm.currentPage == 0" 
-                      ng-click="vm.CurrentPageChanged(false)"> 
+                      ng-disabled="vm.storeModel.PaginatorModel.CurrentPage == 0" 
+                      ng-click="vm.storeModel.PaginatorModel.CurrentPageChanged(false)"> 
                       &lt; Anterior
                 </button>
-                <span>Página {{vm.currentPage + 1}} de {{ vm.numberOfPages() }}</span>
+                <span>Página {{vm.storeModel.PaginatorModel.CurrentPage + 1}} de {{ vm.storeModel.PaginatorModel.NumberOfPages(vm.storeModel.OrdersList) }}</span>
                 <button type="button" class="btn btn-primary"
-                      ng-disabled="vm.currentPage >= vm.rootOrdersObj.allOrders.length/vm.pageSize - 1 || vm.rootOrdersObj.allOrders == 0"
-                      ng-click="vm.CurrentPageChanged(true)">Siguiente &gt;
+                      ng-disabled="vm.storeModel.PaginatorModel.CurrentPage >= vm.storeModel.OrdersList.length/vm.storeModel.PaginatorModel.PageSize - 1 || vm.storeModel.OrdersList == 0"
+                      ng-click="vm.storeModel.PaginatorModel.CurrentPageChanged(true)">Siguiente &gt;
                 </button>
             </div>
             <div>
                 <button class="btn btn-success" ng-click="vm.DeleteAllOrders()">Borrar todos</button>
-                <button class="btn btn-success" ng-click="vm.DeleteOrderSelected()">Borrar Seleccionados</button>
+                <button class="btn btn-success" ng-click="vm.DeleteOrdersSelected()">Borrar Seleccionados</button>
             </div>         
         </div>        
         </div>

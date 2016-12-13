@@ -11,7 +11,8 @@
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
         'Intensive.Core.Models.OperationsModel',
-        'Intensive.Core.Models.QueryDataModel'
+        'Intensive.Core.Models.QueryDataModel',
+        'Intensive.Core.Models.PaginatorModel'
     ];
 
     function StoreModel(UtilsConstants,
@@ -19,7 +20,8 @@
                         UtilitiesFactory,
                         ActionResultModel,
                         OperationsModel,
-                        QueryDataModel)
+                        QueryDataModel,
+                        PaginatorModel)
     {
         var Model = function (dataDTO) 
         {
@@ -44,6 +46,9 @@
 
                 //CRUD Operations
                 OperationsModel: new OperationsModel(),
+                
+                //Pagination Operations
+                PaginatorModel: new PaginatorModel(),
 
                 //Query Operations
                 QueryDataModel: new QueryDataModel(),

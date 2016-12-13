@@ -10,98 +10,64 @@
 		'$state',
 		'$stateParams',
 		'$uibModal',
-		'GetStoresInfo',
-		'GetAllOrders',
-		'Intensive.App.LoginOrderAdminService',
 		'Intensive.Blocks.Utils.Constants',
-		'Intensive.Blocks.Messages.UserMessagesFactory'
-
+		'Intensive.Blocks.Messages.UserMessagesFactory',
+		'Intensive.Core.Models.StoreModel',
+		'Intensive.Blocks.Utils.ActionResultModel'
 	];	
 
 	function LoginOrderAdminController($state,
 									   $stateParams,
 									   $uibModal,
-									   GetStoresInfo,
-									   GetAllOrders,
-									   LoginOrderAdminService,
 							 		   UtilsConstants,
-							 		   UserMessagesFactory)
+							 		   UserMessagesFactory,
+									   StoreModel,
+									   ActionResultModel)
 	{	
 		//####################### Instance Properties #######################
 		
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
+		vm.storeModel = new StoreModel();
 
-		vm.currentPage = 0;
-		vm.pageSize = 6;
-		vm.countCurrentPage = 0;
+		vm.searchOrder = '';
 
-		vm.rootOrdersObj = {
-			searchOrder: '',
-			selectAllOrders : false,
-			arrOrderSelected: [],
-			allOrders: []
-		};
-		
-		if(GetAllOrders.ResponseMessage !== "")
-		{
-			_paramsDTO.Message = GetAllOrders.ResponseMessage;
-			UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-		}
-		else
-		{
-			vm.rootOrdersObj.allOrders = GetAllOrders.ObjData;
-		}
-
-		vm.orderDetailUpdate = $stateParams.objData;
-		vm.storesToSelect = GetStoresInfo.storeNumber;
-		vm.wayToPayToSelect = GetStoresInfo.wayToPay;
-
-		vm.CurrentPageChanged = CurrentPageChanged;
 		vm.DeleteOrderByID = DeleteOrderByID;
 		vm.DeleteAllOrders = DeleteAllOrders;
-		vm.DeleteOrderSelected = DeleteOrderSelected;
+		vm.DeleteOrdersSelected = DeleteOrdersSelected;
 		vm.UpdateOrder = UpdateOrder;
 		vm.ViewOrderByID = ViewOrderByID;
 		vm.CheckAllOrders = CheckAllOrders;
 		vm.OrderSelectedChanged = OrderSelectedChanged;
-		vm.NumberOfPages = NumberOfPages;
 
 		//####################### Public Functions #######################
 
-		function CurrentPageChanged(isNextPage)
+		function DeleteOrderByID(clientOrder)
 		{
-			if(isNextPage)
+			var actionResultModel = ValidateItemsBeforeDelete();
+			if(actionResultModel.HasError)
 			{
-				vm.currentPage = vm.currentPage + 1;
-				vm.countCurrentPage = vm.currentPage * vm.pageSize;
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+			}
+
+			if(!ShowDeleteConfirm())
+			{
 				return;
 			}
 
-			vm.currentPage = vm.currentPage - 1
-			vm.countCurrentPage = vm.currentPage * vm.pageSize;
-		}
-
-		function DeleteOrderByID(clientOrder)
-		{
-			LoginOrderAdminService.DeleteOrderByID(clientOrder).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
+			vm.storeModel.OperationsModel.DeleteItemByID().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
 						return;
 					}
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
 					console.log(error);
 				}
 			);
@@ -109,71 +75,61 @@
 
 		function DeleteAllOrders()
 		{
-			if(vm.rootOrdersObj.allOrders.length == 0)
+			var actionResultModel = ValidateItemsBeforeDelete();
+			if(actionResultModel.HasError)
 			{
-				_paramsDTO.Message = "No hay registros para eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-				return;
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
 			}
 
-			var response = confirm("¿Estas seguro que deseas eliminar todos los pedidos?");
-
-			if(!response)
+			if(!ShowDeleteConfirm())
 			{
 				return;
 			}
 
-			LoginOrderAdminService.DeleteAllOrders().then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
+			vm.storeModel.OperationsModel.DeleteAllItems().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
 						return;
 					}
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
 					console.log(error);
 				}
 			);
 		}
 
-		function DeleteOrderSelected()
+		function DeleteOrdersSelected()
 		{
-			if(vm.rootOrdersObj.allOrders.length <= 0)
+			var actionResultModel = ValidateItemsBeforeDelete();
+			if(actionResultModel.HasError)
 			{
-				_paramsDTO.Message = "No hay registros para eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+			}
+
+			if(!ShowDeleteConfirm())
+			{
 				return;
 			}
 
-			if(vm.rootOrdersObj.arrOrderSelected.length == 0)
-			{
-				_paramsDTO.Message = "Debes seleccionar los mensajes que quieres eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-				return;
-			}
-
-			LoginOrderAdminService.DeleteOrderSelectedByID(vm.rootOrdersObj.arrOrderSelected).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
+			vm.storeModel.OperationsModel.DeleteItemsSelected().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
 						return;
 					}
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
 					console.log(error);
 				}
 			);
@@ -196,43 +152,45 @@
 			var count = 0;
 			var subCount = 0;
 
-			vm.rootOrdersObj.selectAllOrders = !vm.rootOrdersObj.selectAllOrders ? false : true;
+			vm.storeModel.PaginatorModel.SelectAllItems = !vm.storeModel.PaginatorModel.SelectAllItems ? false : true;
 
-			angular.forEach(vm.rootOrdersObj.allOrders, function (order) 
-			{
-				count++;
-
-				if(!vm.rootOrdersObj.selectAllOrders)
+			vm.storeModel.OrdersList.map(
+				function (order) 
 				{
-					order.Selected = vm.rootOrdersObj.selectAllOrders;
-					vm.rootOrdersObj.arrOrderSelected = [];
-					return;
-				}
+					count++;
 
-				if(vm.currentPage + 1 > 1)
-				{
-					if(count >= vm.countCurrentPage + 1 && count <= (vm.countCurrentPage * 2))
+					if(!vm.storeModel.PaginatorModel.SelectAllItems)
 					{
-						if(subCount == vm.pageSize)
+						order.Selected = vm.storeModel.PaginatorModel.SelectAllItems;
+						vm.storeModel.PaginatorModel.ItemsSelected = [];
+						return;
+					}
+
+					if(vm.storeModel.PaginatorModel.CurrentPage + 1 > 1)
+					{
+						if(count >= vm.storeModel.PaginatorModel.CountCurrentPage + 1 && count <= (vm.storeModel.PaginatorModel.CountCurrentPage * 2))
 						{
-							return;
+							if(subCount == vm.storeModel.PaginatorModel.PageSize)
+							{
+								return;
+							}
+
+							order.Selected = vm.storeModel.PaginatorModel.SelectAllItems;
+							vm.storeModel.PaginatorModel.ItemsSelected.push(order);
+							subCount++;
 						}
-
-						order.Selected = vm.rootOrdersObj.selectAllOrders;
-						vm.rootOrdersObj.arrOrderSelected.push(order);
-						subCount++;
 					}
-				}
-				else if(vm.countCurrentPage == 0)
-				{
-					if(count <= 6)
+					else if(vm.storeModel.PaginatorModel.CountCurrentPage == 0)
 					{
-						order.Selected = vm.rootOrdersObj.selectAllOrders;
-						vm.rootOrdersObj.arrOrderSelected.push(order);
+						if(count <= 6)
+						{
+							order.Selected = vm.storeModel.PaginatorModel.SelectAllItems;
+							vm.storeModel.PaginatorModel.ItemsSelected.push(order);
+						}
 					}
-				}
 
-        	});
+				}
+			);
 
 		}
 
@@ -240,29 +198,17 @@
 		{
 			if(clientOrder.Selected)
 			{
-				vm.rootOrdersObj.arrOrderSelected.push(clientOrder);
+				vm.storeModel.PaginatorModel.ItemsSelected.push(clientOrder);
 
-				if(vm.rootOrdersObj.arrOrderSelected.length == vm.rootOrdersObj.allOrders.length)
+				if(vm.storeModel.PaginatorModel.ItemsSelected.length == vm.storeModel.OrdersList.length)
 				{
-					vm.rootOrdersObj.selectAllOrders = true;
+					vm.storeModel.PaginatorModel.SelectAllItems = true;
 				}
 			}
 			else 
 			{
-				vm.rootOrdersObj.arrOrderSelected.splice(vm.rootOrdersObj.arrOrderSelected.indexOf(clientOrder), 1);
+				vm.storeModel.PaginatorModel.ItemsSelected.splice(vm.storeModel.PaginatorModel.ItemsSelected.indexOf(clientOrder), 1);
 			}
-		}
-
-		//####################### Pagination Functions #######################
-
-		function NumberOfPages()
-		{
-			if(vm.rootOrdersObj.allOrders == 0)
-			{
-				return 0;
-			}
-
-			return Math.ceil(vm.rootOrdersObj.allOrders.length / vm.pageSize);
 		}
 
 		//####################### Private Functions #######################
@@ -272,7 +218,7 @@
 			var modalInstance = $uibModal.open(
 				{
 					animation: true,
-					templateUrl: 'Client/Intensive/App/Components/loginAdmin/login.admin.order.modal.view.html',
+					templateUrl: 'Client/Intensive/App/Templates/loginAdmin/login.admin.order.modal.view.html',
 					controller: 'Intensive.App.LoginOrderModalAdminController',
 					controllerAs: 'vm',
 					size: 'md',
@@ -285,6 +231,48 @@
 					}
 			});
 		}
+
+		function ShowDeleteConfirm()
+		{
+			var response = confirm("¿Estas seguro que deseas eliminar todos los pedidos?");
+
+			return response;	
+		}
+
+		function ValidateItemsBeforeDelete()
+		{
+			var actionResultModel = new ActionResultModel();
+
+			if(vm.storeModel.OrdersList.length == 0)
+			{
+				actionResultModel.SetError("No hay registros para eliminar");
+				return actionResultModel;
+			}
+
+			return actionResultModel;
+		}
+
+		function Initialize()
+		{
+			vm.storeModel.OperationsModel.GetAllItems().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					vm.storeModel.OrdersList = responseDTO.ResponseData;
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
+		}
+
+		Initialize();
 	}
 
 })();

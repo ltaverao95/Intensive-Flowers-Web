@@ -133,6 +133,7 @@
 
     <!-- App/Components Models-->
     <script src="Client/Intensive/Core/Services/Models/OperationsModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/PaginatorModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/MessageModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/StoreModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/BouquetModel.js"></script>

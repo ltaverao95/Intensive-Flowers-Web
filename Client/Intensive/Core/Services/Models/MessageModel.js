@@ -9,12 +9,14 @@
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
         'Intensive.Core.Models.OperationsModel',
+        'Intensive.Core.Models.PaginatorModel',
         'Intensive.Core.Constants'
     ];
 
     function MessageModel(UtilitiesFactory,
                           ActionResultModel,
                           OperationsModel,
+                          PaginatorModel,
                           CoreConstants)
     {
         var Model = function (dataDTO) 
@@ -31,6 +33,9 @@
 
                 //CRUD Operations
                 OperationsModel: new OperationsModel(),
+                
+                //Pagination Operations
+                PaginatorModel: new PaginatorModel(),
 
                 //Model Validations
                 ValidateMessage: ValidateMessage

@@ -6,10 +6,12 @@
         .factory('Intensive.Core.Models.BouquetModel', BouquetModel);
 
     BouquetModel.$inject = [
-        'Intensive.Core.Models.OperationsModel'
+        'Intensive.Core.Models.OperationsModel',
+        'Intensive.Core.Models.PaginatorModel'
     ];
 
-    function BouquetModel(OperationsModel)
+    function BouquetModel(OperationsModel,
+                          PaginatorModel)
     {
         var Model = function (dataDTO) 
         {
@@ -17,7 +19,8 @@
 
             angular.extend(this, {
 
-                OperationsModel: new OperationsModel()
+                OperationsModel: new OperationsModel(),
+                PaginatorModel: new PaginatorModel()
 
             }, dataDTO);
 
