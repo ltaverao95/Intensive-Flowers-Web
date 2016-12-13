@@ -37,7 +37,25 @@
 
         public function GetOrderByName($itemDTO)
         {
+            $responseDTO = new ResponseDTO();
+            $queryServicesDAL = new QueryServicesDAL();
 
+            try
+            {
+                $responseDTO = $this->ValidateName($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $queryServicesDAL->GetOrderByName($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
         }
 
         public function GetOrderByDateAndStoreName($itemDTO)
@@ -98,6 +116,26 @@
                 if($itemDTO->IdentityCard == null)
                 {
                     $responseDTO->SetError("La cédula no puede estar vacía");
+                    return $responseDTO;
+                }   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateName($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->Name == null)
+                {
+                    $responseDTO->SetError("El nombre no puede estar vacío");
                     return $responseDTO;
                 }   
             }

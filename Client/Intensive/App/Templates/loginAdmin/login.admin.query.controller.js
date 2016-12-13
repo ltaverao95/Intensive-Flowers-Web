@@ -74,22 +74,20 @@
 
 		function SearchByName()
 		{
-			LoginQueryAdminService.SearchOrderByName({name: vm.queryDataModel.NameToSearch}).then(
-				function (data)
-				{
-					if(data.ResponseMessage != "")
+			vm.storeModel.QueryDataModel.SearchByName().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						vm.queryDataModel.NameToSearch = null;
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					vm.queryDataModel.ResultData = data.ObjData;
+					vm.storeModel.QueryDataModel.QueryDataResult = responseDTO.ResponseData;
 					vm.showDataTableResult = true;
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
 					console.log(error);
 				}
 			);

@@ -64,7 +64,7 @@
                     method: 'POST',
                     data: angular.toJson(
 						{
-
+							Name: _self.NameToSearch
 						}
 					)
                 };

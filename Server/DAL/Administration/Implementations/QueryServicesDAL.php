@@ -26,7 +26,19 @@
 
         public function GetOrderByName($itemDTO)
         {
+            $responseDTO = new ResponseDTO();
+            $queryServicesDAL = new QueryServicesDAL();
 
+            try
+            {
+                $responseDTO = $this->GetCurrentOrderByName($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
         }
 
         public function GetOrderByDateAndStoreName($itemDTO)
@@ -87,5 +99,39 @@
             return $responseDTO;
         }
 
+        private function GetCurrentOrderByName($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+            $getDataServiceDAL = new GetDataServiceDAL();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+
+                $query = "SELECT * FROM bouquet_order WHERE name = :name";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':name' =>$itemDTO->Name
+                );
+                
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                //Recuperar los registros de la BD
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
+
+                $responseDTO = $getDataServiceDAL->GetOrderItems($result);
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
     }
 ?>
