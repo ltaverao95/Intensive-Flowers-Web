@@ -143,14 +143,6 @@
                 _self.OperationsModel.DeleteItemByIDURL = CoreConstants.StoreServiceURL.DELETE_ORDER_BY_ID_URL;
                 _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.StoreServiceURL.DELETE_ORDERS_SELECTED_URL;
                 _self.OperationsModel.UpdateItemByIDURL = CoreConstants.StoreServiceURL.UPDATE_ORDER_SELECTED_URL;
-
-                if(UtilitiesFactory.IsUndefinedOrNull(dataDTO))
-                {
-                    return;
-                }
-
-                _self.OperationsModel = new OperationsModel(dataDTO.OperationsModel);
-                _self.QueryDataModel = new QueryDataModel(dataDTO.QueryDataModel);
             }
 
             Initialize();

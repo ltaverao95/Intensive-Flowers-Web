@@ -142,18 +142,21 @@
 			})
 			
 			.state('intensive.activities.orders', {
+				url: '/order',
 				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.order.view.php',
 				controller: 'Intensive.App.LoginOrderAdminController',
 				controllerAs: 'vm'					
 			})
 
 			.state('intensive.activities.messages', {
+				url: '/message',
 				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.message.view.php',
 				controller: 'Intensive.App.LoginMessageAdminController',
 				controllerAs: 'vm'					
 			})
 
 			.state('intensive.activities.contact', {
+				url: '/contact',
 				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.contact.view.php',
 				controller: 'Intensive.App.LoginContactAdminController',
 				controllerAs: 'vm'					

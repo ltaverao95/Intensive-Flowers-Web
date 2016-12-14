@@ -42,7 +42,7 @@
             
             try
             {
-                   
+                   $responseDTO = $this->UpdateCurrentItem($orderDTO);
             }
             catch (Exception $e)
             {
@@ -312,6 +312,50 @@
                 }
 
         		$responseDTO->UIMessage = "Registro eliminados!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function UpdateCurrentItem($orderDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "UPDATE bouquet_order SET id = :id, identity_card = :identity_card, name = :name, surname = :surname, addressToSend = :addressToSend, phone = :phone, email = :email, orderDescription = :orderDescription, store = :store, wayToPay = :wayToPay, dateOrder = :dateOrder, dateToSend = :dateToSend, timeToSend = :timeToSend WHERE id = :id";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id' => $orderDTO->Id, 
+                    ':identity_card' => $orderDTO->IdentityCard,
+                    ':name' => $orderDTO->Name,
+                    ':surname' => $orderDTO->Surname,
+                    ':addressToSend' => $orderDTO->AddressToSend,
+                    ':phone' => $orderDTO->Phone,
+                    ':email' => $orderDTO->Email,
+                    ':orderDescription' => $orderDTO->OrderDescription,
+                    ':store' => $orderDTO->Store,
+                    ':wayToPay' => $orderDTO->WayToPay,
+                    ':dateOrder' => $orderDTO->DateOrder,
+                    ':dateToSend' => $orderDTO->DateToSend,
+                    ':timeToSend' => $orderDTO->TimeToSend
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Registro actualizado!";
 
                 $dataBaseServicesBLL->connection = null;
             }

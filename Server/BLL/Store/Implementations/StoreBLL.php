@@ -47,7 +47,26 @@
 
         public function UpdateItemByID($storeDTO)
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_storeDAL = new StoreDAL();
+
+                $responseDTO = $this->ValidateStoreDTO($storeDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_storeDAL->UpdateItemByID($storeDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteAllItems()

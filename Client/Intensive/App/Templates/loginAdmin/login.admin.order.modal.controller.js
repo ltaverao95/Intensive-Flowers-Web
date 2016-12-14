@@ -8,6 +8,7 @@
 
 	LoginMessageModalAdminController.$inject = [
 		'$uibModalInstance',
+		'$window',
 		'OrderObjData',
 		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.Constants',
@@ -16,6 +17,7 @@
 	];	
 
 	function LoginMessageModalAdminController($uibModalInstance,
+											  $window,
 											  OrderObjData,
 											  StoreModel,
 											  UtilsConstants,
@@ -33,6 +35,7 @@
 		vm.UpdateOrder = UpdateOrder;
 		vm.CloseModal = CloseModal;
 		
+		
 		//####################### Public Functions #######################
 
 		function UpdateOrder()
@@ -45,9 +48,26 @@
 			} 
 
 			vm.storeModel.OperationsModel.UpdateItemByID(vm.storeModel).then(
+				responseDTO => {
 
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+						return;
+					}
+
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
+					CloseModal();
+					$window.location.reload();
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
+					console.log(error);
+				}
 			);
 		}
+
+		//####### Private Methods
 
 		function CloseModal()
 		{
