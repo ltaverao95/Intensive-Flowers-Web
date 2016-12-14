@@ -11,6 +11,7 @@
 		'OrderObjData',
 		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.Constants',
+		'Intensive.Blocks.Utils.UtilitiesFactory',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
@@ -18,6 +19,7 @@
 											  OrderObjData,
 											  StoreModel,
 											  UtilsConstants,
+											  UtilitiesFactory,
 											  UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
@@ -25,8 +27,6 @@
 		var vm = this;
 
 		vm.storeModel = new StoreModel(OrderObjData);
-		vm.storeModel.Store = parseInt(vm.storeModel.Store);
-		vm.storeModel.WayToPay = parseInt(vm.storeModel.WayToPay);
 
 		vm.UtilsConstants = UtilsConstants;
 
@@ -37,32 +37,51 @@
 
 		function UpdateOrder()
 		{
-			LoginOrderAdminService.UpdateOrderByID(clientOrder).then(
-				function (data)
-				{
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
+			var actionResultModel = vm.storeModel.ValidateOrder();
+			if(actionResultModel.HasError)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+				return;
+			} 
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-					
-					$state.go('intensive.activities.orders');
-				},
-				function (error)
-				{
-					console.log(error);
-				}
+			vm.storeModel.OperationsModel.UpdateItemByID(vm.storeModel).then(
+
 			);
 		}
 
 		function CloseModal()
 		{
+
+			if(!vm.storeModel.IsReadOnlyMode)
+			{
+				var actionResultModel = vm.storeModel.ValidateOrder();
+				if(actionResultModel.HasError)
+				{
+					UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+					return;
+				}
+			}
+
 			$uibModalInstance.close();
 		}
-	};
 
+		function SetCurrentDateFormat(currentDate)
+		{
+			currentDate = currentDate.split("-");
+			currentDate[1] -= 1;
+
+			return currentDate;
+		}
+
+		function Initialize()
+		{
+			vm.storeModel.Store = parseInt(vm.storeModel.Store);
+			vm.storeModel.WayToPay = parseInt(vm.storeModel.WayToPay);
+			
+			vm.storeModel.DateOrder = new Date(...SetCurrentDateFormat(vm.storeModel.DateOrder));
+			vm.storeModel.DateToSend = new Date(...SetCurrentDateFormat(vm.storeModel.DateToSend));
+		}
+
+		Initialize();
+	}
 })();

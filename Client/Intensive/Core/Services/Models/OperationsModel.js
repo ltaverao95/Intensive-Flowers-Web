@@ -25,13 +25,15 @@
                 DeleteAllItemsURL: null,
                 DeleteItemByIDURL: null,
                 DeleteItemsSelectedURL: null,
+                UpdateItemByIDURL: null,
 
                 //CRUD Operations
                 GetAllItems: GetAllItems,
                 SaveItem: SaveItem,
                 DeleteAllItems: DeleteAllItems,
                 DeleteItemByID: DeleteItemByID,
-                DeleteItemsSelected: DeleteItemsSelected
+                DeleteItemsSelected: DeleteItemsSelected,
+                UpdateItemByID: UpdateItemByID
 
             }, dataDTO);
 
@@ -88,6 +90,18 @@
                 var requestParamsObj = 
                 {
                     url: _self.DeleteItemsSelectedURL,
+                    method: 'POST',
+                    data: angular.toJson(itemObj)
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function UpdateItemByID(itemObj)
+            {
+                var requestParamsObj = 
+                {
+                    url: _self.UpdateItemByIDURL,
                     method: 'POST',
                     data: angular.toJson(itemObj)
                 };

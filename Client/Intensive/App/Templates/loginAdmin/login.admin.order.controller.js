@@ -225,6 +225,8 @@
 					controller: 'Intensive.App.LoginOrderModalAdminController',
 					controllerAs: 'vm',
 					size: 'md',
+					keyboard: false,
+					backdrop: 'static',
 					resolve: 
 					{
 						OrderObjData : function()

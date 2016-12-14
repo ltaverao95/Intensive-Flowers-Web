@@ -11,66 +11,91 @@
 </div>
 <div class="modal-body">
         
-    <form>
+    <form name="order_detail_form">
         <div>
-            <label>Id: </label>
+            <label for="order_detail_form_id">Id: </label>
             <input type="text" 
+                   id="order_detail_form_id"
                    ng-model="vm.storeModel.Id" 
-                   class="form-control" 
+                   class="form-control"
+                   name="id" 
                    readonly>
         </div>
         <div>
-            <label>Nombre: </label>
+            <label for="order_detail_form_name">Nombre: </label>
             <input type="text" 
+                   id="order_detail_form_name"
                    ng-model="vm.storeModel.Name" 
                    class="form-control" 
+                   name="name"
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Apellido: </label>
+            <label for="order_detail_form_surname">Apellido: </label>
             <input type="text" 
+                   id="order_detail_form_surname"
+                   name="surname"
                    ng-model="vm.storeModel.Surname" 
                    class="form-control" 
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Dirección de Envío: </label>
+            <label for="order_detail_form_address_to_send">Dirección de Envío: </label>
             <input type="text" 
+                   id="order_detail_form_address_to_send"
+                   name="address_to_send"
                    ng-model="vm.storeModel.AddressToSend" 
                    class="form-control" 
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Teléfono: </label>
+            <label for="order_detail_form_phone">Teléfono: </label>
             <input type="text" 
+                   id="order_detail_form_phone"
+                   name="phone"
                    ng-model="vm.storeModel.Phone" 
                    class="form-control" 
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Email: </label>
-            <input type="text" 
+            <label for="order_detail_form_email">Email: </label>
+            <input type="email" 
+                   id="order_detail_form_email"
+                   name="email"
                    ng-model="vm.storeModel.Email" 
-                   class="form-control" 
+                   class="form-control"
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Descripción del Pedido: </label>
-            <input type="text" 
-                   ng-model="vm.storeModel.OrderDescription" 
-                   class="form-control" 
-                   ng-readonly="vm.storeModel.IsReadOnlyMode">
+            <label for="order_detail_form_order_description">Descripción del Pedido: </label>
+            <textarea name="order_description" 
+                      id="order_detail_form_order_description" 
+                      cols="30" 
+                      rows="3"
+                      style="resize: vertical"
+                      class="form-control"
+                      ng-model="vm.storeModel.OrderDescription"
+                      ng-required="!vm.storeModel.IsReadOnlyMode"
+                      ng-readonly="vm.storeModel.IsReadOnlyMode">
+            </textarea>
         </div>
         <div>
-            <label>Tienda: </label>
+            <label for="order_detail_form_store">Tienda: </label>
             <input type="text" 
+                   id="order_detail_form_store"
+                   name="store"
                    ng-model="vm.UtilsConstants.StoresList[vm.storeModel.Store].Name"
                    ng-if="vm.storeModel.IsReadOnlyMode" 
                    class="form-control" 
                    readonly>
 
             <select class="form-control"
-                    id="order_form_store"
+                    id="order_detail_form_store"
                     name="store"
                     ng-model="vm.storeModel.Store" 
                     ng-if="!vm.storeModel.IsReadOnlyMode"
@@ -81,15 +106,17 @@
         </div>
 
         <div>
-            <label>Forma de Pago: </label>
+            <label for="order_detail_form_way_to_pay">Forma de Pago: </label>
             <input type="text" 
+                   id="order_detail_form_way_to_pay"
+                   name="way_to_pay"
                    ng-model="vm.UtilsConstants.WayToPayList[vm.storeModel.WayToPay].Name" 
                    ng-if="vm.storeModel.IsReadOnlyMode" 
                    class="form-control" 
                    readonly>
 
             <select class="form-control"
-                    id="order_form_way_to_pay"
+                    id="order_detail_form_way_to_pay"
                     name="way_to_pay"
                     ng-model="vm.storeModel.WayToPay" 
                     ng-options="wayToPay.Id as wayToPay.Name for wayToPay in vm.UtilsConstants.WayToPayList"
@@ -99,29 +126,49 @@
             </select>       
         </div>
         <div>
-            <label>Fecha del Pedido: </label>
-            <input type="text" 
+            <label for="order_detail_form_date_order">Fecha del Pedido: </label>
+            <input type="date" 
+                   id="order_detail_form_date_order"
                    ng-model="vm.storeModel.DateOrder" 
                    class="form-control" 
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Fecha de Entrega: </label>
-            <input type="text" 
+            <label for="order_detail_form_date_to_send">Fecha de Entrega: </label>
+            <input type="date" 
+                   id="order_detail_form_date_to_send"
+                   name="date_to_send"
                    ng-model="vm.storeModel.DateToSend" 
                    class="form-control" 
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Hora de Entrega: </label>
-            <input type="text" 
+            <label for="order_detail_form_time_to_send">Hora de Entrega: </label>
+            <input type="time" 
+                   id="order_detail_form_time_to_send"
+                   name="time_to_send"
                    ng-model="vm.storeModel.TimeToSend" 
                    class="form-control" 
+                   ng-required="!vm.storeModel.IsReadOnlyMode"
                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-click="vm.UpdateOrder()" ng-show="!vm.storeModel.IsReadOnlyMode">Guardar</button>
-    <button class="btn btn-warning" type="button" ng-click="vm.CloseModal()">Cerrar</button>
+    <button class="btn btn-success" 
+            type="button" 
+            ng-click="vm.UpdateOrder()" 
+            ng-disabled="!order_detail_form.$valid"
+            ng-show="!vm.storeModel.IsReadOnlyMode">
+            Guardar
+    </button>
+
+    <button class="btn btn-warning" 
+            type="button" 
+            ng-disabled="!order_detail_form.$valid && !vm.storeModel.IsReadOnlyMode"
+            ng-click="vm.CloseModal()">
+            Cerrar
+    </button>
 </div>
