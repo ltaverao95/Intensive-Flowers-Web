@@ -10,95 +10,118 @@
     <h3 class="modal-title">Información del Pedido</h3>
 </div>
 <div class="modal-body">
-    
+        
     <form>
         <div>
             <label>Id: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.id" 
+                   ng-model="vm.storeModel.Id" 
                    class="form-control" 
                    readonly>
         </div>
         <div>
             <label>Nombre: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.name" 
+                   ng-model="vm.storeModel.Name" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Apellido: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.surname" 
+                   ng-model="vm.storeModel.Surname" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Dirección de Envío: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.addressToSend" 
+                   ng-model="vm.storeModel.AddressToSend" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Teléfono: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.phone" 
+                   ng-model="vm.storeModel.Phone" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Email: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.email" 
+                   ng-model="vm.storeModel.Email" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Descripción del Pedido: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.orderDescription" 
+                   ng-model="vm.storeModel.OrderDescription" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Tienda: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.store" 
+                   ng-model="vm.UtilsConstants.StoresList[vm.storeModel.Store].Name"
+                   ng-if="vm.storeModel.IsReadOnlyMode" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   readonly>
+
+            <select class="form-control"
+                    id="order_form_store"
+                    name="store"
+                    ng-model="vm.storeModel.Store" 
+                    ng-if="!vm.storeModel.IsReadOnlyMode"
+                    ng-options="store.Id as store.Name for store in vm.UtilsConstants.StoresList"
+                    required>
+                <option value="">Seleccionar</option>
+            </select>
         </div>
+
         <div>
             <label>Forma de Pago: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.wayToPay" 
+                   ng-model="vm.UtilsConstants.WayToPayList[vm.storeModel.WayToPay].Name" 
+                   ng-if="vm.storeModel.IsReadOnlyMode" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   readonly>
+
+            <select class="form-control"
+                    id="order_form_way_to_pay"
+                    name="way_to_pay"
+                    ng-model="vm.storeModel.WayToPay" 
+                    ng-options="wayToPay.Id as wayToPay.Name for wayToPay in vm.UtilsConstants.WayToPayList"
+                    ng-if="!vm.storeModel.IsReadOnlyMode"
+                    required>
+                <option value="">Seleccionar</option>
+            </select>       
         </div>
         <div>
             <label>Fecha del Pedido: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.dateOrder" 
+                   ng-model="vm.storeModel.DateOrder" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Fecha de Entrega: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.dateToSend" 
+                   ng-model="vm.storeModel.DateToSend" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Hora de Entrega: </label>
             <input type="text" 
-                   ng-model="vm.rootModalOrder.orderData.timeToSend" 
+                   ng-model="vm.storeModel.TimeToSend" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalOrder.orderData.IsReadOnlyMode">
+                   ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-click="vm.UpdateOrder()" ng-show="!vm.rootModalOrder.orderData.IsReadOnlyMode">Guardar</button>
+    <button class="btn btn-success" type="button" ng-click="vm.UpdateOrder()" ng-show="!vm.storeModel.IsReadOnlyMode">Guardar</button>
     <button class="btn btn-warning" type="button" ng-click="vm.CloseModal()">Cerrar</button>
 </div>

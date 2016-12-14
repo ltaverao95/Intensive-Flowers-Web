@@ -9,14 +9,14 @@
 	LoginMessageModalAdminController.$inject = [
 		'$uibModalInstance',
 		'OrderObjData',
-		'Intensive.App.LoginOrderAdminService',
+		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
 	function LoginMessageModalAdminController($uibModalInstance,
 											  OrderObjData,
-											  LoginOrderAdminService,
+											  StoreModel,
 											  UtilsConstants,
 											  UserMessagesFactory)
 	{
@@ -24,9 +24,11 @@
 
 		var vm = this;
 
-		vm.rootModalOrder = {
-			orderData: OrderObjData
-		};
+		vm.storeModel = new StoreModel(OrderObjData);
+		vm.storeModel.Store = parseInt(vm.storeModel.Store);
+		vm.storeModel.WayToPay = parseInt(vm.storeModel.WayToPay);
+
+		vm.UtilsConstants = UtilsConstants;
 
 		vm.UpdateOrder = UpdateOrder;
 		vm.CloseModal = CloseModal;
