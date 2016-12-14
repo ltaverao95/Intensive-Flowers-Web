@@ -7,22 +7,14 @@
 		.controller('Intensive.App.LoginMessageAdminController', LoginMessageAdminController);
 
 	LoginMessageAdminController.$inject = [
-		'$scope',
-		'$stateParams',
-		'$state',
 		'$uibModal',
-		'GetAllMessages',
-		'Intensive.App.MessageLoginService',
+		'Intensive.Core.Models.MessageModel',
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginMessageAdminController($scope,
-										 $stateParams,
-										 $state,
-										 $uibModal,
-										 GetAllMessages,
-										 MessageLoginService,
+	function LoginMessageAdminController($uibModal,
+										 MessageModel,
 								 		 UtilsConstants,
 								 		 UserMessagesFactory)
 	{
@@ -31,36 +23,10 @@
 		
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
+		vm.messageModel = new MessageModel();
 
-		vm.currentPage = 0;
-		vm.pageSize = 6;
-		vm.countCurrentPage = 0;
+		vm.searchMessage = '';
 
-		vm.rootMessageObj = {
-			searchMessage : '',
-			messagesObj : [],
-			selectAllMessages: false,
-			arrMessageSelected : []
-		};
-
-		if(GetAllMessages.ResponseMessage !== "")
-		{
-			_paramsDTO.Message = GetAllMessages.ResponseMessage;
-			UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-
-			vm.rootMessageObj.messagesObj = [];
-		}
-		else
-		{
-			vm.rootMessageObj.messagesObj = GetAllMessages.ObjData;
-		}
-
-		vm.messageDetailUpdate = $stateParams.objData;
-
-		vm.CurrentPageChanged = CurrentPageChanged;
 		vm.DeleteMessageByID = DeleteMessageByID;
 		vm.DeleteAllMessages = DeleteAllMessages;
 		vm.DeleteMessageSelected = DeleteMessageSelected;		
@@ -68,108 +34,22 @@
 		vm.ViewMessageById = ViewMessageById;
 		vm.CheckAllMessages = CheckAllMessages;
 		vm.MessageSelectedChanged = MessageSelectedChanged;
-		vm.NumberOfPages = NumberOfPages;
 
-		//####################### Public Functions #######################
-
-		function CurrentPageChanged(isNextPage)
-		{
-			if(isNextPage)
-			{
-				vm.currentPage = vm.currentPage + 1;
-				vm.countCurrentPage = vm.currentPage * vm.pageSize;
-				return;
-			}
-
-			vm.currentPage = vm.currentPage - 1
-			vm.countCurrentPage = vm.currentPage * vm.pageSize;
-		}
+		//####################### Public Methods #######################
 
 		function DeleteMessageByID(messageObj)
 		{
-			MessageLoginService.DeleteMessageByID(messageObj).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
 		function DeleteAllMessages()
 		{			
-			if(vm.rootMessageObj.messagesObj.length == 0)
-			{
-				_paramsDTO.Message = "No hay registros para eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-				return;
-			}
-
-			var response = confirm("¿Estas seguro que deseas eliminar todos los mensajes?");
-
-			if(!response)
-			{
-				return;
-			}
-
-			MessageLoginService.DeleteAllMessages().then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
 		function DeleteMessageSelected()
 		{
-			if(vm.rootMessageObj.arrMessageSelected.length == 0)
-			{
-				_paramsDTO.Message = "Debes seleccionar los mensajes que quieres eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-				return;
-			}
-
-			MessageLoginService.DeleteMessagessSelectedByID(vm.rootMessageObj.arrMessageSelected).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
 		function EditMessageById(messageObj)
@@ -189,93 +69,113 @@
 			var count = 0;
 			var subCount = 0;
 
-			vm.rootMessageObj.selectAllMessages = !vm.rootMessageObj.selectAllMessages ? false : true;
+			vm.messageModel.PaginatorModel.SelectAllItems = !vm.messageModel.PaginatorModel.SelectAllItems ? false : true;
 
-			angular.forEach(vm.rootMessageObj.messagesObj, function (message) 
-			{
-				count++;
-
-				if(!vm.rootMessageObj.selectAllMessages)
+			vm.messageModel.MessagesList.map(
+				function (message)
 				{
-					message.Selected = vm.rootMessageObj.selectAllMessages;
-					vm.rootMessageObj.arrMessageSelected = [];
-					return;
-				}
+					count++;
 
-				if(vm.currentPage + 1 > 1)
-				{
-					if(count >= vm.countCurrentPage + 1 && count <= (vm.countCurrentPage * 2))
+					if(!vm.messageModel.PaginatorModel.SelectAllItems)
 					{
-						if(subCount == vm.pageSize)
+						message.Selected = vm.messageModel.PaginatorModel.SelectAllItems;
+						vm.messageModel.PaginatorModel.ItemsSelected = [];
+						return;
+					}
+
+					if(vm.messageModel.PaginatorModel.CurrentPage + 1 > 1)
+					{
+						if(count >= vm.messageModel.PaginatorModel.CountCurrentPage + 1 && count <= (vm.messageModel.PaginatorModel.CountCurrentPage * 2))
 						{
-							return;
-						}
+							if(subCount == vm.pageSize)
+							{
+								return;
+							}
 
-						message.Selected = vm.rootMessageObj.selectAllMessages;
-						vm.rootMessageObj.arrMessageSelected.push(message);
-						subCount++;
+							message.Selected = vm.messageModel.PaginatorModel.SelectAllItems;
+							vm.messageModel.PaginatorModel.ItemsSelected.push(message);
+							subCount++;
+						}
 					}
-				}
-				else if(vm.countCurrentPage == 0)
-				{
-					if(count <= 6)
+					else if(vm.messageModel.PaginatorModel.CountCurrentPage == 0)
 					{
-						message.Selected = vm.rootMessageObj.selectAllMessages;
-						vm.rootMessageObj.arrMessageSelected.push(message);
+						if(count <= 6)
+						{
+							message.Selected = vm.messageModel.PaginatorModel.SelectAllItems;
+							vm.messageModel.PaginatorModel.ItemsSelected.push(message);
+						}
 					}
 				}
-        	});
+			);
 		}
 
 		function MessageSelectedChanged(messageObj)
 		{
 			if(messageObj.Selected)
 			{
-				vm.rootMessageObj.arrMessageSelected.push(messageObj);
+				vm.messageModel.PaginatorModel.ItemsSelected.push(messageObj);
 
-				if(vm.rootMessageObj.arrMessageSelected.length == vm.rootMessageObj.messagesObj.length)
+				if(vm.messageModel.PaginatorModel.ItemsSelected.length == vm.rootMessageObj.messagesObj.length)
 				{
-					vm.rootMessageObj.selectAllMessages = true;
+					vm.messageModel.PaginatorModel.SelectAllItems = true;
 				}
 			}
 			else 
 			{
-				vm.rootMessageObj.arrMessageSelected.splice(vm.rootMessageObj.arrMessageSelected.indexOf(messageObj), 1);
+				vm.messageModel.PaginatorModel.ItemsSelected.splice(vm.messageModel.PaginatorModel.ItemsSelected.indexOf(messageObj), 1);
 			}
 		}
 
-		//####################### Pagination Functions #######################
-
-		function NumberOfPages()
-		{
-			if(vm.rootMessageObj.messagesObj == 0)
-			{
-				return 0;
-			}
-
-			return Math.ceil(vm.rootMessageObj.messagesObj.length / vm.pageSize);
-		}
-
-		//####################### Private Functions #######################
+		//####################### Private Methods #######################
 
 		function OpenEditOrUpdateModel(messageObj)
 		{
 			var modalInstance = $uibModal.open(
 				{
 					animation: true,
-					templateUrl: 'Client/Intensive/App/Components/loginAdmin/login.admin.message.modal.view.html',
+					templateUrl: 'Client/Intensive/App/Templates/loginAdmin/login.admin.message.modal.view.html',
 					controller: 'Intensive.App.LoginMessageModalAdminController',
 					controllerAs: 'vm',
 					size: 'md',
+					keyboard: false,
+					backdrop: 'static',
 					resolve: 
 					{
-						MessageObjData : function(){
+						MessageObjData : function()
+						{
 							return messageObj;
 						}
 					}
 				}
 			);
 		}
-	};
 
+		function GetAllMessages()
+		{
+			vm.messageModel.OperationsModel.GetAllItems().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						vm.messageModel.MessagesList = [];
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					vm.messageModel.MessagesList = responseDTO.ResponseData;
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
+		}
+
+		function Initialize()
+		{
+			GetAllMessages();
+		}
+
+		Initialize();
+	}
 })();

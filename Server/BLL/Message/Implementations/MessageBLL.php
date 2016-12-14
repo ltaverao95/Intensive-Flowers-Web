@@ -50,7 +50,7 @@
 
         }
 
-        public function DeleteAllItems($messageDTO)
+        public function DeleteAllItems()
         {
 
         }

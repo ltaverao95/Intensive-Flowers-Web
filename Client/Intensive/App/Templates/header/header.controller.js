@@ -7,12 +7,12 @@
 		.controller('Intensive.App.HeaderController', HeaderController);
 
 	HeaderController.$inject = [
-		'$window',
+		'$state',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function HeaderController($window,
+	function HeaderController($state,
 							  LoginModel,
 							  UserMessagesFactory)
 	{
@@ -37,7 +37,7 @@
 					}
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
-					$window.location.reload();
+					$state.go('intensive.home', {}, {reload: true})
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de cerrar la sesión"});

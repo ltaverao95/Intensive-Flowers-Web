@@ -7,8 +7,6 @@
 		.controller('Intensive.App.LoginOrderAdminController', LoginOrderAdminController);
 
 	LoginOrderAdminController.$inject = [
-		'$state',
-		'$stateParams',
 		'$uibModal',
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
@@ -16,9 +14,7 @@
 		'Intensive.Blocks.Utils.ActionResultModel'
 	];	
 
-	function LoginOrderAdminController($state,
-									   $stateParams,
-									   $uibModal,
+	function LoginOrderAdminController($uibModal,
 							 		   UtilsConstants,
 							 		   UserMessagesFactory,
 									   StoreModel,

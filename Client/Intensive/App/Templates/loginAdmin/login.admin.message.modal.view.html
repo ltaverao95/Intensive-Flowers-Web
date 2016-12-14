@@ -7,29 +7,38 @@
         <div>
             <label>Id: </label>
             <input type="text" 
-                   ng-model="vm.rootModalMessage.messageData.id" 
+                   ng-model="vm.messageModel.Id" 
                    class="form-control" 
                    readonly>
         </div>
         <div>
             <label>Nombre: </label>
             <input type="text" 
-                   ng-model="vm.rootModalMessage.messageData.name" 
+                   ng-model="vm.messageModel.Name" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalMessage.messageData.IsReadOnlyMode">
+                   ng-readonly="vm.messageModel.IsReadOnlyMode">
         </div>
         <div>
             <label>Comentario: </label>
             <textarea cols="50" 
                       rows="3" 
-                      ng-model="vm.rootModalMessage.messageData.message" 
+                      ng-model="vm.messageModel.Message" 
                       class="form-control" 
-                      ng-readonly="vm.rootModalMessage.messageData.IsReadOnlyMode">
+                      ng-readonly="vm.messageModel.IsReadOnlyMode">
             </textarea>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-click="vm.SaveUserMessage()" ng-show="!vm.rootModalMessage.messageData.IsReadOnlyMode">Guardar</button>
-    <button class="btn btn-warning" type="button" ng-click="vm.CloseModal()">Cerrar</button>
+    <button class="btn btn-success" 
+            type="button" 
+            ng-click="vm.UpdateMessage()" 
+            ng-show="!vm.messageModel.IsReadOnlyMode">
+            Guardar
+    </button>
+    <button class="btn btn-warning" 
+            type="button" 
+            ng-click="vm.CloseModal()">
+            Cerrar
+    </button>
 </div>

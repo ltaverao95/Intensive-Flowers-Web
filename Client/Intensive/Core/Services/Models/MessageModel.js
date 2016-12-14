@@ -69,10 +69,10 @@
             {
                 _self.OperationsModel.GetAllItemsURL = CoreConstants.MessageServiceURL.GET_ALL_MESSAGES_URL;
                 _self.OperationsModel.SaveItemURL = CoreConstants.MessageServiceURL.SAVE_MESSAGE_URL;
-                _self.OperationsModel.DeleteAllItemsURL = null;
-                _self.OperationsModel.DeleteItemByIDURL = null;
-                _self.OperationsModel.DeleteItemsSelectedURL = null;
-                _self.OperationsModel.EditItemURL = null;
+                _self.OperationsModel.DeleteAllItemsURL = CoreConstants.MessageServiceURL.DELETE_ALL_ORDERS_URL;
+                _self.OperationsModel.DeleteItemByIDURL = CoreConstants.MessageServiceURL.DELETE_ORDER_BY_ID_URL;
+                _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.MessageServiceURL.DELETE_ORDERS_SELECTED_URL;
+                _self.OperationsModel.UpdateItemByIDURL = CoreConstants.MessageServiceURL.UPDATE_ORDER_SELECTED_URL;
             }
 
             Initialize();

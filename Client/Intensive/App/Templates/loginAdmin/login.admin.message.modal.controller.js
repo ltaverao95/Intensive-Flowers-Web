@@ -9,14 +9,14 @@
 	LoginMessageModalAdminController.$inject = [
 		'$uibModalInstance',
 		'MessageObjData',
-		'Intensive.App.MessageLoginService',
+		'Intensive.Core.Models.MessageModel',
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
 	function LoginMessageModalAdminController($uibModalInstance,
 											  MessageObjData,
-											  MessageLoginService,
+											  MessageModel,
 											  UtilsConstants,
 											  UserMessagesFactory)
 	{
@@ -24,45 +24,22 @@
 
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
+		vm.messageModel = new MessageModel(MessageObjData);
 
-		vm.rootModalMessage = {
-			messageData: MessageObjData
-		};
-
-		vm.SaveUserMessage = SaveUserMessage;
+		vm.UpdateMessage = UpdateMessage;
 		vm.CloseModal = CloseModal;
 		
 		//####################### Public Functions #######################
 
-		function SaveUserMessage()
+		function UpdateMessage()
 		{
-			MessageLoginService.UpdateMessageByID(vm.rootModalMessage.messageData).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
-		function CloseModal(){
+		function CloseModal()
+		{
 
 			$uibModalInstance.close();
-		};
-	};
-
+		}
+	}
 })();
