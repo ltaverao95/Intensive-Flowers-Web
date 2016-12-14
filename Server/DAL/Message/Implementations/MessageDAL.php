@@ -56,6 +56,11 @@
 
         }
 
+        public function ValidateLastRecordToResetAutoIncement()
+        {
+            
+        }
+
         //##### Private Methods #####
 
         private function GetMessages()

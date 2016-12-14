@@ -87,7 +87,7 @@
             {
                 var requestParamsObj = 
                 {
-                    url: _self.DeleteItemsSelected,
+                    url: _self.DeleteItemsSelectedURL,
                     method: 'POST',
                     data: angular.toJson(itemObj)
                 };

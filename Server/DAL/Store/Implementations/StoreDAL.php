@@ -74,7 +74,13 @@
             
             try
             {
-                   
+                   $responseDTO = $this->DeteleCurrentOrder($orderDTO);
+                   if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
             }
             catch (Exception $e)
             {
@@ -90,11 +96,57 @@
             
             try
             {
-                   
+                $responseDTO = $this->DeleteCurrentItemsSelected($orderDTO);      
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
             }
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        public function ValidateLastRecordToResetAutoIncement()
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "SELECT * FROM bouquet_order ORDER BY id";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                //Recuperar los registros de la BD
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
+                if($result == null)
+                {
+                    $query = "ALTER TABLE bouquet_order AUTO_INCREMENT = 1";
+
+                    $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                } 
+                
+                $responseDTO->UIMessage = "Registros eliminados";
+                
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetMessageErrorAndStackTrace("There was an error trying to validate records", $e->getMessage());
             }
 
             return $responseDTO;
@@ -199,6 +251,73 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentItemsSelected($orderDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                for ($i=0; $i < count($orderDTO); $i++) 
+                {
+                    $query = "DELETE FROM bouquet_order WHERE id = :id";
+                    $dataBaseServicesBLL->ArrayParameters = array(
+                        ':id' => $orderDTO[$i]->Id
+                    );
+
+                    $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                }
+
+        		$responseDTO->UIMessage = "Registros eliminados!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeteleCurrentOrder($orderDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "DELETE FROM bouquet_order WHERE id = :id";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id' => $orderDTO->Id
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$responseDTO->UIMessage = "Registro eliminados!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;

@@ -55,7 +55,7 @@
 				return;
 			}
 
-			vm.storeModel.OperationsModel.DeleteItemByID().then(
+			vm.storeModel.OperationsModel.DeleteItemByID(clientOrder).then(
 				responseDTO =>
 				{
 					if(responseDTO.HasError)
@@ -64,6 +64,7 @@
 						return;
 					}
 
+					GetAllOrders();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {
@@ -94,7 +95,8 @@
 						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
 						return;
 					}
-
+					
+					GetAllOrders();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {
@@ -106,10 +108,10 @@
 
 		function DeleteOrdersSelected()
 		{
-			var actionResultModel = ValidateItemsBeforeDelete();
-			if(actionResultModel.HasError)
+			if(vm.storeModel.PaginatorModel.ItemsSelected.length == 0)
 			{
-				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+				UserMessagesFactory.ShowErrorMessage({ Message: "Debes seleccionar los items que deseas eliminar primero" });
+				return;
 			}
 
 			if(!ShowDeleteConfirm())
@@ -117,7 +119,7 @@
 				return;
 			}
 
-			vm.storeModel.OperationsModel.DeleteItemsSelected().then(
+			vm.storeModel.OperationsModel.DeleteItemsSelected(vm.storeModel.PaginatorModel.ItemsSelected).then(
 				responseDTO =>
 				{
 					if(responseDTO.HasError)
@@ -126,6 +128,7 @@
 						return;
 					}
 
+					GetAllOrders();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {
@@ -259,13 +262,14 @@
 			return actionResultModel;
 		}
 
-		function Initialize()
+		function GetAllOrders()
 		{
 			vm.storeModel.OperationsModel.GetAllItems().then(
 				responseDTO =>
 				{
 					if(responseDTO.HasError)
 					{
+						vm.storeModel.OrdersList = [];
 						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
 						return;
 					}
@@ -277,6 +281,11 @@
 					console.log(error);
 				}
 			);
+		}
+
+		function Initialize()
+		{
+			GetAllOrders();
 		}
 
 		Initialize();

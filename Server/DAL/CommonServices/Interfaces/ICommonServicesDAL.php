@@ -8,6 +8,7 @@
         public function DeleteAllItems();
         public function DeleteItemByID($itemDTO);
         public function DeleteItemsSelected($itemDTO);
+        public function ValidateLastRecordToResetAutoIncement();
     }
 
 ?>

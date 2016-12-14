@@ -70,12 +70,50 @@
 
         public function DeleteItemByID($storeDTO)
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_storeDAL = new StoreDAL();
+
+                $responseDTO = $this->ValidateStoreDTO($storeDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_storeDAL->DeleteItemByID($storeDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
         
         public function DeleteItemsSelected($storeDTO)
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_storeDAL = new StoreDAL();
+
+                $responseDTO = $this->ValidateItemsSelected($storeDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_storeDAL->DeleteItemsSelected($storeDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         //##### Private Methods #####
@@ -161,6 +199,29 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateItemsSelected($storeDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                for ($i=0; $i < count($storeDTO); $i++) 
+                {
+                    $responseDTO = $this->ValidateStoreDTO($storeDTO[$i]);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;
