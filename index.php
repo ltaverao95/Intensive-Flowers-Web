@@ -47,7 +47,7 @@
 
 </head>
 
-<body ng-app="Intensive.App">
+<body ng-app="Intensive.App" class="ng-cloak">
 
     <toaster-container toaster-options="{'time-out': 4000, 'close-button': true}"></toaster-container>
 
@@ -145,15 +145,6 @@
 
     <!-- Filters -->
     <script src="Client/Intensive/Core/Filters/paginator.filter.js"></script>
-
-    <!-- Script to Activate the Carousel -->
-    <script>
-    $('.carousel').carousel(
-        {
-            interval: 5000 //changes the speed
-        }
-    );
-    </script>
 </body>
 
 </html>

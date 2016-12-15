@@ -1,3 +1,7 @@
 .tableTdColor{
 	background: #e4e4e4;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

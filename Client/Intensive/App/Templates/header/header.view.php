@@ -7,7 +7,7 @@
         
         if(isset($_SESSION['admin']))
         {
-                echo "Cadena de Floristerías - ". $_SESSION['admin']; 
+            echo "Cadena de Floristerías - ". $_SESSION['admin']; 
         } 
         else
         {
@@ -71,7 +71,5 @@
                 ?>
             </ul>
         </div>
-        <!-- /.navbar-collapse -->
     </div>
-    <!-- /.container -->
 </nav>
