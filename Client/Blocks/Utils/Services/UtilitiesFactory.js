@@ -20,11 +20,13 @@
             GetFormatedDate: GetFormatedDate,
             GetFormatedTime: GetFormatedTime,
             ValidateItemsSelectedInCurrentPage: ValidateItemsSelectedInCurrentPage,
+            ShowDeleteConfirm: ShowDeleteConfirm,
 
             //Validations
 
             IsStringValid: IsStringValid,
-            IsUndefinedOrNull: IsUndefinedOrNull
+            IsUndefinedOrNull: IsUndefinedOrNull,
+            IsArrayNullOrEmpty: IsArrayNullOrEmpty
         };
 
         return service;
@@ -73,6 +75,13 @@
 			return true;
 		}
 
+        function ShowDeleteConfirm()
+        {
+            var response = confirm("¿Estas seguro que deseas eliminar todos los registros?");
+
+			return response;
+        }
+
         function IsStringValid(stringToValidate)
         {
             if(stringToValidate === undefined ||
@@ -91,6 +100,22 @@
                paramToValidate === null)
             {
                 return true;   
+            }
+
+            return false;
+        }
+
+        function IsArrayNullOrEmpty(arrayToValidate)
+        {
+            var isUndefinedOrNull = IsUndefinedOrNull(arrayToValidate);
+            if(isUndefinedOrNull)
+            {
+                return true;
+            }
+
+            if(arrayToValidate.length == 0)
+            {
+                return true;
             }
 
             return false;

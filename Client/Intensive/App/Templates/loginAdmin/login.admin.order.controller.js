@@ -42,12 +42,6 @@
 
 		function DeleteOrderByID(clientOrder)
 		{
-			var actionResultModel = ValidateItemsBeforeDelete();
-			if(actionResultModel.HasError)
-			{
-				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
-			}
-
 			if(!ShowDeleteCurrentUserConfirm())
 			{
 				return;
@@ -74,13 +68,13 @@
 
 		function DeleteAllOrders()
 		{
-			var actionResultModel = ValidateItemsBeforeDelete();
-			if(actionResultModel.HasError)
+			if(UtilitiesFactory.IsArrayNullOrEmpty(vm.storeModel.OrdersList))
 			{
-				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
-			}
+				UserMessagesFactory.ShowErrorMessage({ Message: "No hay registros para eliminar" });
+				return;
+			}	
 
-			if(!ShowDeleteConfirm())
+			if(!UtilitiesFactory.ShowDeleteConfirm())
 			{
 				return;
 			}
@@ -106,13 +100,13 @@
 
 		function DeleteOrdersSelected()
 		{
-			if(vm.storeModel.PaginatorModel.ItemsSelected.length == 0)
+			if(UtilitiesFactory.IsArrayNullOrEmpty(vm.storeModel.PaginatorModel.ItemsSelected))
 			{
-				UserMessagesFactory.ShowErrorMessage({ Message: "Debes seleccionar los items que deseas eliminar primero" });
+				UserMessagesFactory.ShowErrorMessage({ Message: "Debes seleccionar los registros que deseas eliminar" });
 				return;
-			}
+			}	
 
-			if(!ShowDeleteConfirm())
+			if(!UtilitiesFactory.ShowDeleteConfirm())
 			{
 				return;
 			}
@@ -255,31 +249,11 @@
 			});
 		}
 
-		function ShowDeleteConfirm()
-		{
-			var response = confirm("¿Estas seguro que deseas eliminar todos los pedidos?");
-
-			return response;	
-		}
-
 		function ShowDeleteCurrentUserConfirm()
 		{
 			var response = confirm("¿Estas seguro que deseas eliminar este registro?");
 
 			return response;	
-		}
-
-		function ValidateItemsBeforeDelete()
-		{
-			var actionResultModel = new ActionResultModel();
-
-			if(vm.storeModel.OrdersList.length == 0)
-			{
-				actionResultModel.SetError("No hay registros para eliminar");
-				return actionResultModel;
-			}
-
-			return actionResultModel;
 		}
 
 		function GetAllOrders()

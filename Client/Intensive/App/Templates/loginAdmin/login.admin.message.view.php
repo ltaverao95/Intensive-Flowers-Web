@@ -67,8 +67,8 @@
                 </button>
             </div>
             <div>
-                <button class="btn btn-success" ng-click="vm.DeleteAllOrders()">Borrar todos</button>
-                <button class="btn btn-success" ng-click="vm.DeleteOrdersSelected()">Borrar Seleccionados</button>
+                <button class="btn btn-success" ng-click="vm.DeleteAllMessages()">Borrar todos</button>
+                <button class="btn btn-success" ng-click="vm.DeleteMessagesSelected()">Borrar Seleccionados</button>
             </div>         
         </div>
     </div>

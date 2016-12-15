@@ -31,7 +31,7 @@
 
 		vm.DeleteMessageByID = DeleteMessageByID;
 		vm.DeleteAllMessages = DeleteAllMessages;
-		vm.DeleteMessageSelected = DeleteMessageSelected;		
+		vm.DeleteMessagesSelected = DeleteMessagesSelected;		
 		vm.EditMessageById = EditMessageById;
 		vm.ViewMessageById = ViewMessageById;
 		vm.CheckAllMessages = CheckAllMessages;
@@ -41,17 +41,56 @@
 
 		function DeleteMessageByID(messageObj)
 		{
-			
+			if(!UtilitiesFactory.ShowDeleteConfirm())
+			{
+				return;
+			}
 		}
 
 		function DeleteAllMessages()
-		{			
-			
+		{	
+			if(UtilitiesFactory.IsArrayNullOrEmpty(vm.messageModel.MessagesList))
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: "No hay registros para eliminar" });
+				return;
+			}	
+
+			if(!UtilitiesFactory.ShowDeleteConfirm())
+			{
+				return;
+			}
+
+			vm.messageModel.OperationsModel.DeleteAllItems().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+					
+					GetAllMessages();
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
+					console.log(error);
+				}	
+			);
 		}
 
-		function DeleteMessageSelected()
+		function DeleteMessagesSelected()
 		{
-			
+			if(UtilitiesFactory.IsArrayNullOrEmpty(vm.messageModel.PaginatorModel.ItemsSelected))
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: "Debes seleccionar los registros que deseas eliminar" });
+				return;
+			}	
+
+			if(!UtilitiesFactory.ShowDeleteConfirm())
+			{
+				return;
+			}
 		}
 
 		function EditMessageById(messageObj)
