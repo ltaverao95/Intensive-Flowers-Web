@@ -1,21 +1,21 @@
 <?php
 	session_start();
 
-	if(isset($_SESSION['admin'])){
-      
+	if(isset($_SESSION['admin']))
+    {  
 ?>
 
 <div class="row">
     <div class="box">
-        <input type="text" class="form-control" placeholder="Buscar..." ng-model="vm.rootLoginContact.searchContact">
+        <input type="text" class="form-control" placeholder="Buscar..." ng-model="vm.searchContact">
         <br>
         <div class="clearfix">
-            <div style="width: 100%; height:390px; overflow: scroll;">
+            <div style="width: 100%; max-height:390px; overflow: auto;">
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <th>
-                                <input type="checkbox" ng-model="vm.rootLoginContact.selectAllContacts" ng-click="vm.CheckAllContacts()">
+                                <input type="checkbox" ng-model="vm.contactModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllContacts()">
                             </th>
                             <th>Id</th>
                             <th>Nombre</th>
@@ -24,15 +24,15 @@
                             <th>Mensaje</th>
                             <th></th>
                         </thead>
-                        <tbody ng-repeat="user in vm.rootLoginContact.contacts | filter: vm.rootLoginContact.searchContact | pagination: vm.currentPage * vm.pageSize | limitTo: vm.pageSize" ng-class="{'tableTdColor': $index % 2 != 0}">
+                        <tbody ng-repeat="user in vm.contactModel.ContactsList | filter: vm.searchContact | pagination: vm.contactModel.PaginatorModel.CurrentPage * vm.contactModel.PaginatorModel.PageSize | limitTo: vm.contactModel.PaginatorModel.PageSize" ng-class="{'tableTdColor': $index % 2 != 0}">
                             <td>
                                 <input type="checkbox" ng-model="user.Selected" ng-change="vm.ContactSelectedChanged(user)">
                             </td>
-                            <td>{{user.id}}</td>
-                            <td>{{user.name}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.phone}}</td>
-                            <td>{{user.message}}</td>
+                            <td>{{user.Id}}</td>
+                            <td>{{user.Name}}</td>
+                            <td>{{user.Email}}</td>
+                            <td>{{user.Phone}}</td>
+                            <td>{{user.Message}}</td>
                             <td>
                                 <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="vm.DeleteContactByID(user)"></button>
                                 <button class="btn btn-success glyphicon glyphicon-edit" ng-click="vm.EditUserByID(user)"></button>
@@ -45,14 +45,14 @@
             <div class="pagination-controle pagination">
                 <button type="button" 
                       class="btn btn-primary" 
-                      ng-disabled="vm.currentPage == 0" 
-                      ng-click="vm.CurrentPageChanged(false)"> 
+                      ng-disabled="vm.contactModel.PaginatorModel.CurrentPage == 0" 
+                      ng-click="vm.contactModel.PaginatorModel.CurrentPageChanged(false)"> 
                       &lt; Anterior
                 </button>
-                <span>Página {{vm.currentPage + 1}} de {{ vm.numberOfPages() }}</span>
+                <span>Página {{vm.contactModel.PaginatorModel.CurrentPage + 1}} de {{ vm.contactModel.PaginatorModel.NumberOfPages(vm.contactModel.ContactsList) }}</span>
                 <button type="button" class="btn btn-primary"
-                      ng-disabled="vm.currentPage >= vm.rootLoginContact.contacts.length/vm.pageSize - 1 || vm.rootLoginContact.contacts == 0"
-                      ng-click="vm.CurrentPageChanged(true)">Siguiente &gt;
+                      ng-disabled="vm.contactModel.PaginatorModel.CurrentPage >= vm.contactModel.ContactsList.length/vm.contactModel.PaginatorModel.PageSize - 1 || vm.contactModel.ContactsList == 0"
+                      ng-click="vm.contactModel.PaginatorModel.CurrentPageChanged(true)">Siguiente &gt;
                 </button>
             </div>
             <div>

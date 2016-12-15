@@ -9,42 +9,56 @@
 </div>
 <div class="modal-body">
     
-    <form>
+    <form name="update_contact_form">
         <div>
-            <label>Id: </label>
+            <label for="update_contact_form_id">Id: </label>
             <input type="text" 
-                   ng-model="vm.rootModalContact.contactData.id" 
+                   id="update_contact_form_id"
+                   name="id"
+                   ng-model="vm.contactModel.Id" 
                    class="form-control" 
                    readonly>
         </div>
         <div>
-            <label>Nombre: </label>
+            <label for="update_contact_form_name">Nombre: </label>
             <input type="text" 
-                   ng-model="vm.rootModalContact.contactData.name" 
+                   id="update_contact_form_name"
+                   name="name"
+                   ng-model="vm.contactModel.Name" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+                   ng-required="!vm.contactModel.IsReadOnlyMode"
+                   ng-readonly="vm.contactModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Email: </label>
+            <label for="update_contact_form_email">Email: </label>
             <input type="text" 
-                   ng-model="vm.rootModalContact.contactData.email" 
+                   id="update_contact_form_email"
+                   name="email"
+                   ng-model="vm.contactModel.Email" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+                   ng-required="!vm.contactModel.IsReadOnlyMode"
+                   ng-readonly="vm.contactModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Celular: </label>
+            <label for="update_contact_form_phone">Celular: </label>
             <input type="text" 
-                   ng-model="vm.rootModalContact.contactData.phone" 
+                   id="update_contact_form_phone"
+                   name="phone"
+                   ng-model="vm.contactModel.Phone" 
                    class="form-control" 
-                   ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+                   ng-required="!vm.contactModel.IsReadOnlyMode"
+                   ng-readonly="vm.contactModel.IsReadOnlyMode">
         </div>
         <div>
-            <label>Mensaje: </label>
+            <label for="update_contact_form_message">Mensaje: </label>
             <textarea cols="50" 
+                      id="update_contact_form_message"
+                      name="message"
                       rows="3" 
-                      ng-model="vm.rootModalContact.contactData.message" 
+                      ng-model="vm.contactModel.Message" 
                       class="form-control" 
-                      ng-readonly="vm.rootModalContact.contactData.IsReadOnlyMode">
+                      ng-required="!vm.contactModel.IsReadOnlyMode"
+                      ng-readonly="vm.contactModel.IsReadOnlyMode">
             </textarea>
         </div>
     </form>
@@ -52,7 +66,15 @@
 <div class="modal-footer">
     <button class="btn btn-success" 
             type="button" 
-            ng-click="vm.SaveUserContact()" 
-            ng-show="!vm.rootModalContact.contactData.IsReadOnlyMode">Guardar</button>
-    <button class="btn btn-warning" type="button" ng-click="vm.CloseModal()">Cerrar</button>
+            ng-click="vm.UpdateContactByID()" 
+            ng-disabled="!update_contact_form.$valid"
+            ng-if="!vm.contactModel.IsReadOnlyMode">
+            Guardar
+    </button>
+    <button class="btn btn-warning" 
+            type="button" 
+            ng-disabled="!update_contact_form.$valid && !vm.contactModel.IsReadOnlyMode"
+            ng-click="vm.CloseModal()">
+            Cerrar
+    </button>
 </div>

@@ -8,7 +8,6 @@
 
 	LoginOrderAdminController.$inject = [
 		'$uibModal',
-		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.ActionResultModel',
@@ -16,7 +15,6 @@
 	];	
 
 	function LoginOrderAdminController($uibModal,
-							 		   UtilsConstants,
 							 		   UserMessagesFactory,
 									   StoreModel,
 									   ActionResultModel,
@@ -42,7 +40,7 @@
 
 		function DeleteOrderByID(clientOrder)
 		{
-			if(!ShowDeleteCurrentUserConfirm())
+			if(!UtilitiesFactory.ShowDeleteConfirm())
 			{
 				return;
 			}
@@ -248,13 +246,6 @@
 						}
 					}
 			});
-		}
-
-		function ShowDeleteCurrentUserConfirm()
-		{
-			var response = confirm("¿Estas seguro que deseas eliminar este registro?");
-
-			return response;	
 		}
 
 		function GetAllOrders()

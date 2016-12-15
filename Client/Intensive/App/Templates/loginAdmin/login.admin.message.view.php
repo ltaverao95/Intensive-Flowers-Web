@@ -10,7 +10,7 @@
         <input type="text" class="form-control" placeholder="Buscar..." ng-model="vm.searchMessage">
         <br>
         <div class="clearfix">
-            <div style="width: 100%; height:390px; overflow: auto;">
+            <div style="width: 100%; max-height:390px; overflow: auto;">
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>

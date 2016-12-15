@@ -7,52 +7,56 @@
 		.controller('Intensive.App.LoginContactModalAdminController', LoginContactModalAdminController);
 
 	LoginContactModalAdminController.$inject = [
+		'$window',
 		'$uibModalInstance',
 		'ContactObjData',
-		'Intensive.App.ContactLoginService',
-		'Intensive.Blocks.Utils.Constants',
+		'Intensive.Core.Models.ContactModel',
+		'Intensive.Blocks.Utils.UtilitiesFactory',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginContactModalAdminController($uibModalInstance,
+	function LoginContactModalAdminController($window,
+											  $uibModalInstance,
 											  ContactObjData,
-											  ContactLoginService,
-											  UtilsConstants,
+											  ContactModel,
+											  UtilitiesFactory,
 											  UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
 
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
+		vm.contactModel = new ContactModel(ContactObjData);
 
-		vm.rootModalContact = {
-			contactData: ContactObjData
-		};
-
-		vm.SaveUserContact = SaveUserContact
+		vm.UpdateContactByID = UpdateContactByID;
 		vm.CloseModal = CloseModal;
 		//####################### Public Functions #######################
 
-		function SaveUserContact()
+		function UpdateContactByID()
 		{
-			ContactLoginService.UpdateContactByID(vm.rootModalContact.contactData).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
+			var actionResultModel = vm.contactModel.ValidateContact();
+			if(actionResultModel.HasError)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+				return;
+			}
+
+			vm.contactModel.OperationsResult.UpdateItemByID(vm.contactModel).then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
 					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
 
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
+					CloseModal();
+					$window.location.reload();
 				},
-				function (error)
-				{
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});
+					CloseModal();
 					console.log(error);
 				}
 			);
@@ -60,8 +64,17 @@
 
 		function CloseModal()
 		{
+			if(!vm.contactModel.IsReadOnlyMode)
+			{
+				var actionResultModel = vm.contactModel.ValidateContact();
+				if(actionResultModel.HasError)
+				{
+					UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+					return;
+				}
+			}
+
 			$uibModalInstance.close();
 		}
-	};
-
+	}
 })();

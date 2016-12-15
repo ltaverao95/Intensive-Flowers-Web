@@ -82,10 +82,10 @@
             {
                 _self.OperationsModel.GetAllItemsURL = CoreConstants.ContactServiceURL.GET_ALL_CONTACTS_URL;
                 _self.OperationsModel.SaveItemURL = CoreConstants.ContactServiceURL.SAVE_CONTACT_URL;
-                _self.OperationsModel.DeleteAllItemsURL = null;
-                _self.OperationsModel.DeleteItemByIDURL = null;
-                _self.OperationsModel.DeleteItemsSelectedURL = null;
-                _self.OperationsModel.EditItemURL = null;
+                _self.OperationsModel.DeleteAllItemsURL = CoreConstants.ContactServiceURL.DELETE_ALL_CONTACTS_URL;
+                _self.OperationsModel.DeleteItemByIDURL = CoreConstants.ContactServiceURL.DELETE_CONTACT_BY_ID_URL;
+                _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.ContactServiceURL.DELETE_CONTACTS_SELECTED_URL;
+                _self.OperationsModel.UpdateItemByIDURL = CoreConstants.ContactServiceURL.UPDATE_CONTACT_SELECTED_URL;
             }
 
             Initialize();

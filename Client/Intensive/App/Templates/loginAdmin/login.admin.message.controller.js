@@ -9,14 +9,12 @@
 	LoginMessageAdminController.$inject = [
 		'$uibModal',
 		'Intensive.Core.Models.MessageModel',
-		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function LoginMessageAdminController($uibModal,
 										 MessageModel,
-								 		 UtilsConstants,
 								 		 UserMessagesFactory,
 										 UtilitiesFactory)
 	{

@@ -7,57 +7,25 @@
 		.controller('Intensive.App.LoginContactAdminController', LoginContactAdminController);
 
 	LoginContactAdminController.$inject = [
-		'$stateParams',
 		'$uibModal',
-		'$state',
-		'GetAllContacts',
-		'Intensive.App.ContactLoginService',
-		'Intensive.Blocks.Utils.Constants',
+		'Intensive.Core.Models.ContactModel',
+		'Intensive.Blocks.Utils.UtilitiesFactory',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginContactAdminController($stateParams,
-										 $uibModal,
-										 $state,
-										 GetAllContacts,
-										 ContactLoginService,
-								 		 UtilsConstants,
+	function LoginContactAdminController($uibModal,
+										 ContactModel,
+								 		 UtilitiesFactory,
 								 		 UserMessagesFactory)
 	{	
 		//####################### Instance Properties #######################
 
 		var vm = this;
 
-		var _paramsDTO = {
-			Message: ''
-		};
+		vm.contactModel = new ContactModel();
 
-		vm.currentPage = 0;
-		vm.pageSize = 6;
-		vm.countCurrentPage = 0;
+		vm.searchContact = '';
 
-		vm.rootLoginContact = {
-			contacts: [],
-			searchContact: '',
-			selectAllContacts: false,
-			arrContactsSelected : []
-		};
-
-		if(GetAllContacts.ResponseMessage !== "")
-		{
-			_paramsDTO.Message = GetAllContacts.ResponseMessage;
-			UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-
-			vm.rootLoginContact.contacts = [];
-		}
-		else
-		{
-			vm.rootLoginContact.contacts = GetAllContacts.ObjData;
-		}
-
-		vm.contactDetailUpdate = $stateParams.objData;
-
-		vm.CurrentPageChanged = CurrentPageChanged;
 		vm.DeleteContactByID = DeleteContactByID;
 		vm.DeleteAllContacts = DeleteAllContacts;
 		vm.DeleteContactsSelected = DeleteContactsSelected;
@@ -66,109 +34,21 @@
 		vm.CheckAllContacts = CheckAllContacts;
 		vm.ContactSelectedChanged = ContactSelectedChanged;
 
-		vm.NumberOfPages = NumberOfPages;
-
 		//####################### Public Functions #######################
-
-		function CurrentPageChanged(isNextPage)
-		{
-			if(isNextPage
-			)
-			{
-				vm.currentPage = vm.currentPage + 1;
-				vm.countCurrentPage = vm.currentPage * vm.pageSize;
-				return;
-			}
-
-			vm.currentPage = vm.currentPage - 1
-			vm.countCurrentPage = vm.currentPage * vm.pageSize;
-		}
 
 		function DeleteContactByID(clientObj)
 		{	
-			ContactLoginService.DeleteContactByID(clientObj).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
 		function DeleteAllContacts()
 		{		
-			if(vm.rootLoginContact.contacts.length == 0)
-			{
-				_paramsDTO.Message = "No hay registros para eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-				return;
-			}
-
-			var response = confirm("¿Estas seguro que deseas eliminar todos los pedidos?");
-
-			if(!response)
-			{
-				return;
-			}
-
-			ContactLoginService.DeleteAllContacts().then(
-				function (data)
-				{				
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
 		function DeleteContactsSelected()
 		{
-			if(vm.rootLoginContact.arrContactsSelected.length == 0)
-			{
-				_paramsDTO.Message = "Debes seleccionar los usuarios que quieres eliminar";
-				UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-				return;
-			}
-
-			ContactLoginService.DeleteContactsSelectedByID(vm.rootLoginContact.arrContactsSelected).then(
-				function (data)
-				{					
-					if(data.Result == UtilsConstants.EnumResult.ERROR)
-					{
-						_paramsDTO.Message = data.ResponseMessage;
-						UserMessagesFactory.ShowErrorMessage(_paramsDTO);
-						return;
-					}
-
-					_paramsDTO.Message = data.ResponseMessage;
-					UserMessagesFactory.ShowSuccessMessage(_paramsDTO);
-				},
-				function (error)
-				{
-					console.log(error);
-				}
-			);
+			
 		}
 
 		function EditUserByID(clientObj)
@@ -188,73 +68,83 @@
 			var count = 0;
 			var subCount = 0;
 
-			vm.rootLoginContact.selectAllContacts = !vm.rootLoginContact.selectAllContacts ? false : true;
+			vm.contactModel.PaginatorModel.SelectAllItems = !vm.contactModel.PaginatorModel.SelectAllItems ? false : true;
 
-			angular.forEach(vm.rootLoginContact.contacts, function (user) 
+			var i = 0;
+
+			if(vm.contactModel.PaginatorModel.CountCurrentPage + 1 > vm.contactModel.PaginatorModel.PageSize)
 			{
-				count++;
+				i = vm.contactModel.PaginatorModel.CountCurrentPage;
+			}
 
-				if(!vm.rootLoginContact.selectAllContacts)
+			for(i; i < vm.contactModel.ContactsList.length; i++)
+			{
+				if(!vm.contactModel.PaginatorModel.SelectAllItems)
 				{
-					user.Selected = vm.rootLoginContact.selectAllContacts;
-					vm.rootLoginContact.arrContactsSelected = [];
-					return;
+					vm.contactModel.ContactsList[i].Selected = vm.contactModel.PaginatorModel.SelectAllItems;
+					vm.contactModel.PaginatorModel.ItemsSelected = [];
+					continue;
 				}
 
-				if(vm.currentPage + 1 > 1)
+				var currentMessage = vm.contactModel.PaginatorModel.ItemsSelected.find(contactToFind => contactToFind.Id == vm.contactModel.ContactsList[i].Id);
+
+				if(vm.contactModel.PaginatorModel.CurrentPage + 1 > 1)
 				{
-					if(count >= vm.countCurrentPage + 1 && 
-					   count <= (vm.countCurrentPage * 2))
+					if(i >= vm.contactModel.PaginatorModel.CountCurrentPage && 
+					   i <= (vm.contactModel.PaginatorModel.CountCurrentPage * 2))
 					{
-						if(subCount == vm.pageSize)
+						if(subCount == vm.contactModel.PaginatorModel.PageSize)
 						{
-							return;
+							break;
 						}
 
-						user.Selected = vm.rootLoginContact.selectAllContacts;
-						vm.rootLoginContact.arrContactsSelected.push(user);
+						vm.contactModel.ContactsList[i].Selected = vm.contactModel.PaginatorModel.SelectAllItems;
+
+						if(UtilitiesFactory.IsUndefinedOrNull(currentMessage))
+						{
+							vm.contactModel.PaginatorModel.ItemsSelected.push(vm.contactModel.ContactsList[i]);
+						}
+
 						subCount++;
 					}
 				}
-				else if(vm.countCurrentPage == 0)
+				else if(vm.contactModel.PaginatorModel.CountCurrentPage == 0)
 				{
-					if(count <= 6)
+					if(i < vm.contactModel.PaginatorModel.PageSize)
 					{
-						user.Selected = vm.rootLoginContact.selectAllContacts;
-						vm.rootLoginContact.arrContactsSelected.push(user);
+						if(UtilitiesFactory.IsUndefinedOrNull(currentMessage))
+						{
+							vm.contactModel.PaginatorModel.ItemsSelected.push(vm.contactModel.ContactsList[i]);
+						}
+
+						vm.contactModel.ContactsList[i].Selected = vm.contactModel.PaginatorModel.SelectAllItems;
 					}
 				}
-        	});
+			}
+
+			console.log(vm.contactModel.PaginatorModel.ItemsSelected);
 		}
 
 		function ContactSelectedChanged(clientObj)
 		{
 			if(clientObj.Selected)
 			{
-				vm.rootLoginContact.arrContactsSelected.push(clientObj);
+				vm.contactModel.PaginatorModel.ItemsSelected.push(clientObj);
 
-				if(vm.rootLoginContact.arrContactsSelected.length == vm.rootLoginContact.contacts.length)
+				if(vm.contactModel.PaginatorModel.ItemsSelected.length == vm.contactModel.PaginatorModel.PageSize ||
+				   UtilitiesFactory.ValidateItemsSelectedInCurrentPage(vm.contactModel.ContactsList, vm.contactModel.PaginatorModel))
 				{
-					vm.rootLoginContact.selectAllContacts = true;
+					vm.contactModel.PaginatorModel.SelectAllItems = true;
 				}
+
+				return;
 			}
-			else 
+			
+			vm.contactModel.PaginatorModel.ItemsSelected.splice(vm.contactModel.PaginatorModel.ItemsSelected.indexOf(clientObj), 1);
+			if(!UtilitiesFactory.ValidateItemsSelectedInCurrentPage(vm.contactModel.ContactsList, vm.contactModel.PaginatorModel))
 			{
-				vm.rootLoginContact.arrContactsSelected.splice(vm.rootLoginContact.arrContactsSelected.indexOf(clientObj), 1);
-
+				vm.contactModel.PaginatorModel.SelectAllItems = false;
 			}
-		}
-
-		//####################### Pagination Functions #######################	
-
-		function NumberOfPages()
-		{
-			if(vm.rootLoginContact.contacts == 0)
-			{
-				return 0;
-			}
-
-			return Math.ceil(vm.rootLoginContact.contacts.length / vm.pageSize);
 		}
 
 		//####################### Private Functions #######################
@@ -264,7 +154,7 @@
 			var modalInstance = $uibModal.open(
 				{
 					animation: true,
-					templateUrl: 'Client/Intensive/App/Components/loginAdmin/login.admin.contact.modal.view.html',
+					templateUrl: 'Client/Intensive/App/Templates/loginAdmin/login.admin.contact.modal.view.html',
 					controller: 'Intensive.App.LoginContactModalAdminController',
 					controllerAs: 'vm',
 					resolve: 
@@ -277,6 +167,33 @@
 				}
 			);
 		}
-	};
 
+		function GetAllContacts()
+		{
+			vm.contactModel.OperationsModel.GetAllItems().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						vm.contactModel.ContactsList = [];
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					vm.contactModel.ContactsList = responseDTO.ResponseData;
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
+		}
+
+		function Initialize()
+		{
+			GetAllContacts();
+		}
+
+		Initialize();
+	}
 })();
