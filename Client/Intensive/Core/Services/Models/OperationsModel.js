@@ -62,7 +62,7 @@
                 return DoRequestToServer(requestParamsObj);
             }
 
-            function DeleteAllItems(itemObj)
+            function DeleteAllItems()
             {
                 var requestParamsObj = 
                 {
