@@ -43,7 +43,18 @@
 
         public function DeleteAllItems()
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                $responseDTO = $this->DeleteCurrentItems();
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la eliminación de los datos", $e->getMessage());	
+            }
 
+            return $responseDTO;
         }
 
         public function DeleteItemByID($messageDTO)
@@ -58,7 +69,41 @@
 
         public function ValidateLastRecordToResetAutoIncement()
         {
-            
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "SELECT * FROM message ORDER BY id";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                //Recuperar los registros de la BD
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
+                if($result == null)
+                {
+                    $query = "ALTER TABLE message AUTO_INCREMENT = 1";
+
+                    $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                } 
+                
+                $responseDTO->UIMessage = "Registros eliminados";
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetMessageErrorAndStackTrace("Ocurrió un error tratando de validar los registros", $e->getMessage());
+            }
+
+            return $responseDTO;
         }
 
         //##### Private Methods #####
@@ -121,6 +166,34 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentItems()
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "Truncate table message";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$responseDTO->UIMessage = "Registros eliminados!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se borraban los datos", $e->getMessage());	
             }
 
             return $responseDTO;

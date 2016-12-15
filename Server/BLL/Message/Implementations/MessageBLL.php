@@ -52,7 +52,20 @@
 
         public function DeleteAllItems()
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_messageDAL = new MessageDAL();
+
+                $responseDTO = $_messageDAL->DeleteAllItems();
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteItemByID($messageDTO)

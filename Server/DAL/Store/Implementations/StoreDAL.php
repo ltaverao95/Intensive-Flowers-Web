@@ -146,7 +146,7 @@
             }
             catch (Exception $e)
             {
-                $responseDTO->SetMessageErrorAndStackTrace("There was an error trying to validate records", $e->getMessage());
+                $responseDTO->SetMessageErrorAndStackTrace("Ocurrió un error tratando de validar los registros", $e->getMessage());
             }
 
             return $responseDTO;
