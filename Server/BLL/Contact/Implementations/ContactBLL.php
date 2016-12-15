@@ -50,7 +50,7 @@
 
         }
 
-        public function DeleteAllItems($contactDTO)
+        public function DeleteAllItems()
         {
 
         }
