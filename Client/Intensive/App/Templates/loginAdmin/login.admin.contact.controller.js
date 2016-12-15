@@ -233,6 +233,8 @@
 					templateUrl: 'Client/Intensive/App/Templates/loginAdmin/login.admin.contact.modal.view.html',
 					controller: 'Intensive.App.LoginContactModalAdminController',
 					controllerAs: 'vm',
+					keyboard: false,
+					backdrop: 'static',
 					resolve: 
 					{
 						ContactObjData : function()
