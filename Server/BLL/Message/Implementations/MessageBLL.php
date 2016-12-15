@@ -47,7 +47,26 @@
 
         public function UpdateItemByID($messageDTO)
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_messageDAL = new MessageDAL();
+
+                $responseDTO = $this->ValidateMessageDTO($messageDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_messageDAL->UpdateItemByID($messageDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteAllItems()

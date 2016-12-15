@@ -12,7 +12,6 @@
 		'OrderObjData',
 		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.Constants',
-		'Intensive.Blocks.Utils.UtilitiesFactory',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
@@ -21,7 +20,6 @@
 											  OrderObjData,
 											  StoreModel,
 											  UtilsConstants,
-											  UtilitiesFactory,
 											  UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
@@ -61,7 +59,8 @@
 					$window.location.reload();
 				},
 				error => {
-					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});
+					CloseModal();
 					console.log(error);
 				}
 			);

@@ -63,7 +63,7 @@
             }
             catch (Exception $e)
             {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;

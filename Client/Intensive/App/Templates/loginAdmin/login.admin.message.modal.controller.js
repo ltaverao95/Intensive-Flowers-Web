@@ -7,17 +7,17 @@
 		.controller('Intensive.App.LoginMessageModalAdminController', LoginMessageModalAdminController);
 
 	LoginMessageModalAdminController.$inject = [
+		'$window',
 		'$uibModalInstance',
 		'MessageObjData',
 		'Intensive.Core.Models.MessageModel',
-		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginMessageModalAdminController($uibModalInstance,
+	function LoginMessageModalAdminController($window,
+											  $uibModalInstance,
 											  MessageObjData,
 											  MessageModel,
-											  UtilsConstants,
 											  UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
@@ -26,18 +26,52 @@
 
 		vm.messageModel = new MessageModel(MessageObjData);
 
-		vm.UpdateMessage = UpdateMessage;
+		vm.UpdateMessageByID = UpdateMessageByID;
 		vm.CloseModal = CloseModal;
 		
 		//####################### Public Functions #######################
 
-		function UpdateMessage()
+		function UpdateMessageByID()
 		{
-			
+			var actionResultModel = vm.messageModel.ValidateMessage();
+			if(actionResultModel.HasError)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });	
+				return;
+			}
+
+			vm.messageModel.OperationsModel.UpdateItemByID(vm.messageModel).then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+						return;
+					}
+
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
+					CloseModal();
+					$window.location.reload();
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});
+					CloseModal();
+					console.log(error);
+				}
+			);
 		}
 
 		function CloseModal()
 		{
+			if(!vm.messageModel.IsReadOnlyMode)
+			{	
+				var actionResultModel = vm.messageModel.ValidateMessage();
+				if(actionResultModel.HasError)
+				{
+					UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });	
+					return;
+				}
+			}
 
 			$uibModalInstance.close();
 		}

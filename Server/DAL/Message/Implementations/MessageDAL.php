@@ -38,7 +38,18 @@
 
         public function UpdateItemByID($messageDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                   $responseDTO = $this->UpdateCurrentItem($messageDTO);
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban los datos", $e->getMessage());	
+            }
 
+            return $responseDTO;
         }
 
         public function DeleteAllItems()
@@ -304,6 +315,40 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function UpdateCurrentItem($messageDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "UPDATE message SET id = :id, name = :name, message = :message WHERE id = :id";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id' => $messageDTO->Id, 
+                    ':name' => $messageDTO->Name,
+                    ':message' => $messageDTO->Message
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Registro actualizado!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;
