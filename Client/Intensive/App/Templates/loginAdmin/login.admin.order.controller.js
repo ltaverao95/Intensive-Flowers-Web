@@ -121,6 +121,7 @@
 					}
 
 					GetAllOrders();
+					vm.storeModel.PaginatorModel.ClearItemsSelected();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {

@@ -25,7 +25,8 @@
                 ItemsSelected: [],
 
                 NumberOfPages: NumberOfPages,
-                CurrentPageChanged: CurrentPageChanged
+                CurrentPageChanged: CurrentPageChanged,
+                ClearItemsSelected: ClearItemsSelected
 
             }, dataDTO);
 
@@ -54,6 +55,10 @@
                 _self.CountCurrentPage = _self.CurrentPage * _self.PageSize;
             }
 
+            function ClearItemsSelected()
+            {
+                _self.ItemsSelected = [];
+            }
             //######## Private
 
         }

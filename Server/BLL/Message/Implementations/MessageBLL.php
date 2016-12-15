@@ -92,9 +92,28 @@
             return $responseDTO;
         }
         
-        public function DeleteItemsSelected($messageDTO)
+        public function DeleteItemsSelected($messagesDTO)
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_messageDAL = new MessageDAL();
+
+                $responseDTO = $this->ValidateItemsSelected($messagesDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_messageDAL->DeleteItemsSelected($messagesDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         //##### Private Methods #####
@@ -120,6 +139,29 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateItemsSelected($messagesDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                for ($i=0; $i < count($messagesDTO); $i++) 
+                {
+                    $responseDTO = $this->ValidateMessageDTO($messagesDTO[$i]);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;

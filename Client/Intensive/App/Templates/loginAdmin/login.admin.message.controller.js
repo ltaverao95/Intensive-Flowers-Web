@@ -120,6 +120,7 @@
 					}
 
 					GetAllMessages();
+					vm.messageModel.PaginatorModel.ClearItemsSelected();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {
@@ -267,7 +268,7 @@
 				}
 			);
 		}
-
+		
 		function Initialize()
 		{
 			GetAllMessages();

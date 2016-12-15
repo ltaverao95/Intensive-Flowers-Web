@@ -103,10 +103,23 @@
                 }
 
                 $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                if(count($orderDTO) > 1)
+                {
+                    $responseDTO->UIMessage = "Registros eliminados!";
+                }
+                else
+                {
+                    $responseDTO->UIMessage = "Registro eliminado!";
+                }
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -140,9 +153,6 @@
                         return $responseDTO;
                     }
                 } 
-                
-                $responseDTO->UIMessage = "Registros eliminados";
-                
             }
             catch (Exception $e)
             {
@@ -256,7 +266,7 @@
             return $responseDTO;
         }
 
-        private function DeleteCurrentItemsSelected($orderDTO)
+        private function DeleteCurrentItemsSelected($ordersDTO)
         {
             $responseDTO = new ResponseDTO();
 
@@ -265,11 +275,11 @@
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
                 $getDataServiceDAL = new GetDataServiceDAL();
 
-                for ($i=0; $i < count($orderDTO); $i++) 
+                for ($i=0; $i < count($ordersDTO); $i++) 
                 {
                     $query = "DELETE FROM bouquet_order WHERE id = :id";
                     $dataBaseServicesBLL->ArrayParameters = array(
-                        ':id' => $orderDTO[$i]->Id
+                        ':id' => $ordersDTO[$i]->Id
                     );
 
                     $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
@@ -279,13 +289,11 @@
                     }
                 }
 
-        		$responseDTO->UIMessage = "Registros eliminados!";
-
                 $dataBaseServicesBLL->connection = null;
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;

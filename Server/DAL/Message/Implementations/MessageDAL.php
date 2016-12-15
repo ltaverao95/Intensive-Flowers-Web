@@ -79,9 +79,39 @@
             return $responseDTO;
         }
         
-        public function DeleteItemsSelected($messageDTO)
+        public function DeleteItemsSelected($messagesDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                $responseDTO = $this->DeleteCurrentItemsSelected($messagesDTO);      
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
 
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                if(count($messagesDTO) > 1)
+                {
+                    $responseDTO->UIMessage = "Registros eliminados!";
+                }
+                else
+                {
+                    $responseDTO->UIMessage = "Registro eliminado!";
+                }
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function ValidateLastRecordToResetAutoIncement()
@@ -112,8 +142,6 @@
                         return $responseDTO;
                     }
                 } 
-                
-                $responseDTO->UIMessage = "Registros eliminados";
             }
             catch (Exception $e)
             {
@@ -216,7 +244,7 @@
             return $responseDTO;
         }
 
-        private function DeleteCurrentMessage($orderDTO)
+        private function DeleteCurrentMessage($messageDTO)
         {
             $responseDTO = new ResponseDTO();
 
@@ -227,7 +255,7 @@
 
                 $query = "DELETE FROM message WHERE id = :id";
                 $dataBaseServicesBLL->ArrayParameters = array(
-                    ':id' => $orderDTO->Id
+                    ':id' => $messageDTO->Id
                 );
 
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
@@ -243,6 +271,39 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentItemsSelected($messagesDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                for ($i=0; $i < count($messagesDTO); $i++) 
+                {
+                    $query = "DELETE FROM message WHERE id = :id";
+                    $dataBaseServicesBLL->ArrayParameters = array(
+                        ':id' => $messagesDTO[$i]->Id
+                    );
+
+                    $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                }
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;
