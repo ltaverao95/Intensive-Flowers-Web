@@ -10,13 +10,15 @@
 		'$uibModal',
 		'Intensive.Core.Models.MessageModel',
 		'Intensive.Blocks.Utils.Constants',
-		'Intensive.Blocks.Messages.UserMessagesFactory'
+		'Intensive.Blocks.Messages.UserMessagesFactory',
+		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function LoginMessageAdminController($uibModal,
 										 MessageModel,
 								 		 UtilsConstants,
-								 		 UserMessagesFactory)
+								 		 UserMessagesFactory,
+										 UtilitiesFactory)
 	{
 		
 		//####################### Instance Properties #######################
@@ -71,42 +73,57 @@
 
 			vm.messageModel.PaginatorModel.SelectAllItems = !vm.messageModel.PaginatorModel.SelectAllItems ? false : true;
 
-			vm.messageModel.MessagesList.map(
-				function (message)
+			var i = 0;
+
+			if(vm.messageModel.PaginatorModel.CountCurrentPage + 1 > vm.messageModel.PaginatorModel.PageSize)
+			{
+				i = vm.messageModel.PaginatorModel.CountCurrentPage;
+			}
+
+			for(i; i < vm.messageModel.MessagesList.length; i++)
+			{
+				if(!vm.messageModel.PaginatorModel.SelectAllItems)
 				{
-					count++;
+					vm.messageModel.MessagesList[i].Selected = vm.messageModel.PaginatorModel.SelectAllItems;
+					vm.messageModel.PaginatorModel.ItemsSelected = [];
+					continue;
+				}
 
-					if(!vm.messageModel.PaginatorModel.SelectAllItems)
-					{
-						message.Selected = vm.messageModel.PaginatorModel.SelectAllItems;
-						vm.messageModel.PaginatorModel.ItemsSelected = [];
-						return;
-					}
+				var currentMessage = vm.messageModel.PaginatorModel.ItemsSelected.find(messageToFind => messageToFind.Id == vm.messageModel.MessagesList[i].Id);
 
-					if(vm.messageModel.PaginatorModel.CurrentPage + 1 > 1)
+				if(vm.messageModel.PaginatorModel.CurrentPage + 1 > 1)
+				{
+					if(i >= vm.messageModel.PaginatorModel.CountCurrentPage && 
+					   i <= (vm.messageModel.PaginatorModel.CountCurrentPage * 2))
 					{
-						if(count >= vm.messageModel.PaginatorModel.CountCurrentPage + 1 && count <= (vm.messageModel.PaginatorModel.CountCurrentPage * 2))
+						if(subCount == vm.messageModel.PaginatorModel.PageSize)
 						{
-							if(subCount == vm.pageSize)
-							{
-								return;
-							}
+							break;
+						}
 
-							message.Selected = vm.messageModel.PaginatorModel.SelectAllItems;
-							vm.messageModel.PaginatorModel.ItemsSelected.push(message);
-							subCount++;
-						}
-					}
-					else if(vm.messageModel.PaginatorModel.CountCurrentPage == 0)
-					{
-						if(count <= 6)
+						vm.messageModel.MessagesList[i].Selected = vm.messageModel.PaginatorModel.SelectAllItems;
+
+						if(UtilitiesFactory.IsUndefinedOrNull(currentMessage))
 						{
-							message.Selected = vm.messageModel.PaginatorModel.SelectAllItems;
-							vm.messageModel.PaginatorModel.ItemsSelected.push(message);
+							vm.messageModel.PaginatorModel.ItemsSelected.push(vm.messageModel.MessagesList[i]);
 						}
+
+						subCount++;
 					}
 				}
-			);
+				else if(vm.messageModel.PaginatorModel.CountCurrentPage == 0)
+				{
+					if(i < vm.messageModel.PaginatorModel.PageSize)
+					{
+						if(UtilitiesFactory.IsUndefinedOrNull(currentMessage))
+						{
+							vm.messageModel.PaginatorModel.ItemsSelected.push(vm.messageModel.MessagesList[i]);
+						}
+
+						vm.messageModel.MessagesList[i].Selected = vm.messageModel.PaginatorModel.SelectAllItems;
+					}
+				}
+			}
 		}
 
 		function MessageSelectedChanged(messageObj)
@@ -115,14 +132,19 @@
 			{
 				vm.messageModel.PaginatorModel.ItemsSelected.push(messageObj);
 
-				if(vm.messageModel.PaginatorModel.ItemsSelected.length == vm.rootMessageObj.messagesObj.length)
+				if(vm.messageModel.PaginatorModel.ItemsSelected.length == vm.messageModel.PaginatorModel.PageSize ||
+				   UtilitiesFactory.ValidateItemsSelectedInCurrentPage(vm.messageModel.MessagesList, vm.messageModel.PaginatorModel))
 				{
 					vm.messageModel.PaginatorModel.SelectAllItems = true;
 				}
+
+				return;
 			}
-			else 
+			
+			vm.messageModel.PaginatorModel.ItemsSelected.splice(vm.messageModel.PaginatorModel.ItemsSelected.indexOf(messageObj), 1);
+			if(!UtilitiesFactory.ValidateItemsSelectedInCurrentPage(vm.messageModel.MessagesList, vm.messageModel.PaginatorModel))
 			{
-				vm.messageModel.PaginatorModel.ItemsSelected.splice(vm.messageModel.PaginatorModel.ItemsSelected.indexOf(messageObj), 1);
+				vm.messageModel.PaginatorModel.SelectAllItems = false;
 			}
 		}
 

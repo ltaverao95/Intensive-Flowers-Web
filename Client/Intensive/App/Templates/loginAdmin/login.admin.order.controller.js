@@ -11,14 +11,16 @@
 		'Intensive.Blocks.Utils.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Core.Models.StoreModel',
-		'Intensive.Blocks.Utils.ActionResultModel'
+		'Intensive.Blocks.Utils.ActionResultModel',
+		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function LoginOrderAdminController($uibModal,
 							 		   UtilsConstants,
 							 		   UserMessagesFactory,
 									   StoreModel,
-									   ActionResultModel)
+									   ActionResultModel,
+									   UtilitiesFactory)
 	{	
 		//####################### Instance Properties #######################
 		
@@ -153,44 +155,59 @@
 
 			vm.storeModel.PaginatorModel.SelectAllItems = !vm.storeModel.PaginatorModel.SelectAllItems ? false : true;
 
-			vm.storeModel.OrdersList.map(
-				function (order) 
+			var i = 0;
+
+			if(vm.storeModel.PaginatorModel.CountCurrentPage + 1 > vm.storeModel.PaginatorModel.PageSize)
+			{
+				i = vm.storeModel.PaginatorModel.CountCurrentPage;
+			}
+
+			for(i; i < vm.storeModel.OrdersList.length; i++)
+			{
+				if(!vm.storeModel.PaginatorModel.SelectAllItems)
 				{
-					count++;
-
-					if(!vm.storeModel.PaginatorModel.SelectAllItems)
-					{
-						order.Selected = vm.storeModel.PaginatorModel.SelectAllItems;
-						vm.storeModel.PaginatorModel.ItemsSelected = [];
-						return;
-					}
-
-					if(vm.storeModel.PaginatorModel.CurrentPage + 1 > 1)
-					{
-						if(count >= vm.storeModel.PaginatorModel.CountCurrentPage + 1 && count <= (vm.storeModel.PaginatorModel.CountCurrentPage * 2))
-						{
-							if(subCount == vm.storeModel.PaginatorModel.PageSize)
-							{
-								return;
-							}
-
-							order.Selected = vm.storeModel.PaginatorModel.SelectAllItems;
-							vm.storeModel.PaginatorModel.ItemsSelected.push(order);
-							subCount++;
-						}
-					}
-					else if(vm.storeModel.PaginatorModel.CountCurrentPage == 0)
-					{
-						if(count <= 6)
-						{
-							order.Selected = vm.storeModel.PaginatorModel.SelectAllItems;
-							vm.storeModel.PaginatorModel.ItemsSelected.push(order);
-						}
-					}
-
+					vm.storeModel.OrdersList[i].Selected = vm.storeModel.PaginatorModel.SelectAllItems;
+					vm.storeModel.PaginatorModel.ItemsSelected = [];
+					continue;
 				}
-			);
 
+				var currentMessage = vm.storeModel.PaginatorModel.ItemsSelected.find(messageToFind => messageToFind.Id == vm.storeModel.OrdersList[i].Id);
+
+				if(vm.storeModel.PaginatorModel.CurrentPage + 1 > 1)
+				{
+					if(i >= vm.storeModel.PaginatorModel.CountCurrentPage && 
+					   i <= (vm.storeModel.PaginatorModel.CountCurrentPage * 2))
+					{
+						if(subCount == vm.storeModel.PaginatorModel.PageSize)
+						{
+							break;
+						}
+
+						vm.storeModel.OrdersList[i].Selected = vm.storeModel.PaginatorModel.SelectAllItems;
+
+						if(UtilitiesFactory.IsUndefinedOrNull(currentMessage))
+						{
+							vm.storeModel.PaginatorModel.ItemsSelected.push(vm.storeModel.OrdersList[i]);
+						}
+
+						subCount++;
+					}
+				}
+				else if(vm.storeModel.PaginatorModel.CountCurrentPage == 0)
+				{
+					if(i < vm.storeModel.PaginatorModel.PageSize)
+					{
+						if(UtilitiesFactory.IsUndefinedOrNull(currentMessage))
+						{
+							vm.storeModel.PaginatorModel.ItemsSelected.push(vm.storeModel.OrdersList[i]);
+						}
+
+						vm.storeModel.OrdersList[i].Selected = vm.storeModel.PaginatorModel.SelectAllItems;
+					}
+				}
+			}
+
+			console.log(vm.storeModel.PaginatorModel.ItemsSelected);
 		}
 
 		function OrderSelectedChanged(clientOrder)
@@ -199,14 +216,19 @@
 			{
 				vm.storeModel.PaginatorModel.ItemsSelected.push(clientOrder);
 
-				if(vm.storeModel.PaginatorModel.ItemsSelected.length == vm.storeModel.OrdersList.length)
+				if(vm.storeModel.PaginatorModel.ItemsSelected.length == vm.storeModel.PaginatorModel.PageSize ||
+				   UtilitiesFactory.ValidateItemsSelectedInCurrentPage(vm.storeModel.OrdersList, vm.storeModel.PaginatorModel))
 				{
 					vm.storeModel.PaginatorModel.SelectAllItems = true;
 				}
+
+				return;
 			}
-			else 
+
+			vm.storeModel.PaginatorModel.ItemsSelected.splice(vm.storeModel.PaginatorModel.ItemsSelected.indexOf(clientOrder), 1);
+			if(!UtilitiesFactory.ValidateItemsSelectedInCurrentPage(vm.storeModel.OrdersList, vm.storeModel.PaginatorModel))
 			{
-				vm.storeModel.PaginatorModel.ItemsSelected.splice(vm.storeModel.PaginatorModel.ItemsSelected.indexOf(clientOrder), 1);
+				vm.storeModel.PaginatorModel.SelectAllItems = false;
 			}
 		}
 

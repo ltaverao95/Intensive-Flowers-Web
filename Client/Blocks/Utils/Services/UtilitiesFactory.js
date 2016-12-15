@@ -19,6 +19,7 @@
 
             GetFormatedDate: GetFormatedDate,
             GetFormatedTime: GetFormatedTime,
+            ValidateItemsSelectedInCurrentPage: ValidateItemsSelectedInCurrentPage,
 
             //Validations
 
@@ -56,6 +57,21 @@
 
             return formatedTime;
         }
+
+        function ValidateItemsSelectedInCurrentPage(itemsList, paginatorModel)
+		{
+			var i = paginatorModel.CurrentPage * paginatorModel.PageSize;
+
+			for(i; i < itemsList.length; i++)
+			{
+				if(!itemsList[i].Selected)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
 
         function IsStringValid(stringToValidate)
         {
