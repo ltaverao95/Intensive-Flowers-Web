@@ -1,0 +1,21 @@
+<?php  
+	
+	include_once("../../Utils/Libraries/CoreLibraries.php");
+	include_once("../../Utils/Libraries/CrudLibraries.php");
+	include_once("../../Utils/Libraries/ContactLibraries.php");
+
+	$responseDTO = new ResponseDTO();
+	
+	try 
+	{
+		$contactBLL = new ContactBLL();
+
+		$responseDTO = $contactBLL->DeleteAllItems();
+	} 
+	catch (Exception $e) 
+	{
+		$responseDTO->SetErrorAndStackTrace("Ocurrió un problema borrando los datos", $e->getMessage());		
+	}
+
+	echo json_encode($responseDTO);
+?>

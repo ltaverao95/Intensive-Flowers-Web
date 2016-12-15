@@ -229,6 +229,13 @@
 
             try
             {
+                if(count($storeDTO) == 0 ||
+                   $storeDTO == null)
+                {
+                    $responseDTO->SetError("No hay registros para eliminar");
+                    return $responseDTO;
+                }
+
                 for ($i=0; $i < count($storeDTO); $i++) 
                 {
                     $responseDTO = $this->ValidateStoreDTO($storeDTO[$i]);

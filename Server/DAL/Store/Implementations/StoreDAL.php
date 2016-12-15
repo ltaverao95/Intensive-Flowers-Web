@@ -62,7 +62,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -81,10 +81,16 @@
                 }
 
                 $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Registro eliminado!";
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;

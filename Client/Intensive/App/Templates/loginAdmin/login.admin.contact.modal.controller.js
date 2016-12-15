@@ -41,7 +41,7 @@
 				return;
 			}
 
-			vm.contactModel.OperationsResult.UpdateItemByID(vm.contactModel).then(
+			vm.contactModel.OperationsModel.UpdateItemByID(vm.contactModel).then(
 				responseDTO => {
 
 					if(responseDTO.HasError)

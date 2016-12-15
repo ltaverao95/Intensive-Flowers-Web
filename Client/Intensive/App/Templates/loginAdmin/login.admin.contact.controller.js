@@ -38,17 +38,93 @@
 
 		function DeleteContactByID(clientObj)
 		{	
-			
+			if(!UtilitiesFactory.ShowDeleteConfirm())
+			{
+				return;
+			}
+
+			vm.contactModel.OperationsModel.DeleteItemByID(clientObj).then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					GetAllContacts();
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
+					console.log(error);
+				}
+			);
 		}
 
 		function DeleteAllContacts()
 		{		
-			
+			if(UtilitiesFactory.IsArrayNullOrEmpty(vm.contactModel.ContactsList))
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: "No hay registros para eliminar" });
+				return;
+			}	
+
+			if(!UtilitiesFactory.ShowDeleteConfirm())
+			{
+				return;
+			}
+
+			vm.contactModel.OperationsModel.DeleteAllItems().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					GetAllContacts();
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
+					console.log(error);
+				}
+			);
 		}
 
 		function DeleteContactsSelected()
 		{
-			
+			if(UtilitiesFactory.IsArrayNullOrEmpty(vm.contactModel.PaginatorModel.ItemsSelected))
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: "Debes seleccionar los registros que deseas eliminar" });
+				return;
+			}	
+
+			if(!UtilitiesFactory.ShowDeleteConfirm())
+			{
+				return;
+			}
+
+			vm.contactModel.OperationsModel.DeleteItemsSelected(vm.contactModel.PaginatorModel.ItemsSelected).then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					GetAllContacts();
+					vm.contactModel.PaginatorModel.ClearItemsSelected();
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
+					console.log(error);
+				}
+			);
 		}
 
 		function EditUserByID(clientObj)

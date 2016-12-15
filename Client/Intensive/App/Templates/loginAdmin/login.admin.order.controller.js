@@ -199,8 +199,6 @@
 					}
 				}
 			}
-
-			console.log(vm.storeModel.PaginatorModel.ItemsSelected);
 		}
 
 		function OrderSelectedChanged(clientOrder)

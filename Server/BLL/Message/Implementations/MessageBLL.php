@@ -169,6 +169,13 @@
 
             try
             {
+                if(count($messagesDTO) == 0 ||
+                   $messagesDTO == null)
+                {
+                    $responseDTO->SetError("No hay registros para eliminar");
+                    return $responseDTO;
+                }
+
                 for ($i=0; $i < count($messagesDTO); $i++) 
                 {
                     $responseDTO = $this->ValidateMessageDTO($messagesDTO[$i]);
