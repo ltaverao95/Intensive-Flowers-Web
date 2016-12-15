@@ -311,7 +311,7 @@
                     return $responseDTO;
                 }
 
-        		$responseDTO->UIMessage = "Registro eliminados!";
+        		$responseDTO->UIMessage = "Registro eliminado!";
 
                 $dataBaseServicesBLL->connection = null;
             }

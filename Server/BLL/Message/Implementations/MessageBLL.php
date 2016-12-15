@@ -70,7 +70,26 @@
 
         public function DeleteItemByID($messageDTO)
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $_messageDAL = new MessageDAL();
+
+                $responseDTO = $this->ValidateMessageDTO($messageDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $_messageDAL->DeleteItemByID($messageDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
         
         public function DeleteItemsSelected($messageDTO)

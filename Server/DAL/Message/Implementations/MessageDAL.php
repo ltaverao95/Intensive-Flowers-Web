@@ -59,7 +59,24 @@
 
         public function DeleteItemByID($messageDTO)
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                $responseDTO = $this->DeleteCurrentMessage($messageDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
 
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
         
         public function DeleteItemsSelected($messageDTO)
@@ -194,6 +211,38 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se borraban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentMessage($orderDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "DELETE FROM message WHERE id = :id";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id' => $orderDTO->Id
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$responseDTO->UIMessage = "Registro eliminado!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;

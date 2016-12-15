@@ -45,6 +45,24 @@
 			{
 				return;
 			}
+
+			vm.messageModel.OperationsModel.DeleteItemByID(messageObj).then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					GetAllMessages();
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
+					console.log(error);
+				}
+			);
 		}
 
 		function DeleteAllMessages()
@@ -91,6 +109,24 @@
 			{
 				return;
 			}
+
+			vm.messageModel.OperationsModel.DeleteItemsSelected(vm.messageModel.PaginatorModel.ItemsSelected).then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					GetAllMessages();
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
+					console.log(error);
+				}
+			);
 		}
 
 		function EditMessageById(messageObj)
