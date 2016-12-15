@@ -44,6 +44,8 @@
 					}
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
+					vm.messageModel = new MessageModel();
+					GetAllMessages();
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos"});
@@ -54,7 +56,7 @@
 
 		//##### Private Methods #####
 
-		function Initialize()
+		function GetAllMessages()
 		{
 			vm.messageModel.OperationsModel.GetAllItems().then(
 				responseDTO => {
@@ -72,6 +74,11 @@
 					console.log(error);
 				}
 			);
+		}
+
+		function Initialize()
+		{
+			GetAllMessages();
 		}
 
 		Initialize();

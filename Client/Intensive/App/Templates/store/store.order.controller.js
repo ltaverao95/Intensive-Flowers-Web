@@ -52,9 +52,11 @@
 					}
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
+					ClearStoreModel();
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de guardar los datos"});
+					ClearStoreModel();
 					console.log(error);
 				}
 			);
@@ -66,13 +68,6 @@
         {
             vm.storeModel = new StoreModel();
         }
-
-		function Initialize()
-		{
-			
-		}
-
-		Initialize();
 	}
 
 })();

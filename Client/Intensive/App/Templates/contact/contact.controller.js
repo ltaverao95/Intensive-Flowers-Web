@@ -38,6 +38,8 @@
 			vm.contactModel.OperationsModel.SaveItem(vm.contactModel).then(
 				responseDTO => {
 
+					ClearContactModel();
+
 					if(responseDTO.HasError)
 					{
 						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
@@ -47,6 +49,7 @@
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 				},
 				error => {
+					ClearContactModel();
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de guardar los datos"});
 					console.log(error);
 				}
@@ -59,12 +62,5 @@
 		{
 			vm.contactModel = new ContactModel();
 		}
-
-		function Initialize()
-		{
-			
-		}
-
-		Initialize();
 	}
 })();
