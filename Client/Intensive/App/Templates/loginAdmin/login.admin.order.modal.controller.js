@@ -4,9 +4,9 @@
 
 	angular
 		.module('Intensive.App')
-		.controller('Intensive.App.LoginOrderModalAdminController', LoginMessageModalAdminController);
+		.controller('Intensive.App.LoginOrderModalAdminController', LoginOrderModalAdminController);
 
-	LoginMessageModalAdminController.$inject = [
+	LoginOrderModalAdminController.$inject = [
 		'$uibModalInstance',
 		'$window',
 		'OrderObjData',
@@ -15,7 +15,7 @@
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginMessageModalAdminController($uibModalInstance,
+	function LoginOrderModalAdminController($uibModalInstance,
 											  $window,
 											  OrderObjData,
 											  StoreModel,

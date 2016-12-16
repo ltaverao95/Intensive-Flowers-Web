@@ -34,6 +34,7 @@
             <li role="presentation"><a ui-sref="intensive.activities.orders" ui-sref-active="active">Pedidos</a></li>
             <li role="presentation"><a ui-sref="intensive.activities.messages" ui-sref-active="active">Mensajes</a></li>
             <li role="presentation"><a ui-sref="intensive.activities.contact" ui-sref-active="active">Contactos</a></li>
+            <li role="presentation"><a ui-sref="intensive.activities.profile" ui-sref-active="active">Perfil</a></li>
         </ul>
         <br>
         <div class="clearfix">

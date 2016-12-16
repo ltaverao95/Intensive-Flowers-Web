@@ -162,6 +162,13 @@
 				controllerAs: 'vm'					
 			})
 
+			.state('intensive.activities.profile', {
+				url: '/profile',
+				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.profile.view.php',
+				controller: 'Intensive.App.LoginProfileAdminController',
+				controllerAs: 'vm'					
+			})
+
 		$urlRouterProvider.otherwise('/');	
 	};
 

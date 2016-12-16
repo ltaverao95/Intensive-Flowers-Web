@@ -76,12 +76,12 @@
                 <button class="btn btn-success" ng-click="vm.DeleteOrdersSelected()">Borrar Seleccionados</button>
             </div>         
         </div>        
-        </div>
     </div>
 </div>
 <?php
 	}
-	else {
-		header('location: ../index.html');
+	else 
+    {
+		header('location: ../../../../../index.php');
 	}
 ?>
