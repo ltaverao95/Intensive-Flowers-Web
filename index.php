@@ -140,6 +140,7 @@
     <script src="Client/Intensive/Core/Services/Models/BouquetModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/ContactModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/LoginModel.js"></script>
+    <script src="Client/Intensive/Core/Services/Models/UserAdminModel.js"></script>
     <script src="Client/Intensive/Core/Services/Models/QueryDataModel.js"></script>
 
     <!-- App/Components/loginAdmin Services -->

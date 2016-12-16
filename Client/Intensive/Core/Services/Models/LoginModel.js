@@ -9,13 +9,17 @@
         '$q',
         '$http',
         'Intensive.Core.Constants',
-        'Intensive.Blocks.Utils.ActionResultModel'
+        'Intensive.Blocks.Utils.UtilitiesFactory',
+        'Intensive.Blocks.Utils.ActionResultModel',
+        'Intensive.Core.Models.UserAdminModel'
     ];
 
     function ModelName($q,
                        $http,
                        CoreConstants,
-                       ActionResultModel)
+                       UtilitiesFactory,
+                       ActionResultModel,
+                       UserAdminModel)
     {
         var Model = function (dataDTO) 
         {
@@ -23,8 +27,11 @@
 
             angular.extend(this, {
 
+                IDLoginUser: null,
                 UserName: null,
                 Password: null,
+                
+                UserAdminModel: new UserAdminModel(),
 
                 SignIn: SignIn,
                 LogOut: LogOut,
@@ -95,6 +102,18 @@
 
                 return deferred.promise;
             }
+
+            function Initialize()
+            {
+                if(UtilitiesFactory.IsUndefinedOrNull(dataDTO))
+                {
+                    return;
+                }
+
+                _self.UserAdminModel = new UserAdminModel(dataDTO.UserAdminModel);
+            }
+
+            Initialize();
         }
 
         return Model;

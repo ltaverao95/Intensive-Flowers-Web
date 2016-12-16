@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2016 a las 23:51:35
+-- Tiempo de generación: 16-12-2016 a las 02:55:51
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -42,38 +42,6 @@ CREATE TABLE `bouquet_order` (
   `timeToSend` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `bouquet_order`
---
-
-INSERT INTO `bouquet_order` (`id`, `identity_card`, `name`, `surname`, `addressToSend`, `phone`, `email`, `orderDescription`, `store`, `wayToPay`, `dateOrder`, `dateToSend`, `timeToSend`) VALUES
-(1, 1053845970, 'Felipe', 'Tavera', 'Cra 36 a # 97 b 17', 8916391, 'lftavera@hotmail.com', 'Rosas', '1', '0', '2016-12-13', '2016-12-12', '1970-01-01T06:01:00.000Z'),
-(2, 1014567829, 'Marcela', 'Lopez', 'Cra 20 - 12', 8965473, 'marcela@hotmail.com', 'Flores amarillas', '2', '0', '2016-12-13', '2016-12-12', '1970-01-01T06:01:00.000Z'),
-(3, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(4, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(5, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(6, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(7, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(8, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(9, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(10, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(11, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(12, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(13, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(14, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(15, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(16, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(17, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(18, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(19, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(20, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(21, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(22, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(23, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(24, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(25, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50'),
-(26, 1053845970, 'Marco', 'Parra', 'Cra 36', 891, 'marco@hotmail', 'Rosas', '1', 'Tarjeta DÃ©bito', '2016-12-13', '2016-12-13', '07:50');
-
 -- --------------------------------------------------------
 
 --
@@ -88,23 +56,6 @@ CREATE TABLE `contact` (
   `message` varchar(254) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `contact`
---
-
-INSERT INTO `contact` (`id`, `name`, `email`, `phone`, `message`) VALUES
-(1, 'Felipe', 'lftavera@hotmail.com', '3005268836', 'Muy puntuales.'),
-(2, 'Maria', 'maria@hotmail.com', '3201547986', 'Que bonitos productos'),
-(3, 'Luis', 'luis@gmail.com', '3148564231', 'Pedido a tiempo'),
-(4, 'Marcela Cardenas', 'marcelacardenas@gmail.com', '3004329784', 'Gracias por cumplir'),
-(5, 'Luisa Ramirez', 'luisaramirez95@hotmail.com', '3124567894', 'Gracias'),
-(6, 'Marcos Parra', 'mparra12@gmail.com', '3178964530', 'Buena coordinaciÃ³n'),
-(7, 'Andrea Zuluaga', 'andreaz65@gmail.com', '3128972156', 'Gracias'),
-(8, 'David LondoÃ±o', 'davidl@hotmail.es', '3164956478', 'PodrÃ­an enviarme un mapa con mejores coordenadas de las tiendas ?'),
-(10, 'asd', 'lftavera@hotmail.com', '423', 'asd'),
-(11, 'Felipe', 'lftavera@hotmail.com', '3005268836', 'Prueba'),
-(12, 'Marcela', 'marcela@hotmail.com', '3268975640', 'Hola');
-
 -- --------------------------------------------------------
 
 --
@@ -112,18 +63,17 @@ INSERT INTO `contact` (`id`, `name`, `email`, `phone`, `message`) VALUES
 --
 
 CREATE TABLE `login` (
-  `id` int(11) NOT NULL,
-  `user` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `pass` varchar(15) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id_login_user` int(11) NOT NULL,
+  `user_name` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(15) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `login`
 --
 
-INSERT INTO `login` (`id`, `user`, `pass`) VALUES
-(1, 'FelipeT', 'felipe0025'),
-(2, 'Admin', 'admin');
+INSERT INTO `login` (`id_login_user`, `user_name`, `password`) VALUES
+(1, 'admin', 'admin2016');
 
 -- --------------------------------------------------------
 
@@ -137,20 +87,18 @@ CREATE TABLE `message` (
   `message` varchar(254) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `message`
+-- Estructura de tabla para la tabla `user_logued_info`
 --
 
-INSERT INTO `message` (`id`, `name`, `message`) VALUES
-(1, 'Felipe', 'test'),
-(2, 'Mariana', 'Hola'),
-(3, 'Carlos', 'Hola'),
-(4, 'Luisa', 'Hola'),
-(5, 'Marcos', 'Hola'),
-(6, 'Manuela', 'Que tal'),
-(7, 'Carla', 'Hola'),
-(8, 'carlos', 'hola'),
-(9, 'Marcela', 'hola');
+CREATE TABLE `user_logued_info` (
+  `id_login_user` int(11) NOT NULL,
+  `name` varchar(70) NOT NULL,
+  `surname` varchar(80) NOT NULL,
+  `phone` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Índices para tablas volcadas
@@ -172,13 +120,19 @@ ALTER TABLE `contact`
 -- Indices de la tabla `login`
 --
 ALTER TABLE `login`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_login_user`);
 
 --
 -- Indices de la tabla `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `user_logued_info`
+--
+ALTER TABLE `user_logued_info`
+  ADD KEY `id_login_user` (`id_login_user`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -188,22 +142,32 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT de la tabla `bouquet_order`
 --
 ALTER TABLE `bouquet_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_login_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `user_logued_info`
+--
+ALTER TABLE `user_logued_info`
+  ADD CONSTRAINT `user_logued_info_ibfk_1` FOREIGN KEY (`id_login_user`) REFERENCES `login` (`id_login_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

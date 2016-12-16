@@ -61,10 +61,10 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
 
-                $query = "SELECT * FROM login WHERE user = :user AND pass = :pass";
+                $query = "SELECT * FROM login WHERE user_name = :user_name AND password = :password";
                 $dataBaseServicesBLL->ArrayParameters = array(
-                    ':user' => $itemDTO->UserName, 
-					':pass' =>$itemDTO->Password);
+                    ':user_name' => $itemDTO->UserName, 
+					':password' =>$itemDTO->Password);
 
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
                 if($responseDTO->HasError)
