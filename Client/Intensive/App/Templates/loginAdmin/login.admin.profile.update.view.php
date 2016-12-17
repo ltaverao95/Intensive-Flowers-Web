@@ -1,159 +1,94 @@
 <div class="row">
     <div class="col-lg-12">
-        <form name="order_detail_form">
-            <div>
-                <label for="order_detail_form_id">Id: </label>
-                <input type="text" 
-                        id="order_detail_form_id"
-                        ng-model="vm.storeModel.Id" 
-                        class="form-control"
-                        name="id" 
-                        readonly>
+        <form name="user_profile_update_form">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <label for="user_profile_update_form_identity_card">Cédula: </label>
+                    <input type="text" 
+                           id="user_profile_update_form_identity_card"
+                           ng-model="vm.loginModel.UserAdminModel.IdentityCard" 
+                           class="form-control" 
+                           name="identity_card"
+                           required>
+                </div>
             </div>
-            <div>
-                <label for="order_detail_form_name">Nombre: </label>
-                <input type="text" 
-                        id="order_detail_form_name"
-                        ng-model="vm.storeModel.Name" 
+            <div class="row">
+                <div class="col-lg-7">
+                    <label for="user_profile_update_form_name">Nombre: </label>
+                    <input type="text" 
+                        id="user_profile_update_form_name"
+                        ng-model="vm.loginModel.UserAdminModel.Name" 
                         class="form-control" 
                         name="name"
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
+                        required>
+                </div>
             </div>
-            <div>
-                <label for="order_detail_form_surname">Apellido: </label>
-                <input type="text" 
-                        id="order_detail_form_surname"
+            <div class="row">
+                <div class="col-lg-7">
+                    <label for="user_profile_update_form_surname">Apellido: </label>
+                    <input type="text" 
+                        id="user_profile_update_form_surname"
                         name="surname"
-                        ng-model="vm.storeModel.Surname" 
-                        class="form-control" 
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
-            </div>
-            <div>
-                <label for="order_detail_form_address_to_send">Dirección de Envío: </label>
-                <input type="text" 
-                        id="order_detail_form_address_to_send"
-                        name="address_to_send"
-                        ng-model="vm.storeModel.AddressToSend" 
-                        class="form-control" 
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
-            </div>
-            <div>
-                <label for="order_detail_form_phone">Teléfono: </label>
-                <input type="text" 
-                        id="order_detail_form_phone"
-                        name="phone"
-                        ng-model="vm.storeModel.Phone" 
-                        class="form-control" 
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
-            </div>
-            <div>
-                <label for="order_detail_form_email">Email: </label>
-                <input type="email" 
-                        id="order_detail_form_email"
-                        name="email"
-                        ng-model="vm.storeModel.Email" 
+                        ng-model="vm.loginModel.UserAdminModel.Surname" 
                         class="form-control"
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
-            </div>
-            <div>
-                <label for="order_detail_form_order_description">Descripción del Pedido: </label>
-                <textarea name="order_description" 
-                            id="order_detail_form_order_description" 
-                            cols="30" 
-                            rows="3"
-                            style="resize: vertical"
-                            class="form-control"
-                            ng-model="vm.storeModel.OrderDescription"
-                            ng-required="!vm.storeModel.IsReadOnlyMode"
-                            ng-readonly="vm.storeModel.IsReadOnlyMode">
-                </textarea>
-            </div>
-            <div>
-                <label for="order_detail_form_store">Tienda: </label>
-                <input type="text" 
-                        id="order_detail_form_store"
-                        name="store"
-                        ng-model="vm.UtilsConstants.StoresList[vm.storeModel.Store].Name"
-                        ng-if="vm.storeModel.IsReadOnlyMode" 
-                        class="form-control" 
-                        readonly>
-
-                <select class="form-control"
-                        id="order_detail_form_store"
-                        name="store"
-                        ng-model="vm.storeModel.Store" 
-                        ng-if="!vm.storeModel.IsReadOnlyMode"
-                        ng-options="store.Id as store.Name for store in vm.UtilsConstants.StoresList"
                         required>
-                    <option value="">Seleccionar</option>
-                </select>
+                </div>
             </div>
-
-            <div>
-                <label for="order_detail_form_way_to_pay">Forma de Pago: </label>
-                <input type="text" 
-                        id="order_detail_form_way_to_pay"
-                        name="way_to_pay"
-                        ng-model="vm.UtilsConstants.WayToPayList[vm.storeModel.WayToPay].Name" 
-                        ng-if="vm.storeModel.IsReadOnlyMode" 
-                        class="form-control" 
-                        readonly>
-
-                <select class="form-control"
-                        id="order_detail_form_way_to_pay"
-                        name="way_to_pay"
-                        ng-model="vm.storeModel.WayToPay" 
-                        ng-options="wayToPay.Id as wayToPay.Name for wayToPay in vm.UtilsConstants.WayToPayList"
-                        ng-if="!vm.storeModel.IsReadOnlyMode"
+            <div class="row">
+                <div class="col-lg-7">
+                    <label for="user_profile_update_form_phone">Teléfono: </label>
+                    <input type="text" 
+                        id="user_profile_update_form_phone"
+                        name="phone"
+                        ng-model="vm.loginModel.UserAdminModel.Phone" 
+                        class="form-control"
                         required>
-                    <option value="">Seleccionar</option>
-                </select>       
+                </div>
             </div>
-            <div>
-                <label for="order_detail_form_date_order">Fecha del Pedido: </label>
-                <input type="date" 
-                        id="order_detail_form_date_order"
-                        ng-model="vm.storeModel.DateOrder" 
-                        class="form-control" 
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
+            <div class="row">
+                <div class="col-lg-7">
+                    <label for="user_profile_update_form_email">Email: </label>
+                    <input type="email" 
+                        id="user_profile_update_form_email"
+                        name="email"
+                        ng-model="vm.loginModel.UserAdminModel.Email" 
+                        class="form-control"
+                        required>
+                </div>
             </div>
-            <div>
-                <label for="order_detail_form_date_to_send">Fecha de Entrega: </label>
-                <input type="date" 
-                        id="order_detail_form_date_to_send"
-                        name="date_to_send"
-                        ng-model="vm.storeModel.DateToSend" 
-                        class="form-control" 
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
-            </div>
-            <div>
-                <label for="order_detail_form_time_to_send">Hora de Entrega: </label>
-                <input type="text" 
-                        id="order_detail_form_time_to_send"
-                        name="time_to_send"
-                        ng-model="vm.storeModel.TimeToSend" 
-                        class="form-control" 
-                        ng-required="!vm.storeModel.IsReadOnlyMode"
-                        ng-readonly="vm.storeModel.IsReadOnlyMode">
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" 
+                            class="btn btn-primary"
+                            ng-disabled="!user_profile_update_form.$valid"
+                            ng-click="vm.UpdateLoggedUserByID()">
+                        Actualizar Perfil
+                    </button>
+                </div>
             </div>
         </form>
     </div>
 </div>
+
+<hr>
+
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-warning">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Opciones de la Cuenta</h3>
             </div>
-            <div class="panel-body">
-                
+            <div class="panel-body" style="margin: 5px;">
+                <div class="row">
+                    <p>
+                        En esta sección podrás eliminar tu cuenta, recuerda que una vez borrada 
+                        no podrás volver a iniciar sesión en el sitio.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

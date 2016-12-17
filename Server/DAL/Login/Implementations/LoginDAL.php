@@ -20,6 +20,22 @@
             return $responseDTO;
         }
 
+        public function GetUserLoggedInfoByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->GetCurrentLoggedUser($itemDTO);   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function GetOrderByIdentityCard($itemDTO)
         {
 
@@ -32,18 +48,7 @@
 
         public function GetOrderByDateAndStoreName($itemDTO)
         {
-            $responseDTO = new ResponseDTO();
-
-            try
-            {
-                
-            }
-            catch (Exception $e)
-            {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
-            }
-
-            return $responseDTO;
+            
         }
 
         public function GetOrderByStoreName($itemDTO)
@@ -82,6 +87,41 @@
                 
                 session_start();
                 $_SESSION['user_auth'] = $rowUser;
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function GetCurrentLoggedUser($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "SELECT user_logued_inf.*, login_user.* FROM user_logued_info user_logued_inf inner join login login_user on user_logued_inf.id_login_user = login_user.id_login_user WHERE login_user.user_name = :user_name";
+                
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':user_name' => $itemDTO->UserName);
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		//Recuperar los registros de la BD
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
+
+                $responseDTO = $getDataServiceDAL->GetLoggedUserItems($result);
 
                 $dataBaseServicesBLL->connection = null;
             }

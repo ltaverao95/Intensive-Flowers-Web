@@ -15,7 +15,9 @@
 					</div>
 					<div class="panel-body" style="padding: 0px;">
 						<ul class="nav nav-pills nav-stacked">
-							<li role="presentation" ui-sref="intensive.activities.profile.update" ui-sref-active="active" class="active">
+							<li role="presentation" 
+								ui-sref="intensive.activities.profile.update" 
+								ui-sref-active="active">
 								<a>Información Personal</a>
 							</li>
 							<li role="presentation" 
@@ -31,7 +33,9 @@
 			<div class="col-lg-9">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<div ui-view></div>
+						<div ui-view>
+							
+						</div>
 					</div>
 				</div>
 			</div>

@@ -136,6 +136,51 @@
             return $responseDTO;
         }
 
+        public function GetLoggedUserItems($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO == null)
+                {
+                    $responseDTO->SetError("No se encontraron resultados");
+                    return $responseDTO;
+                }
+
+                $itemsList = array();
+                while ($row = array_shift($itemDTO)) 
+                {
+                    $loginDTO = new LoginDTO();
+                    $loginDTO->UserAdminDTO = new UserAdminDTO();
+
+                    $loginDTO->IDLoginUser = $row['id_login_user'];
+                    $loginDTO->UserAdminDTO->IDLoginUser = $row['id_login_user'];
+                    $loginDTO->UserAdminDTO->IdentityCard = $row['identity_card'];
+                    $loginDTO->UserAdminDTO->Name = $row['name'];
+                    $loginDTO->UserAdminDTO->Surname = $row['surname'];
+                    $loginDTO->UserAdminDTO->Phone = $row['phone'];
+                    $loginDTO->UserAdminDTO->Email = $row['email'];
+
+                    array_push($itemsList, $loginDTO);
+                }
+
+                if($itemsList == null)
+                {
+                    $responseDTO->SetError("No se encontraron registros para mostrar");
+                    return $responseDTO;
+                } 
+                
+                $responseDTO->ResponseData = $itemsList;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         //######### Private Methods
 
 

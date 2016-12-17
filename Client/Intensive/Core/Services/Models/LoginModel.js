@@ -35,6 +35,7 @@
 
                 SignIn: SignIn,
                 LogOut: LogOut,
+                GetUserLoggedInfoByID: GetUserLoggedInfoByID,
                 ValidateUser: ValidateUser
 
             }, dataDTO);
@@ -59,6 +60,22 @@
                 {
                     url: CoreConstants.LoginServiceURL.LOG_OUT_URL,
                     method: 'GET'
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function GetUserLoggedInfoByID()
+            {
+                var requestParamsObj = 
+                {
+                    url: CoreConstants.LoginServiceURL.GET_USER_LOGGED_INFO_BY_ID_URL,
+                    method: 'POST',
+                    data: angular.toJson(
+                        {
+                            UserName: _self.UserName
+                        }
+                    )
                 };
 
                 return DoRequestToServer(requestParamsObj);
@@ -110,7 +127,7 @@
                     return;
                 }
 
-                _self.UserAdminModel = new UserAdminModel(dataDTO.UserAdminModel);
+                _self.UserAdminModel = new UserAdminModel(dataDTO.UserAdminDTO);
             }
 
             Initialize();

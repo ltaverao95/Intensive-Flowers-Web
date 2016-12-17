@@ -17,7 +17,6 @@
                             <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 <input type="checkbox" ng-model="vm.contactModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllContacts()">
                             </th>
-                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>Celular</th>
@@ -28,7 +27,6 @@
                             <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 <input type="checkbox" ng-model="user.Selected" ng-change="vm.ContactSelectedChanged(user)">
                             </td>
-                            <td>{{user.Id}}</td>
                             <td>{{user.Name}}</td>
                             <td>{{user.Email}}</td>
                             <td>{{user.Phone}}</td>

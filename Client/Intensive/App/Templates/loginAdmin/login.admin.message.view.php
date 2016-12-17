@@ -17,7 +17,6 @@
                             <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 <input type="checkbox" ng-model="vm.messageModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllMessages()">
                             </th>
-                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Comentario</th>
                             <th>Acciones</th>
@@ -25,9 +24,6 @@
                         <tbody ng-repeat="message in vm.messageModel.MessagesList  | pagination: vm.messageModel.PaginatorModel.CurrentPage * vm.messageModel.PaginatorModel.PageSize | limitTo: vm.messageModel.PaginatorModel.PageSize | filter: vm.searchMessage"> 
                             <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 <input type="checkbox" ng-model="message.Selected" ng-change="vm.MessageSelectedChanged(message)">
-                            </td>
-                            <td>
-                                {{message.Id}}
                             </td>
                             <td>
                                 {{message.Name}}

@@ -9,7 +9,9 @@
 		MESSAGE_FILES_BASE_PATH: 'Message/',
 		STORE_FILES_BASE_PATH: 'Store/',
 		CONTACT_FILES_BASE_PATH: 'Contact/',
-		LOGIN_FILES_BASE_PATH: 'Login/'
+		LOGIN_FILES_BASE_PATH: 'Login/',
+
+		UserLoggedInfoKey: 'UserLoggedInfo'
 	};
 
 	CoreConstants.MESSAGE_FILES_NAMES = {
@@ -45,7 +47,8 @@
 
 	CoreConstants.LOGIN_FILES_NAMES = {
 		SIGN_IN_FILE: CoreConstants.LOGIN_FILES_BASE_PATH + 'SignIn.php',
-		LOG_OUT_FILE: CoreConstants.LOGIN_FILES_BASE_PATH + 'LogOut.php'
+		LOG_OUT_FILE: CoreConstants.LOGIN_FILES_BASE_PATH + 'LogOut.php',
+		GET_USER_LOGGED_INFO_BY_ID_FILE: CoreConstants.LOGIN_FILES_BASE_PATH + 'GetUserLoggedInfoByID.php'
 	};
 
 	CoreConstants.MessageServiceURL = {
@@ -82,6 +85,7 @@
 	CoreConstants.LoginServiceURL = {
 		SIGN_IN_URL: CoreConstants.SERVER_API_RELATIVE_PATH + CoreConstants.LOGIN_FILES_NAMES.SIGN_IN_FILE,
 		LOG_OUT_URL: CoreConstants.SERVER_API_RELATIVE_PATH + CoreConstants.LOGIN_FILES_NAMES.LOG_OUT_FILE,
+		GET_USER_LOGGED_INFO_BY_ID_URL: CoreConstants.SERVER_API_RELATIVE_PATH + CoreConstants.LOGIN_FILES_NAMES.GET_USER_LOGGED_INFO_BY_ID_FILE
 	};
 
 	angular

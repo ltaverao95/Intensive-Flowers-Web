@@ -8,11 +8,13 @@
 
 	IntensiveConfig.$inject = [
 		'$stateProvider',
-		'$urlRouterProvider'
+		'$urlRouterProvider',
+		'localStorageServiceProvider'
 	];	
 
 	function IntensiveConfig($stateProvider,
-						   	 $urlRouterProvider)
+						   	 $urlRouterProvider,
+							 localStorageServiceProvider)
 	{
 		var folderTemplatesPath = "Client/Intensive/App/Templates/";
 
@@ -170,20 +172,22 @@
 			})
 
 			.state('intensive.activities.profile.update', {
-				url: '/update',
 				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.profile.update.view.php',
 				controller: 'Intensive.App.LoginProfileUpdateAdminController',
 				controllerAs: 'vm'					
 			})
 
 			.state('intensive.activities.profile.usersadministration', {
-				url: '/usersadministration',
 				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.profile.usersadministration.view.php',
 				controller: 'Intensive.App.LoginProfileUsersAdminController',
 				controllerAs: 'vm'					
 			})
 
 		$urlRouterProvider.otherwise('/');	
+
+		localStorageServiceProvider.setPrefix('Intensive.App')
+    							   .setStorageType('sessionStorage')
+    							   .setNotify(true, true)
 	};
 
 })();

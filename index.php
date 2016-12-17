@@ -13,6 +13,7 @@
 
     <!--Angular Libraries-->
     <script src="Client/Intensive/App/lib/angular/angular.min.js"></script>
+    <script src="Client/Intensive/App/lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
     <script src="Client/Intensive/App/lib/angular-ui-router/release/angular-ui-router.js"></script>   
     <script src="Client/Intensive/App/lib/angular-animate/angular-animate.js"></script>
     <script src="Client/Intensive/App/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>

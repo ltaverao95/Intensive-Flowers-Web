@@ -8,6 +8,11 @@
         {
         }
 
+        public function GetUserLoggedInfoByID($itemDTO)
+        {
+           
+        }
+
         public function GetOrderByIdentityCard($itemDTO)
         {
             $responseDTO = new ResponseDTO();

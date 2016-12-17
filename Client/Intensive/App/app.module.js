@@ -8,6 +8,7 @@
 			'ngAnimate',
 			'ui.bootstrap',
 			'toaster',
+			'LocalStorageModule',
 			
 			'Intensive.Blocks.Utils',
 			'Intensive.Blocks.Log',

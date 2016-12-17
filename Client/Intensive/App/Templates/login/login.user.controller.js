@@ -8,15 +8,18 @@
 
 	LoginUserController.$inject = [
 		'$window',
+		'localStorageService',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Blocks.Utils.Constants',
+		'Intensive.Core.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
-
 	];	
 
 	function LoginUserController($window,
+								 localStorageService,
 								 LoginModel,
 							 	 UtilsConstants,
+								 CoreConstants,
 							 	 UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
@@ -42,6 +45,8 @@
 						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
 						return;
 					}
+
+					localStorageService.set(CoreConstants.UserLoggedInfoKey, vm.loginModel.UserName);
 
 					$window.location.reload();
 				},

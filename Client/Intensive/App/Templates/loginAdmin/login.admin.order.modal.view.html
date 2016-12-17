@@ -13,13 +13,14 @@
         
     <form name="order_detail_form">
         <div>
-            <label for="order_detail_form_id">Id: </label>
+            <label for="order_detail_form_identity_card">Cédula: </label>
             <input type="text" 
-                   id="order_detail_form_id"
-                   ng-model="vm.storeModel.Id" 
-                   class="form-control"
-                   name="id" 
-                   readonly>
+                    id="order_detail_form_identity_card"
+                    ng-model="vm.storeModel.IdentityCard" 
+                    class="form-control" 
+                    name="identity_card"
+                    ng-required="!vm.storeModel.IsReadOnlyMode"
+                    ng-readonly="vm.storeModel.IsReadOnlyMode">
         </div>
         <div>
             <label for="order_detail_form_name">Nombre: </label>
