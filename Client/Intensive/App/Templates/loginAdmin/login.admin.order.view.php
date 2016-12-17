@@ -14,8 +14,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
-
-                            <th ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
+                            <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 <input type="checkbox" ng-model="vm.storeModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllOrders()">
                             </th>
 
@@ -35,7 +34,7 @@
                         </thead>
                         <tbody ng-repeat="order in vm.storeModel.OrdersList | pagination: vm.storeModel.PaginatorModel.CurrentPage * vm.storeModel.PaginatorModel.PageSize | limitTo: vm.storeModel.PaginatorModel.PageSize | filter: vm.searchOrder" 
                                ng-class="{'tableTdColor': $index % 2 != 0}">
-                            <td ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
+                            <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 <input type="checkbox" ng-model="order.Selected" ng-change="vm.OrderSelectedChanged(order)">
                             </td>
                             <td>{{order.IdentityCard}}</td>
@@ -53,11 +52,11 @@
                             <td>
                                 <button class="btn btn-danger glyphicon glyphicon-trash" 
                                         ng-click="vm.DeleteOrderByID(order)"
-                                        ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
+                                        ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                                 </button>
                                 <button class="btn btn-success glyphicon glyphicon-edit" 
                                         ng-click="vm.UpdateOrder(order)"
-                                        ng-if="<?php $_SESSION['user_auth'][2] !== 'reader'?>">
+                                        ng-if="<?php echo $_SESSION['user_auth'][3] != 'reader'?>">
                                 </button>
                                 <button class="btn btn-primary glyphicon glyphicon-eye-open" 
                                         ng-click="vm.ViewOrderByID(order)">
@@ -81,7 +80,7 @@
                       ng-click="vm.storeModel.PaginatorModel.CurrentPageChanged(true)">Siguiente &gt;
                 </button>
             </div>
-            <div ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
+            <div ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
                 <button class="btn btn-success" ng-click="vm.DeleteAllOrders()">Borrar todos</button>
                 <button class="btn btn-success" ng-click="vm.DeleteOrdersSelected()">Borrar Seleccionados</button>
             </div>         

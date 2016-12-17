@@ -21,7 +21,7 @@
 							<li role="presentation" 
 								ui-sref="intensive.activities.profile.usersadministration" 
 								ui-sref-active="active"
-								ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
+								ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
 								<a>Listado de Usuarios</a>
 							</li>
 						</ul>
