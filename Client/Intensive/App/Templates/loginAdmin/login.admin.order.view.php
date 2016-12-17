@@ -1,7 +1,7 @@
 <?php
 	session_start();
 
-	if(isset($_SESSION['admin']))
+	if(isset($_SESSION['user_auth']))
     {  
 ?>
 
@@ -14,9 +14,11 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
-                            <th>
+
+                            <th ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
                                 <input type="checkbox" ng-model="vm.storeModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllOrders()">
                             </th>
+
                             <th>Cédula</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
@@ -33,7 +35,7 @@
                         </thead>
                         <tbody ng-repeat="order in vm.storeModel.OrdersList | pagination: vm.storeModel.PaginatorModel.CurrentPage * vm.storeModel.PaginatorModel.PageSize | limitTo: vm.storeModel.PaginatorModel.PageSize | filter: vm.searchOrder" 
                                ng-class="{'tableTdColor': $index % 2 != 0}">
-                            <td>
+                            <td ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
                                 <input type="checkbox" ng-model="order.Selected" ng-change="vm.OrderSelectedChanged(order)">
                             </td>
                             <td>{{order.IdentityCard}}</td>
@@ -49,9 +51,17 @@
                             <td>{{order.DateToSend}}</td>
                             <td>{{order.TimeToSend}}</td>
                             <td>
-                                <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="vm.DeleteOrderByID(order)"></button>
-                                <button class="btn btn-success glyphicon glyphicon-edit" ng-click="vm.UpdateOrder(order)"></button>
-                                <button class="btn btn-primary glyphicon glyphicon-eye-open" ng-click="vm.ViewOrderByID(order)"></button>
+                                <button class="btn btn-danger glyphicon glyphicon-trash" 
+                                        ng-click="vm.DeleteOrderByID(order)"
+                                        ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
+                                </button>
+                                <button class="btn btn-success glyphicon glyphicon-edit" 
+                                        ng-click="vm.UpdateOrder(order)"
+                                        ng-if="<?php $_SESSION['user_auth'][2] !== 'reader'?>">
+                                </button>
+                                <button class="btn btn-primary glyphicon glyphicon-eye-open" 
+                                        ng-click="vm.ViewOrderByID(order)">
+                                </button>
                             </td>
                         </tbody>
                     </table>
@@ -71,7 +81,7 @@
                       ng-click="vm.storeModel.PaginatorModel.CurrentPageChanged(true)">Siguiente &gt;
                 </button>
             </div>
-            <div>
+            <div ng-if="<?php $_SESSION['user_auth'][2] == 'admin'?>">
                 <button class="btn btn-success" ng-click="vm.DeleteAllOrders()">Borrar todos</button>
                 <button class="btn btn-success" ng-click="vm.DeleteOrdersSelected()">Borrar Seleccionados</button>
             </div>         

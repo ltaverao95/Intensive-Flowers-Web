@@ -18,7 +18,7 @@
             angular.extend(this, {
 
                 IDLoginUser: null,
-                IdentityName: null,
+                IdentityCard: null,
                 Name: null,
                 Surname: null,
                 Phone: null,

@@ -131,6 +131,8 @@
     <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.contact.controller.js"></script>
     <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.contact.modal.controller.js"></script>
     <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.profile.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.profile.update.controller.js"></script>
+    <script src="Client/Intensive/App/Templates/loginAdmin/login.admin.profile.usersadministration.controller.js"></script>
 
     <!-- App/Components Models-->
     <script src="Client/Intensive/Core/Services/Models/OperationsModel.js"></script>

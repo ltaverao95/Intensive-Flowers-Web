@@ -81,7 +81,7 @@
                 }
                 
                 session_start();
-                $_SESSION['admin'] = $itemDTO->UserName;
+                $_SESSION['user_auth'] = $rowUser;
 
                 $dataBaseServicesBLL->connection = null;
             }

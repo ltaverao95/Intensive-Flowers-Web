@@ -5,9 +5,9 @@
     <?php 
         session_start(); 
         
-        if(isset($_SESSION['admin']))
+        if(isset($_SESSION['user_auth']))
         {
-            echo "Cadena de Floristerías - ". $_SESSION['admin']; 
+            echo "Cadena de Floristerías - ". $_SESSION['user_auth'][1]; 
         } 
         else
         {
@@ -48,7 +48,7 @@
                 
                 <?php 
 
-                    if(isset($_SESSION['admin']))
+                    if(isset($_SESSION['user_auth']))
                     {
                 ?>
                     <li>

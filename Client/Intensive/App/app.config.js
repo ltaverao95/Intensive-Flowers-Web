@@ -169,6 +169,20 @@
 				controllerAs: 'vm'					
 			})
 
+			.state('intensive.activities.profile.update', {
+				url: '/update',
+				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.profile.update.view.php',
+				controller: 'Intensive.App.LoginProfileUpdateAdminController',
+				controllerAs: 'vm'					
+			})
+
+			.state('intensive.activities.profile.usersadministration', {
+				url: '/usersadministration',
+				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.profile.usersadministration.view.php',
+				controller: 'Intensive.App.LoginProfileUsersAdminController',
+				controllerAs: 'vm'					
+			})
+
 		$urlRouterProvider.otherwise('/');	
 	};
 
