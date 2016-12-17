@@ -13,6 +13,8 @@ Using a PHP data layer to perform structure and usability in application.
 
 ## Steps To Configurate Project
 1. Create a database in PHPMyAdmin with the name **intensiveflowers**.
-2. Import [DataBase File](Server/App_Data/DataBase_Backup) in your PHPMyAdmin.
+2. Import [DataBase File](Server/App_Data/DataBase_Backup) in your PHPMyAdmin with the name *intensiveflowers.sql*.
+3. Go to **login** table and create 3 users setting up roles with admin, editor and reader.
+4. Go to **user_logued_info** table and fill user info.
 3. Clone Repository.
 4. Open project with your prefered editor and run **bower install** to install dependencies.

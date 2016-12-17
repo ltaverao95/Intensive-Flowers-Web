@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-12-2016 a las 02:55:51
+-- Tiempo de generación: 17-12-2016 a las 05:11:09
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -65,15 +65,9 @@ CREATE TABLE `contact` (
 CREATE TABLE `login` (
   `id_login_user` int(11) NOT NULL,
   `user_name` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(15) COLLATE utf8_unicode_ci NOT NULL
+  `password` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `user_role` varchar(30) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `login`
---
-
-INSERT INTO `login` (`id_login_user`, `user_name`, `password`) VALUES
-(1, 'admin', 'admin2016');
 
 -- --------------------------------------------------------
 
@@ -95,9 +89,11 @@ CREATE TABLE `message` (
 
 CREATE TABLE `user_logued_info` (
   `id_login_user` int(11) NOT NULL,
+  `identity_card` varchar(13) NOT NULL,
   `name` varchar(70) NOT NULL,
   `surname` varchar(80) NOT NULL,
-  `phone` int(12) NOT NULL
+  `phone` varchar(13) NOT NULL,
+  `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -152,7 +148,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT de la tabla `login`
 --
 ALTER TABLE `login`
-  MODIFY `id_login_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_login_user` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `message`
 --
@@ -166,7 +162,7 @@ ALTER TABLE `message`
 -- Filtros para la tabla `user_logued_info`
 --
 ALTER TABLE `user_logued_info`
-  ADD CONSTRAINT `user_logued_info_ibfk_1` FOREIGN KEY (`id_login_user`) REFERENCES `login` (`id_login_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_logued_info_ibfk_1` FOREIGN KEY (`id_login_user`) REFERENCES `login` (`id_login_user`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
