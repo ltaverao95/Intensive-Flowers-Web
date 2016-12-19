@@ -46,7 +46,7 @@
 						return;
 					}
 
-					localStorageService.set(CoreConstants.UserLoggedInfoKey, vm.loginModel.UserName);
+					localStorageService.set(CoreConstants.UserLoggedInfoKey, responseDTO.ResponseData);
 
 					$window.location.reload();
 				},

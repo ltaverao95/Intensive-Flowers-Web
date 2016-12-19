@@ -73,7 +73,7 @@
                     method: 'POST',
                     data: angular.toJson(
                         {
-                            UserName: _self.UserName
+                            IDLoginUser: _self.IDLoginUser
                         }
                     )
                 };

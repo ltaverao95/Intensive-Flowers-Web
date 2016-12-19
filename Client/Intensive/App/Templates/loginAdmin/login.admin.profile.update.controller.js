@@ -37,7 +37,7 @@
 
 		function GetUserLoggedInfoByID()
 		{
-			vm.loginModel.UserName = localStorageService.get(CoreConstants.UserLoggedInfoKey);
+			vm.loginModel.IDLoginUser = localStorageService.get(CoreConstants.UserLoggedInfoKey);
 
 			vm.loginModel.GetUserLoggedInfoByID().then(
 				responseDTO =>

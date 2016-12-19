@@ -53,7 +53,7 @@
 
             try
             {
-                $responseDTO = $this->ValidateCurrentUserName($itemDTO);
+                $responseDTO = $this->ValidateCurrentUserID($itemDTO);
                 if($responseDTO->HasError)
                 {
                     return $responseDTO;
@@ -128,15 +128,15 @@
             return $responseDTO;
         }
 
-        private function ValidateCurrentUserName($itemDTO)
+        private function ValidateCurrentUserID($itemDTO)
         {
             $responseDTO = new ResponseDTO();
 
             try
             {
-                if($itemDTO->UserName == null)
+                if($itemDTO->IDLoginUser == null)
                 {
-                    $responseDTO->SetError("El campo de usuario no puede estar vacío");
+                    $responseDTO->SetError("El id no puede estar vacío");
                     return $responseDTO;
                 }
             }

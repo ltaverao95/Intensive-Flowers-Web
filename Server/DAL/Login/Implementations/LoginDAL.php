@@ -88,6 +88,8 @@
                 session_start();
                 $_SESSION['user_auth'] = $rowUser;
 
+                $responseDTO->ResponseData = $rowUser[0];
+
                 $dataBaseServicesBLL->connection = null;
             }
             catch (Exception $e)
@@ -107,10 +109,10 @@
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
                 $getDataServiceDAL = new GetDataServiceDAL();
 
-                $query = "SELECT user_logued_inf.*, login_user.* FROM user_logued_info user_logued_inf inner join login login_user on user_logued_inf.id_login_user = login_user.id_login_user WHERE login_user.user_name = :user_name";
+                $query = "SELECT user_logued_inf.*, login_user.* FROM user_logued_info user_logued_inf inner join login login_user on user_logued_inf.id_login_user = login_user.id_login_user WHERE login_user.id_login_user = :id_login_user";
                 
                 $dataBaseServicesBLL->ArrayParameters = array(
-                    ':user_name' => $itemDTO->UserName);
+                    ':id_login_user' => $itemDTO->IDLoginUser);
 
                 $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
                 if($responseDTO->HasError)
