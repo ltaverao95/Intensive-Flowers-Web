@@ -69,6 +69,29 @@
             return $responseDTO;
         }
 
+        public function UpdateUserLoggedInfoByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateLoginDTO($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->UpdateUserLoggedInfoByID($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function GetOrderByIdentityCard($itemDTO)
         {
             
@@ -137,6 +160,50 @@
                 if($itemDTO->IDLoginUser == null)
                 {
                     $responseDTO->SetError("El id no puede estar vacío");
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateLoginDTO($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->UserAdminModel->IdentityCard == null)
+                {
+                    $responseDTO->SetError("La cédula no puede estar vacía");
+                    return $responseDTO;
+                }
+
+                if($itemDTO->UserAdminModel->Name == null)
+                {
+                    $responseDTO->SetError("El nombre de usuario no puede estar vacío");
+                    return $responseDTO;
+                }
+
+                if($itemDTO->UserAdminModel->Surname == null)
+                {
+                    $responseDTO->SetError("El apellido no puede estar vacío");
+                    return $responseDTO;
+                }
+
+                if($itemDTO->UserAdminModel->Phone == null)
+                {
+                    $responseDTO->SetError("El teléfono no puede estar vacío");
+                    return $responseDTO;
+                }
+
+                if($itemDTO->UserAdminModel->Email == null)
+                {
+                    $responseDTO->SetError("El correo electrónico no puede estar vacío");
                     return $responseDTO;
                 }
             }

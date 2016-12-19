@@ -36,6 +36,22 @@
             return $responseDTO;
         }
 
+        public function UpdateUserLoggedInfoByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->UpdateCurrentLoggedUser($itemDTO);   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function GetOrderByIdentityCard($itemDTO)
         {
 
@@ -130,6 +146,42 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function UpdateCurrentLoggedUser($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+                $query = "UPDATE user_logued_info SET identity_card = :identity_card, name = :name, surname = :surname, phone = :phone, email = :email WHERE id_login_user = :id_login_user;";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id_login_user' => $itemDTO->IDLoginUser,
+                    ':identity_card' => $itemDTO->UserAdminModel->IdentityCard,
+                    ':name' => $itemDTO->UserAdminModel->Name,
+                    ':surname' => $itemDTO->UserAdminModel->Surname,
+                    ':phone' => $itemDTO->UserAdminModel->Phone,
+                    ':email' => $itemDTO->UserAdminModel->Email
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Registro actualizado!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;

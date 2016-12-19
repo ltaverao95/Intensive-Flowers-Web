@@ -30,7 +30,22 @@
 
 		function UpdateLoggedUserByID()
 		{
+			vm.loginModel.UpdateLoggedUserByID().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
 
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
 		}
 
 		//####### Private Methods

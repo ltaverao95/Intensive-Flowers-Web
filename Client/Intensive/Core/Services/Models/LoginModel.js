@@ -36,6 +36,7 @@
                 SignIn: SignIn,
                 LogOut: LogOut,
                 GetUserLoggedInfoByID: GetUserLoggedInfoByID,
+                UpdateLoggedUserByID: UpdateLoggedUserByID,
                 ValidateUser: ValidateUser
 
             }, dataDTO);
@@ -76,6 +77,19 @@
                             IDLoginUser: _self.IDLoginUser
                         }
                     )
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function UpdateLoggedUserByID()
+            {
+                console.log(angular.toJson(_self));
+                var requestParamsObj = 
+                {
+                    url: CoreConstants.LoginServiceURL.UPDATE_USER_LOGGED_INFO_BY_ID_URL,
+                    method: 'POST',
+                    data: angular.toJson(_self)
                 };
 
                 return DoRequestToServer(requestParamsObj);
