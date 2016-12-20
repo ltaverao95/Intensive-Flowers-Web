@@ -1,6 +1,7 @@
 <?php  
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
+	include_once("../../Utils/Libraries/CrudLibraries.php");
 	include_once("../../Utils/Libraries/AdministrationLibraries.php");
 	include_once("../../Utils/Libraries/LoginLibraries.php");
 
@@ -13,7 +14,7 @@
 		$requestJson = file_get_contents("php://input");
 	    $requestDTO = json_decode($requestJson);
 
-		$responseDTO = $loginBLL->UpdateUserLoggedInfoByID($requestDTO);
+		$responseDTO = $loginBLL->UpdateItemByID($requestDTO);
 	} 
 	catch (Exception $e) 
 	{

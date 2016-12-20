@@ -37,6 +37,7 @@
                 LogOut: LogOut,
                 GetUserLoggedInfoByID: GetUserLoggedInfoByID,
                 UpdateLoggedUserByID: UpdateLoggedUserByID,
+                DeleteCurrentAccount: DeleteCurrentAccount,
                 ValidateUser: ValidateUser
 
             }, dataDTO);
@@ -84,10 +85,21 @@
 
             function UpdateLoggedUserByID()
             {
-                console.log(angular.toJson(_self));
                 var requestParamsObj = 
                 {
                     url: CoreConstants.LoginServiceURL.UPDATE_USER_LOGGED_INFO_BY_ID_URL,
+                    method: 'POST',
+                    data: angular.toJson(_self)
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function DeleteCurrentAccount()
+            {
+                var requestParamsObj = 
+                {
+                    url: CoreConstants.LoginServiceURL.DELETE_USER_LOGGED_INFO_BY_ID_URL,
                     method: 'POST',
                     data: angular.toJson(_self)
                 };

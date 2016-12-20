@@ -45,6 +45,11 @@
             return $responseDTO;
         }
 
+        public function GetItemByID($itemDTO)
+        {
+            
+        }
+
         public function UpdateItemByID($messageDTO)
         {
             $responseDTO = new ResponseDTO();

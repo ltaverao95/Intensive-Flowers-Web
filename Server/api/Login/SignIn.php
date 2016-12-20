@@ -1,6 +1,7 @@
 <?php  
 	
 	include_once("../../Utils/Libraries/CoreLibraries.php");
+	include_once("../../Utils/Libraries/CrudLibraries.php");
 	include_once("../../Utils/Libraries/AdministrationLibraries.php");
 	include_once("../../Utils/Libraries/LoginLibraries.php");
 

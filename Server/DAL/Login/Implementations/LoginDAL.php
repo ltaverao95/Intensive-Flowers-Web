@@ -1,8 +1,8 @@
 <?php 
 
-    class LoginDAL implements IAdministrationServicesDAL
+    class LoginDAL implements IAdministrationServicesDAL, ICommonServicesDAL
     {
-        //########## Public Methods
+        //##### IAdministrationServicesDAL implementations #####
 
         public function SignIn($itemDTO)
         {
@@ -22,34 +22,7 @@
 
         public function GetUserLoggedInfoByID($itemDTO)
         {
-            $responseDTO = new ResponseDTO();
-
-            try
-            {
-                $responseDTO = $this->GetCurrentLoggedUser($itemDTO);   
-            }
-            catch (Exception $e)
-            {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
-            }
-
-            return $responseDTO;
-        }
-
-        public function UpdateUserLoggedInfoByID($itemDTO)
-        {
-            $responseDTO = new ResponseDTO();
-
-            try
-            {
-                $responseDTO = $this->UpdateCurrentLoggedUser($itemDTO);   
-            }
-            catch (Exception $e)
-            {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
-            }
-
-            return $responseDTO;
+            
         }
 
         public function GetOrderByIdentityCard($itemDTO)
@@ -68,6 +41,70 @@
         }
 
         public function GetOrderByStoreName($itemDTO)
+        {
+            
+        }
+
+        //##### ICommonServicesDAL implementations #####
+
+        public function SaveItem($itemDTO)
+        {
+            
+        }
+
+        public function GetAllItems()
+        {
+            
+        }
+
+        public function GetItemByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->GetCurrentLoggedUser($itemDTO);   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de obtener los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        public function UpdateItemByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->UpdateCurrentLoggedUser($itemDTO);   
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema tratando de actualizar los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        public function DeleteAllItems()
+        {
+
+        }
+
+        public function DeleteItemByID($itemDTO)
+        {
+            
+        }
+
+        public function DeleteItemsSelected($itemDTO)
+        {
+            
+        }
+
+        public function ValidateLastRecordToResetAutoIncement()
         {
             
         }

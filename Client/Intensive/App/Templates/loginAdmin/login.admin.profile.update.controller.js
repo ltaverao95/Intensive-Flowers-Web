@@ -25,6 +25,7 @@
 		vm.loginModel = new LoginModel();
 
 		vm.UpdateLoggedUserByID = UpdateLoggedUserByID;
+		vm.DeleteCurrentAccount = DeleteCurrentAccount;
 		
 		//####### Public Methods
 
@@ -43,6 +44,26 @@
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
+		}
+
+		function DeleteCurrentAccount()
+		{
+			vm.loginModel.DeleteCurrentAccount().then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
 					console.log(error);
 				}
 			);

@@ -89,6 +89,16 @@
                         no podrás volver a iniciar sesión en el sitio.
                     </p>
                 </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" 
+                                class="btn btn-danger pull-right"
+                                ng-click="vm.DeleteCurrentAccount()">
+                                Borrar mi cuenta
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

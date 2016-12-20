@@ -12,16 +12,6 @@
         {
         }
 
-        public function GetUserLoggedInfoByID($itemDTO)
-        {
-            
-        }
-
-        public function UpdateUserLoggedInfoByID($itemDTO)
-        {
-            
-        }
-
         public function GetOrderByIdentityCard($itemDTO)
         {
             $responseDTO = new ResponseDTO();

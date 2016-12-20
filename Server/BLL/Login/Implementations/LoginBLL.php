@@ -1,8 +1,8 @@
 <?php 
 
-    class LoginBLL implements IAdministrationServicesBLL
+    class LoginBLL implements IAdministrationServicesBLL, ICommonServicesBLL
     {
-        //##### Public Methods #####
+        //##### IAdministrationServicesBLL implementations #####
 
         public function SignIn($itemDTO)
         {
@@ -46,52 +46,6 @@
             return $responseDTO;
         }
 
-        public function GetUserLoggedInfoByID($itemDTO)
-        {
-            $responseDTO = new ResponseDTO();
-            $loginDAL = new LoginDAL();
-
-            try
-            {
-                $responseDTO = $this->ValidateCurrentUserID($itemDTO);
-                if($responseDTO->HasError)
-                {
-                    return $responseDTO;
-                }
-
-                $responseDTO = $loginDAL->GetUserLoggedInfoByID($itemDTO);
-            }
-            catch (Exception $e)
-            {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
-            }
-
-            return $responseDTO;
-        }
-
-        public function UpdateUserLoggedInfoByID($itemDTO)
-        {
-            $responseDTO = new ResponseDTO();
-            $loginDAL = new LoginDAL();
-
-            try
-            {
-                $responseDTO = $this->ValidateLoginDTO($itemDTO);
-                if($responseDTO->HasError)
-                {
-                    return $responseDTO;
-                }
-
-                $responseDTO = $loginDAL->UpdateUserLoggedInfoByID($itemDTO);
-            }
-            catch (Exception $e)
-            {
-                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
-            }
-
-            return $responseDTO;
-        }
-
         public function GetOrderByIdentityCard($itemDTO)
         {
             
@@ -119,6 +73,79 @@
         }
 
         public function GetOrderByStoreName($itemDTO)
+        {
+            
+        }
+
+        //##### ICommonServicesBLL implementations #####
+
+        public function SaveItem($itemDTO)
+        {
+            
+        }
+
+        public function GetAllItems()
+        {
+            
+        }
+
+        public function GetItemByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateCurrentUserID($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->GetItemByID($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        public function UpdateItemByID($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateLoginDTO($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->UpdateItemByID($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        public function DeleteAllItems()
+        {
+
+        }
+
+        public function DeleteItemByID($itemDTO)
+        {
+            
+        }
+
+        public function DeleteItemsSelected($itemDTO)
         {
             
         }

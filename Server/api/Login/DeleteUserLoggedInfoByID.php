@@ -18,7 +18,7 @@
 	} 
 	catch (Exception $e) 
 	{
-		$responseDTO->SetErrorAndStackTrace("Ocurrió un problema obteniendo los datos", $e->getMessage());		
+		$responseDTO->SetErrorAndStackTrace("Ocurrió un problema eliminando los datos", $e->getMessage());		
 	}
 
 	echo json_encode($responseDTO);
