@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2016 a las 05:11:09
+-- Tiempo de generación: 21-12-2016 a las 04:22:22
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -162,7 +162,7 @@ ALTER TABLE `message`
 -- Filtros para la tabla `user_logued_info`
 --
 ALTER TABLE `user_logued_info`
-  ADD CONSTRAINT `user_logued_info_ibfk_1` FOREIGN KEY (`id_login_user`) REFERENCES `login` (`id_login_user`);
+  ADD CONSTRAINT `user_logued_info_ibfk_1` FOREIGN KEY (`id_login_user`) REFERENCES `login` (`id_login_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

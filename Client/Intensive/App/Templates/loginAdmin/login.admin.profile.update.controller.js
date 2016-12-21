@@ -7,13 +7,17 @@
 		.controller('Intensive.App.LoginProfileUpdateAdminController', LoginProfileUpdateAdminController);
 
 	LoginProfileUpdateAdminController.$inject = [
+		'$window',
+		'$state',
 		'localStorageService',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Core.Constants',
 		'Intensive.Blocks.Messages.UserMessagesFactory'		
 	];	
 
-	function LoginProfileUpdateAdminController(localStorageService,
+	function LoginProfileUpdateAdminController($window,
+											   $state,
+											   localStorageService,
 											   LoginModel,
 											   CoreConstants,
 											   UserMessagesFactory)
@@ -51,6 +55,13 @@
 
 		function DeleteCurrentAccount()
 		{
+			var response = confirm("¿Estas seguro que deseas eliminar todos los registros?");
+
+			if(!response)
+			{
+				return;
+			}
+
 			vm.loginModel.DeleteCurrentAccount().then(
 				responseDTO =>
 				{
@@ -61,6 +72,8 @@
 					}
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+					$state.go('intensive.home', {}, {reload: true});
+					$window.location.reload();
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });

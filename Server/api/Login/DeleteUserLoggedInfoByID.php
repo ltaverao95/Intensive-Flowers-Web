@@ -14,7 +14,7 @@
 		$requestJson = file_get_contents("php://input");
 	    $requestDTO = json_decode($requestJson);
 
-		$responseDTO = $loginBLL->GetItemByID($requestDTO);
+		$responseDTO = $loginBLL->DeleteItemByID($requestDTO);
 	} 
 	catch (Exception $e) 
 	{

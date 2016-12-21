@@ -142,7 +142,26 @@
 
         public function DeleteItemByID($itemDTO)
         {
-            
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $loginDAL = new LoginDAL();
+
+                $responseDTO = $this->ValidateCurrentUserID($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->DeleteItemByID($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteItemsSelected($itemDTO)

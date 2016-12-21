@@ -96,7 +96,30 @@
 
         public function DeleteItemByID($itemDTO)
         {
+            $responseDTO = new ResponseDTO();
             
+            try
+            {
+                $responseDTO = $this->DeleteCurrentItem($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Registro eliminado!";
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteItemsSelected($itemDTO)
@@ -106,7 +129,47 @@
 
         public function ValidateLastRecordToResetAutoIncement()
         {
-            
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "SELECT * FROM login";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                //Recuperar los registros de la BD
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
+                if($result == null)
+                {
+                    $query = "ALTER TABLE login AUTO_INCREMENT = 1";
+
+                    $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+
+                    $query = "ALTER TABLE user_logued_inf";
+
+                    $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                } 
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetMessageErrorAndStackTrace("Ocurrió un error tratando de validar los registros", $e->getMessage());
+            }
+
+            return $responseDTO;
         }
 
         //######### Private Methods
@@ -219,6 +282,41 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentItem($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "DELETE user_logued_inf.*, login_user.* ".
+                "FROM user_logued_info user_logued_inf ".
+                "inner join login login_user on user_logued_inf.id_login_user = login_user.id_login_user ".
+                "WHERE user_logued_inf.id_login_user = :id_login_user";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id_login_user' => $itemDTO->IDLoginUser
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$responseDTO->UIMessage = "Registro eliminado!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;
