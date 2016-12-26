@@ -72,8 +72,27 @@
 					}
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
-					$state.go('intensive.home', {}, {reload: true});
-					$window.location.reload();
+
+					vm.loginModel.LogOut().then(
+						responseDTO => {
+
+							if(responseDTO.HasError)
+							{
+								localStorageService.clearAll();
+								UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+								return;
+							}
+
+							localStorageService.remove(CoreConstants.UserLoggedInfoKey)
+							$state.go('intensive.home');
+							$window.location.reload();
+						},
+						error => {
+							UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de cerrar la sesión"});
+							localStorageService.clearAll();
+							console.log(error);
+						}
+					);
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
