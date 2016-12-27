@@ -9,6 +9,7 @@
         '$q',
         '$http',
         'Intensive.Core.Constants',
+        'Intensive.Blocks.Utils.Constants',
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
         'Intensive.Core.Models.UserAdminModel',
@@ -19,6 +20,7 @@
     function ModelName($q,
                        $http,
                        CoreConstants,
+                       UtilsConstants,
                        UtilitiesFactory,
                        ActionResultModel,
                        UserAdminModel,
@@ -34,6 +36,7 @@
                 IDLoginUser: null,
                 UserName: null,
                 Password: null,
+                UserRole: UtilsConstants.UserAdminRole.READER,
 
                 UsersList: [],
                 
@@ -50,7 +53,8 @@
                 GetUserLoggedInfoByID: GetUserLoggedInfoByID,
                 UpdateLoggedUserByID: UpdateLoggedUserByID,
                 DeleteCurrentAccount: DeleteCurrentAccount,
-                ValidateUser: ValidateUser
+                ValidateUser: ValidateUser,
+                ValidateCompleteUser: ValidateCompleteUser
 
             }, dataDTO);
 
@@ -123,7 +127,7 @@
             {
                 var actionResultModel = new ActionResultModel();
 
-                if(!UtilitiesFactory.IsStringValid(_self.Name))
+                if(!UtilitiesFactory.IsStringValid(_self.UserName))
                 {
                     actionResultModel.SetError("El nombre de usuario no puede estar vacío");
                     return actionResultModel;
@@ -132,6 +136,29 @@
                 if(!UtilitiesFactory.IsStringValid(_self.Password))
                 {
                     actionResultModel.SetError("La contraseña no puede estar vacía");
+                    return actionResultModel;
+                }
+
+                return actionResultModel;
+            }
+
+            function ValidateCompleteUser()
+            {
+                var actionResultModel = _self.ValidateUser();
+                if(actionResultModel.HasError)
+                {
+                    return actionResultModel;
+                }
+
+                if(!UtilitiesFactory.IsStringValid(_self.UserRole))
+                {
+                    actionResultModel.SetError("No se ha definido el rol del usuario");
+                    return actionResultModel;
+                }
+
+                var actionResultModel = _self.UserAdminModel.ValidateUserAdminModel();
+                if(actionResultModel.HasError)
+                {
                     return actionResultModel;
                 }
 
@@ -165,7 +192,7 @@
                 _self.OperationsModel.DeleteAllItemsURL = CoreConstants.LoginServiceURL.DELETE_ALL_USERS_URL;
                 _self.OperationsModel.DeleteItemByIDURL = CoreConstants.LoginServiceURL.DELETE_USER_BY_ID_URL;
                 _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.LoginServiceURL.DELETE_USERS_SELECTED_URL;
-                _self.OperationsModel.UpdateItemByIDURL = CoreConstants.LoginServiceURL.UPDATE_USER_SELECTED_URL;
+                _self.OperationsModel.UpdateItemByIDURL = CoreConstants.LoginServiceURL.UPDATE_USER_LOGGED_INFO_BY_ID_URL;
 
                 if(UtilitiesFactory.IsUndefinedOrNull(dataDTO))
                 {

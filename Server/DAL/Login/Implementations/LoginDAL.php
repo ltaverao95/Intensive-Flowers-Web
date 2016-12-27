@@ -49,7 +49,18 @@
 
         public function SaveItem($itemDTO)
         {
-            
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->SaveCurrentUser($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function GetAllItems()
@@ -361,6 +372,55 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function SaveCurrentUser($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+
+                $query = "INSERT INTO login ".
+                "SET id_login_user = :id_login_user, ".
+                "user_name = :user_name, ".
+                "password = :password, ".
+                "user_role = :user_role; ".
+                "INSERT INTO user_logued_info ".
+                "SET id_login_user = LAST_INSERT_ID(), ".
+                "identity_card = :identity_card, ".
+	            "name = :name, ".
+                "surname = :surname, ".
+                "phone = :phone, ".
+                "email = :email;";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id_login_user' => NULL, 
+                    ':user_name' => $itemDTO->UserName,
+                    ':password' => $itemDTO->Password,
+                    ':user_role' => $itemDTO->UserRole,
+                    ':identity_card' => $itemDTO->UserAdminModel->IdentityCard,
+                    ':name' => $itemDTO->UserAdminModel->Name,
+                    ':surname' => $itemDTO->UserAdminModel->Surname,
+                    ':phone' => $itemDTO->UserAdminModel->Phone,
+				    ':email' => $itemDTO->UserAdminModel->Email);
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$responseDTO->UIMessage = "Usuario creado!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la creación del usuario", $e->getMessage());	
             }
 
             return $responseDTO;

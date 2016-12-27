@@ -28,6 +28,12 @@
 			SEARCH_BY_NAME: 1,
 			SEARCH_BY_DATE_AND_STORE: 2,
 			SEARCH_BY_STORE: 3
+		},
+
+		UserAdminRole: {
+			ADMINISTRATION: 'admin',
+			EDITOR: 'editor',
+			READER: 'reader'
 		}
 	};
 
@@ -177,6 +183,21 @@
 			Id: UtilsConstants.QueryOption.SEARCH_BY_STORE,
 			Label: 'Buscar por tienda',
 			IsVisible: false
+		}
+	];
+
+	UtilsConstants.UserAdminRoleList = [
+		{
+			Label: 'Administración',
+			Value: UtilsConstants.UserAdminRole.ADMINISTRATION
+		},
+		{
+			Label: 'Editor',
+			Value: UtilsConstants.UserAdminRole.EDITOR
+		},
+		{
+			Label: 'Lector',
+			Value: UtilsConstants.UserAdminRole.READER
 		}
 	];
 

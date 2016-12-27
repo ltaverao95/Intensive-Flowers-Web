@@ -81,7 +81,25 @@
 
         public function SaveItem($itemDTO)
         {
-            
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateCompleteUser($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->SaveItem($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function GetAllItems()
@@ -263,6 +281,36 @@
                 if($itemDTO->UserAdminModel->Email == null)
                 {
                     $responseDTO->SetError("El correo electrónico no puede estar vacío");
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateCompleteUser($itemDTO)
+        {
+            try
+            {
+                $responseDTO = $this->ValidateCurrentUser($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                if($itemDTO->UserRole == null)
+                {
+                    $responseDTO->SetError("No se ha definido el rol del usuario");
+                    return $responseDTO;
+                }
+
+                $responseDTO = $this->ValidateLoginDTO($itemDTO);
+                if($responseDTO->HasError)
+                {
                     return $responseDTO;
                 }
             }

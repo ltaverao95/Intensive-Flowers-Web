@@ -6,10 +6,12 @@
         .factory('Intensive.Core.Models.UserAdminModel', UserAdminModel);
 
     UserAdminModel.$inject = [
-        'Intensive.Blocks.Utils.ActionResultModel'
+        'Intensive.Blocks.Utils.ActionResultModel',
+        'Intensive.Blocks.Utils.UtilitiesFactory'
     ];
 
-    function UserAdminModel(ActionResultModel)
+    function UserAdminModel(ActionResultModel,
+                            UtilitiesFactory)
     {
         var Model = function (dataDTO) 
         {
@@ -34,7 +36,7 @@
             {
                 var actionResultModel = new ActionResultModel();
 
-                if(!UtilitiesFactory.IsStringValid(_self.IdentityName))
+                if(!UtilitiesFactory.IsStringValid(_self.IdentityCard))
                 {
                     actionResultModel.SetError("La cédula no puede estar vacía");
                     return actionResultModel;
