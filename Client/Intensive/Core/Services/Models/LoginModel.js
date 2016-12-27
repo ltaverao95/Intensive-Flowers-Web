@@ -11,7 +11,9 @@
         'Intensive.Core.Constants',
         'Intensive.Blocks.Utils.UtilitiesFactory',
         'Intensive.Blocks.Utils.ActionResultModel',
-        'Intensive.Core.Models.UserAdminModel'
+        'Intensive.Core.Models.UserAdminModel',
+        'Intensive.Core.Models.OperationsModel',
+        'Intensive.Core.Models.PaginatorModel'
     ];
 
     function ModelName($q,
@@ -19,7 +21,9 @@
                        CoreConstants,
                        UtilitiesFactory,
                        ActionResultModel,
-                       UserAdminModel)
+                       UserAdminModel,
+                       OperationsModel,
+                       PaginatorModel)
     {
         var Model = function (dataDTO) 
         {
@@ -30,7 +34,15 @@
                 IDLoginUser: null,
                 UserName: null,
                 Password: null,
+
+                UsersList: [],
                 
+                //CRUD Operations
+                OperationsModel: new OperationsModel(),
+
+                //Pagination Operations
+                PaginatorModel: new PaginatorModel(),
+
                 UserAdminModel: new UserAdminModel(),
 
                 SignIn: SignIn,
@@ -148,6 +160,13 @@
 
             function Initialize()
             {
+                _self.OperationsModel.GetAllItemsURL = CoreConstants.LoginServiceURL.GET_ALL_USERS_URL;
+                _self.OperationsModel.SaveItemURL = CoreConstants.LoginServiceURL.SAVE_USER_URL;
+                _self.OperationsModel.DeleteAllItemsURL = CoreConstants.LoginServiceURL.DELETE_ALL_USERS_URL;
+                _self.OperationsModel.DeleteItemByIDURL = CoreConstants.LoginServiceURL.DELETE_USER_BY_ID_URL;
+                _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.LoginServiceURL.DELETE_USERS_SELECTED_URL;
+                _self.OperationsModel.UpdateItemByIDURL = CoreConstants.LoginServiceURL.UPDATE_USER_SELECTED_URL;
+
                 if(UtilitiesFactory.IsUndefinedOrNull(dataDTO))
                 {
                     return;

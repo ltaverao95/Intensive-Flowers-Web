@@ -54,7 +54,18 @@
 
         public function GetAllItems()
         {
+            $responseDTO = new ResponseDTO();
             
+            try
+            {
+                $responseDTO = $this->GetUsers();   
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function GetItemByID($itemDTO)
@@ -317,6 +328,39 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function GetUsers()
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "SELECT user_logued_inf.*, login_user.* ".
+                "FROM user_logued_info user_logued_inf ".
+                "inner join login login_user on user_logued_inf.id_login_user = login_user.id_login_user";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                //Recuperar los registros de la BD
+                $result = $dataBaseServicesBLL->Q->fetchAll();	
+
+                $responseDTO = $getDataServiceDAL->GetLoggedUserItems($result);
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
             }
 
             return $responseDTO;

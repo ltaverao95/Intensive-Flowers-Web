@@ -86,7 +86,20 @@
 
         public function GetAllItems()
         {
-            
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $loginDAL = new LoginDAL();
+
+                $responseDTO = $loginDAL->GetAllItems();
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function GetItemByID($itemDTO)
