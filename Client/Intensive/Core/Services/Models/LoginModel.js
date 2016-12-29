@@ -37,6 +37,7 @@
                 UserName: null,
                 Password: null,
                 UserRole: UtilsConstants.UserAdminRole.READER,
+                IsValidCurrentUserName: false,
 
                 UsersList: [],
                 
@@ -53,6 +54,7 @@
                 GetUserLoggedInfoByID: GetUserLoggedInfoByID,
                 UpdateLoggedUserByID: UpdateLoggedUserByID,
                 DeleteCurrentAccount: DeleteCurrentAccount,
+                ValidateUserIfExists: ValidateUserIfExists,
                 ValidateUser: ValidateUser,
                 ValidateCompleteUser: ValidateCompleteUser
 
@@ -118,6 +120,22 @@
                     url: CoreConstants.LoginServiceURL.DELETE_USER_LOGGED_INFO_BY_ID_URL,
                     method: 'POST',
                     data: angular.toJson(_self)
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function ValidateUserIfExists()
+            {
+                var requestParamsObj = 
+                {
+                    url: CoreConstants.LoginServiceURL.VALIDATE_USER_IF_EXIST_URL,
+                    method: 'POST',
+                    data: angular.toJson(
+                        {
+                            UserName: _self.UserName
+                        }
+                    )
                 };
 
                 return DoRequestToServer(requestParamsObj);

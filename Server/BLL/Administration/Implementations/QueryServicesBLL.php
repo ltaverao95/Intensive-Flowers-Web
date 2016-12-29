@@ -12,6 +12,11 @@
         {
         }
 
+        public function ValidateUserIfExists($itemDTO)
+        {
+            
+        }
+
         public function GetOrderByIdentityCard($itemDTO)
         {
             $responseDTO = new ResponseDTO();

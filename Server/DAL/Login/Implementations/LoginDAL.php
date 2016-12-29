@@ -20,6 +20,22 @@
             return $responseDTO;
         }
 
+        public function ValidateUserIfExists($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->ValidateCurrentUserIfExists($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function GetUserLoggedInfoByID($itemDTO)
         {
             
@@ -421,6 +437,44 @@
             catch (Exception $e)
             {
                 $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la creación del usuario", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateCurrentUserIfExists($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+
+                $query = "SELECT * FROM login WHERE user_name = :user_name";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':user_name' => $itemDTO->UserName);
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+        		$rowUser = $dataBaseServicesBLL->Q->fetch();
+		
+                if($rowUser != NULL)
+                {
+                    $responseDTO->SetError("El usuario: " . $itemDTO->UserName . " actualmente ya existe");
+                    return $responseDTO;
+                }
+                
+                $responseDTO->UIMessage = "Usuario disponible!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
             }
 
             return $responseDTO;

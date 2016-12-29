@@ -12,7 +12,8 @@
 		'UserObjData',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Blocks.Utils.Constants',
-		'Intensive.Blocks.Messages.UserMessagesFactory'
+		'Intensive.Blocks.Messages.UserMessagesFactory',
+		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function LoginUserModalAdminController($uibModalInstance,
@@ -20,7 +21,8 @@
                                            UserObjData,
 										   LoginModel,
 										   UtilsConstants,
-										   UserMessagesFactory)
+										   UserMessagesFactory,
+										   UtilitiesFactory)
 	{
 		//####################### Instance Properties #######################
 
@@ -30,12 +32,43 @@
 
 		vm.UtilsConstants = UtilsConstants;
 
+		vm.ValidateCurrentUserName = ValidateCurrentUserName
 		vm.CreateUser = CreateUser;
 		vm.UpdateUser = UpdateUser;
 		vm.CloseModal = CloseModal;
 		vm.CloseModalWithoutSave = CloseModalWithoutSave;
 		
 		//####################### Public Functions #######################
+
+		function ValidateCurrentUserName()
+		{
+			vm.loginModel.IsValidCurrentUserName = false;
+
+			if(!UtilitiesFactory.IsStringValid(vm.loginModel.UserName))
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: "El campo de nombre de usuario no puede estar vacío" });
+				return;
+			}
+
+			vm.loginModel.ValidateUserIfExists().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+						return;
+					}
+
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
+					vm.loginModel.IsValidCurrentUserName = true;
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});
+					CloseModal();
+					console.log(error);
+				}
+			);
+		}
 
 		function CreateUser()
 		{
@@ -45,6 +78,12 @@
 				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
 				return;
 			} 
+
+			if(!vm.loginModel.IsValidCurrentUserName)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: "Debes validar el nombre de usuario antes de crearlo" });
+				return;
+			}
 
 			vm.loginModel.OperationsModel.SaveItem(vm.loginModel).then(
 				responseDTO => {

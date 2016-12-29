@@ -46,6 +46,29 @@
             return $responseDTO;
         }
 
+        public function ValidateUserIfExists($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateUserName($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->ValidateUserIfExists($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function GetOrderByIdentityCard($itemDTO)
         {
             
@@ -311,6 +334,26 @@
                 $responseDTO = $this->ValidateLoginDTO($itemDTO);
                 if($responseDTO->HasError)
                 {
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateUserName($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->UserName == null)
+                {
+                    $responseDTO->SetError("El campo de usuario no puede estar vacío");
                     return $responseDTO;
                 }
             }
