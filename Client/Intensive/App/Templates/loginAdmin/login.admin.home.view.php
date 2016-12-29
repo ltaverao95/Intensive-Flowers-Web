@@ -30,22 +30,45 @@
 <div class="row">
     <div class="box">
         <ul class="nav nav-tabs">
-            <li role="presentation">
-                <a ui-sref="intensive.activities.querys" 
-                   ui-sref-active="active">
-                   Consultas Tiendas
-                </a>
-            </li>
-            <li role="presentation"><a ui-sref="intensive.activities.orders" ui-sref-active="active">Pedidos</a></li>
-            <li role="presentation"><a ui-sref="intensive.activities.messages" ui-sref-active="active">Mensajes</a></li>
-            <li role="presentation"><a ui-sref="intensive.activities.contact" ui-sref-active="active">Contactos</a></li>
-            <li role="presentation"><a ui-sref="intensive.activities.profile" ui-sref-active="active">Perfil</a></li>
+            <li role="presentation"><a ui-sref="intensive.activities">Home</a></li>
+            <li role="presentation" ng-class="{active: vm.$state.includes('intensive.activities.querys')}"><a ui-sref="intensive.activities.querys">Consultas Tiendas</a></li>
+            <li role="presentation" ng-class="{active: vm.$state.includes('intensive.activities.orders')}"><a ui-sref="intensive.activities.orders">Pedidos</a></li>
+            <li role="presentation" ng-class="{active: vm.$state.includes('intensive.activities.messages')}"><a ui-sref="intensive.activities.messages">Mensajes</a></li>
+            <li role="presentation" ng-class="{active: vm.$state.includes('intensive.activities.contact')}"><a ui-sref="intensive.activities.contact">Contactos</a></li>
+            <li role="presentation" ng-class="{active: vm.$state.includes('intensive.activities.profile')}"><a ui-sref="intensive.activities.profile">Perfil</a></li>
         </ul>
         <br>
         <div class="clearfix">
         </div>
         
-        <div ui-view></div>
+        <div ui-view> 
+
+            <div >
+                <div class="jumbotron" style="text-align: center; width: 35%">
+                    <h3>
+                        Home principal de la administración
+                    </h3>
+                    <ul>
+                        <li>
+                            Realizar consultas de los pedidos hechos por los usuarios.
+                        </li>
+                        <li>
+                            Aministrar los pedidos realizados.
+                        </li>
+                        <li>
+                            Administrar los mensajes enviados por los usuarios.
+                        </li>
+                        <li>
+                            Administrar los mensajes de contacto enviados por los usuarios
+                        </li>
+                        <li>
+                            Administrar tu perfil, actualizar tus datos de contacto entre otras.
+                        </li>
+                    </ul>
+                </div>
+            </div>       
+
+        </div>
 
     </div>
 </div>

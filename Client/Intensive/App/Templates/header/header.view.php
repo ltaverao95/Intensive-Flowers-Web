@@ -28,22 +28,22 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-            <a class="navbar-brand" ui-sref="intensive.home" ui-sref-active="active">Inicio</a>
+            <a class="navbar-brand" ui-sref="intensive.home">Inicio</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
-                    <a ui-sref="intensive.home" ui-sref-active="active">Inicio</a>
+                <li ng-class="{active: vm.$state.includes('intensive.home')}">
+                    <a ui-sref="intensive.home">Inicio</a>
                 </li>
-                <li>
-                    <a ui-sref="intensive.store" ui-sref-active="active">Tiendas</a>
+                <li ng-class="{active: vm.$state.includes('intensive.store')}">
+                    <a ui-sref="intensive.store">Tiendas</a>
                 </li>
-                <li>
-                    <a ui-sref="intensive.bouquet" ui-sref-active="active">Ramos</a>
+                <li ng-class="{active: vm.$state.includes('intensive.bouquet')}">
+                    <a ui-sref="intensive.bouquet">Ramos</a>
                 </li>
-                <li>
-                    <a ui-sref="intensive.contact" ui-sref-active="active">Contacto</a>
+                <li ng-class="{active: vm.$state.includes('intensive.contact')}">
+                    <a ui-sref="intensive.contact">Contacto</a>
                 </li>
                 
                 <?php 
@@ -51,8 +51,8 @@
                     if(isset($_SESSION['user_auth']))
                     {
                 ?>
-                    <li>
-                        <a ui-sref="intensive.activities" ui-sref-active="active">Admin</a>
+                    <li ng-class="{active: vm.$state.includes('intensive.activities')}">
+                        <a ui-sref="intensive.activities">Admin</a>
                     </li>
                     <li>
                         <a style="cursor: pointer" ng-click="vm.LogOut()">Cerrar Sesión</a>
@@ -63,8 +63,8 @@
                     else 
                     {
                 ?>
-                    <li>
-                        <a ui-sref="intensive.login" ui-sref-active="active">Login</a>
+                    <li ng-class="{active: vm.$state.includes('intensive.login')}">
+                        <a ui-sref="intensive.login">Login</a>
                     </li>
                 <?php 
                     }

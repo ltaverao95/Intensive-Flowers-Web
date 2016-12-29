@@ -24,7 +24,7 @@
 								ui-sref="intensive.activities.profile.usersadministration" 
 								ui-sref-active="active"
 								ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
-								<a>Listado de Usuarios</a>
+								<a>Administración de Usuarios</a>
 							</li>
 						</ul>
 					</div>
@@ -34,7 +34,9 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div ui-view>
-							
+							<p>
+								Perfil de usuario, acá podrás tener acceso a tu información básica y administración de cuentas
+							</p>
 						</div>
 					</div>
 				</div>

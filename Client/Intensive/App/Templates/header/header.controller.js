@@ -26,6 +26,8 @@
 		var vm = this;
 		
 		var _loginModel = new LoginModel();
+		
+		vm.$state = $state;
 
 		vm.LogOut = LogOut;
 

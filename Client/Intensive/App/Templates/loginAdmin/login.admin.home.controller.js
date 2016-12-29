@@ -16,13 +16,9 @@
 		
 		var vm = this;
 
+		vm.$state = $state;
+
 		//####################### Public Methods #######################
 
-		function Initialize()
-		{
-			$state.go('intensive.activities.querys');
-		}
-
-		Initialize();
 	}
 })();

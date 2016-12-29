@@ -138,6 +138,7 @@
 			})
 
 			.state('intensive.activities.querys', {
+				url: '/querys',
 				templateUrl: folderTemplatesPath + 'loginAdmin/login.admin.query.view.php',
 				controller: 'Intensive.App.LoginQueryAdminController',
 				controllerAs: 'vm'					
