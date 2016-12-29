@@ -90,7 +90,7 @@
 
 		function DeleteCurrentAccount()
 		{
-			var response = confirm("¿Estas seguro que deseas eliminar todos los registros?");
+			var response = confirm("¿Estas seguro que deseas eliminar esta cuenta?");
 
 			if(!response)
 			{
