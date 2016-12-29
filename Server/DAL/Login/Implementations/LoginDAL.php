@@ -297,9 +297,29 @@
             {
                 $dataBaseServicesBLL = new DataBaseServicesBLL();
                 $getDataServiceDAL = new GetDataServiceDAL();
-                $query = "UPDATE user_logued_info SET identity_card = :identity_card, name = :name, surname = :surname, phone = :phone, email = :email WHERE id_login_user = :id_login_user;";
+
+                $query = 
+                "SET foreign_key_checks = 0; ".
+                "UPDATE login ".
+                "SET id_login_user = :id_login_user, ".
+                "    user_name = :user_name, ".
+                "    password = :password, ".
+                "    user_role = :user_role ".
+                "WHERE id_login_user = :id_login_user; ".
+                "UPDATE user_logued_info ".
+                "SET id_login_user = :id_login_user, ".
+                "    identity_card = :identity_card, ".
+                "    name = :name, ".
+                "    surname = :surname, ".
+                "    phone = :phone, ".
+                "    email = :email ".
+                "WHERE id_login_user = :id_login_user; ".
+                "SET foreign_key_checks = 1;";
                 $dataBaseServicesBLL->ArrayParameters = array(
                     ':id_login_user' => $itemDTO->IDLoginUser,
+                    ':user_name' => $itemDTO->UserName,
+                    ':password' => $itemDTO->Password,
+                    ':user_role' => $itemDTO->UserRole,
                     ':identity_card' => $itemDTO->UserAdminModel->IdentityCard,
                     ':name' => $itemDTO->UserAdminModel->Name,
                     ':surname' => $itemDTO->UserAdminModel->Surname,

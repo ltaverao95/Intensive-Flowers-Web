@@ -8,12 +8,14 @@
 
 	LoginProfileUsersAdminController.$inject = [
 		'$uibModal',
+		'$scope',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function LoginProfileUsersAdminController($uibModal,
+											  $scope,
 											  LoginModel,
 											  UserMessagesFactory,
 											  UtilitiesFactory)
@@ -25,6 +27,8 @@
 		vm.searchUser = '';
 
 		vm.loginModel = new LoginModel();
+
+		$scope.$on("UserChanged", GetAllUsers);
 
 		vm.DeleteUserByID = DeleteUserByID;
 		vm.DeleteAllUsers = DeleteAllUsers;
@@ -142,6 +146,7 @@
 		{			
 			userObj.IsReadOnlyMode = false;
 			userObj.IsCreateMode = false;
+			userObj.IsValidCurrentUserName = true;
 			OpenEditOrUpdateModel(userObj);
 		}
 
@@ -149,6 +154,7 @@
 		{
 			userObj.IsReadOnlyMode = true;
 			userObj.IsCreateMode = false;
+			userObj.IsValidCurrentUserName = true;
 			OpenEditOrUpdateModel(userObj);			
 		}
 

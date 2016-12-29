@@ -8,7 +8,7 @@
 
 	LoginUserModalAdminController.$inject = [
 		'$uibModalInstance',
-		'$window',
+		'$rootScope',
 		'UserObjData',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Blocks.Utils.Constants',
@@ -17,7 +17,7 @@
 	];	
 
 	function LoginUserModalAdminController($uibModalInstance,
-										   $window,
+										   $rootScope,
                                            UserObjData,
 										   LoginModel,
 										   UtilsConstants,
@@ -96,7 +96,7 @@
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					CloseModal();
-					$window.location.reload();
+					$rootScope.$broadcast('UserUpdated');
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});
@@ -126,7 +126,7 @@
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					CloseModal();
-					$window.location.reload();
+					$rootScope.$broadcast('UserChanged');
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});

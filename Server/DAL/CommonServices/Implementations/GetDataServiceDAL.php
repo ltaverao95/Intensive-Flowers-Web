@@ -155,6 +155,9 @@
                     $loginDTO->UserAdminDTO = new UserAdminDTO();
 
                     $loginDTO->IDLoginUser = $row['id_login_user'];
+                    $loginDTO->UserName = $row['user_name'];
+                    $loginDTO->Password = $row['password'];
+                    $loginDTO->UserRole = $row['user_role'];
                     $loginDTO->UserAdminDTO->IDLoginUser = $row['id_login_user'];
                     $loginDTO->UserAdminDTO->IdentityCard = $row['identity_card'];
                     $loginDTO->UserAdminDTO->Name = $row['name'];

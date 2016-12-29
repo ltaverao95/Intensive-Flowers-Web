@@ -12,7 +12,7 @@
         
     <form name="user_detail_form">
 
-        <fieldset ng-if="vm.loginModel.IsCreateMode">
+        <fieldset>
             <div>
                 <label for="user_detail_form_user_name">Nombre de Usuario: </label>
                 <input type="text" 
@@ -20,12 +20,24 @@
                         name="user_name_login"
                         class="form-control"
                         ng-model="vm.loginModel.UserName"
-                        required>
+                        ng-readonly="!vm.loginModel.IsCreateMode"
+                        ng-required="vm.loginModel.IsCreateMode">
             </div>
 
-            <br>
+            <div ng-if="!vm.loginModel.IsCreateMode && !vm.loginModel.IsReadOnlyMode">
+                <label for="user_detail_form_user_password">Contraseña: </label>
+                <input type="password" 
+                        id="user_detail_form_user_password"
+                        name="user_password"
+                        class="form-control"
+                        ng-model="vm.loginModel.Password"
+                        ng-readonly="!vm.loginModel.IsCreateMode && vm.loginModel.IsReadOnlyMode"
+                        ng-required="vm.loginModel.IsCreateMode">
+            </div>
 
-            <div>
+            <br ng-if="vm.loginModel.IsCreateMode">
+
+            <div ng-if="vm.loginModel.IsCreateMode">
                 <button class="btn btn-default"
                         ng-class="vm.loginModel.IsValidCurrentUserName ? 'btn btn-success' : 'btn btn-default'"
                         ng-click="vm.ValidateCurrentUserName()">
@@ -39,14 +51,15 @@
 
             <br>
 
-            <div ng-if="vm.loginModel.IsCreateMode">
+            <div>
                 <label for="user_detail_form_user_role">Rol de Usuario: </label>
                 <select name="user_role" 
                         id="user_detail_form_user_role"
                         class="form-control"
                         ng-model="vm.loginModel.UserRole"
                         ng-options="user_role.Value as user_role.Label for user_role in vm.UtilsConstants.UserAdminRoleList"
-                        required>
+                        ng-disabled="vm.loginModel.IsReadOnlyMode"
+                        ng-required="vm.loginModel.IsCreateMode">
                 </select>
             </div>
 
