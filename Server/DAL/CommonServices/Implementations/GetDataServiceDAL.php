@@ -12,7 +12,7 @@
             {
                 if($itemDTO == null)
                 {
-                    $responseDTO->SetError("No se encontraron resultados");
+                    $responseDTO->UIMessage = "No se encontraron resultados";
                     return $responseDTO;
                 }
 
@@ -30,7 +30,7 @@
 
                 if($itemsList == null)
                 {
-                    $responseDTO->SetError("No se encontraron registros para mostrar");
+                    $responseDTO->UIMessage = "No se encontraron registros para mostrar";
                     return $responseDTO;
                 } 
                 

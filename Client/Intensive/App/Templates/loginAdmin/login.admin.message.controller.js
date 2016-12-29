@@ -262,6 +262,13 @@
 						return;
 					}
 
+					if(!responseDTO.ResponseData)
+					{
+						vm.messageModel.MessagesList = [];
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
 					vm.messageModel.MessagesList = responseDTO.ResponseData;
 				},
 				error => {

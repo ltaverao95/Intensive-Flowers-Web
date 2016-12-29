@@ -20,6 +20,7 @@
 		var vm = this;
 
 		vm.messageModel = new MessageModel();
+		vm.displayMessageInformation = false;
 
 		vm.SaveMessage = SaveMessage;
 
@@ -58,12 +59,20 @@
 
 		function GetAllMessages()
 		{
+			vm.displayMessageInformation = false;
+
 			vm.messageModel.OperationsModel.GetAllItems().then(
 				responseDTO => {
 
 					if(responseDTO.HasError)
 					{
 						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+						return;
+					}
+
+					if(!responseDTO.ResponseData)
+					{
+						vm.displayMessageInformation = true;
 						return;
 					}
 

@@ -53,7 +53,16 @@
             </h2>
             <hr>
             <div style="width: 100%; max-height:390px; overflow-y: auto;">
+
+                <div style="text-align: center"
+                     ng-if="vm.displayMessageInformation">
+                        <span>
+                            Actualmente no hay mensajes para mostrar
+                        </span>
+                    </div>
+
                 <div class="panel panel-default" ng-repeat="user in vm.messageModel.MessagesList">
+                    
                     <div class="panel-heading">
                         <h3 class="panel-title">{{user.Name}}</h3>
                     </div>
