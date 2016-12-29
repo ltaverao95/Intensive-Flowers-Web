@@ -35,7 +35,7 @@
 
 		function UpdateLoggedUserByID()
 		{
-			vm.loginModel.UpdateLoggedUserByID().then(
+			vm.loginModel.OperationsModel.UpdateItemByID(vm.loginModel).then(
 				responseDTO =>
 				{
 					if(responseDTO.HasError)
@@ -62,7 +62,7 @@
 				return;
 			}
 
-			vm.loginModel.DeleteCurrentAccount().then(
+			vm.loginModel.OperationsModel.DeleteItemByID(vm.loginModel).then(
 				responseDTO =>
 				{
 					if(responseDTO.HasError)
@@ -107,7 +107,7 @@
 		{
 			vm.loginModel.IDLoginUser = localStorageService.get(CoreConstants.UserLoggedInfoKey);
 
-			vm.loginModel.GetUserLoggedInfoByID().then(
+			vm.loginModel.OperationsModel.GetItemByID(vm.loginModel).then(
 				responseDTO =>
 				{
 					if(responseDTO.HasError)

@@ -21,6 +21,7 @@
 
                 //Properties
                 GetAllItemsURL: null,
+                GetItemByIDURL: null,
                 SaveItemURL: null,
                 DeleteAllItemsURL: null,
                 DeleteItemByIDURL: null,
@@ -29,6 +30,7 @@
 
                 //CRUD Operations
                 GetAllItems: GetAllItems,
+                GetItemByID: GetItemByID,
                 SaveItem: SaveItem,
                 DeleteAllItems: DeleteAllItems,
                 DeleteItemByID: DeleteItemByID,
@@ -45,6 +47,18 @@
                 {
                     url: _self.GetAllItemsURL,
                     method: 'GET'
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function GetItemByID(itemObj)
+            {
+                var requestParamsObj = 
+                {
+                    url: _self.GetItemByIDURL,
+                    method: 'POST',
+                    data: angular.toJson(itemObj)
                 };
 
                 return DoRequestToServer(requestParamsObj);

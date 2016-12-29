@@ -51,9 +51,6 @@
 
                 SignIn: SignIn,
                 LogOut: LogOut,
-                GetUserLoggedInfoByID: GetUserLoggedInfoByID,
-                UpdateLoggedUserByID: UpdateLoggedUserByID,
-                DeleteCurrentAccount: DeleteCurrentAccount,
                 ValidateUserIfExists: ValidateUserIfExists,
                 ValidateUser: ValidateUser,
                 ValidateCompleteUser: ValidateCompleteUser
@@ -80,46 +77,6 @@
                 {
                     url: CoreConstants.LoginServiceURL.LOG_OUT_URL,
                     method: 'GET'
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function GetUserLoggedInfoByID()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.LoginServiceURL.GET_USER_LOGGED_INFO_BY_ID_URL,
-                    method: 'POST',
-                    data: angular.toJson(
-                        {
-                            IDLoginUser: _self.IDLoginUser
-                        }
-                    )
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function UpdateLoggedUserByID()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.LoginServiceURL.UPDATE_USER_LOGGED_INFO_BY_ID_URL,
-                    method: 'POST',
-                    data: angular.toJson(_self)
-                };
-
-                return DoRequestToServer(requestParamsObj);
-            }
-
-            function DeleteCurrentAccount()
-            {
-                var requestParamsObj = 
-                {
-                    url: CoreConstants.LoginServiceURL.DELETE_USER_LOGGED_INFO_BY_ID_URL,
-                    method: 'POST',
-                    data: angular.toJson(_self)
                 };
 
                 return DoRequestToServer(requestParamsObj);
@@ -206,9 +163,10 @@
             function Initialize()
             {
                 _self.OperationsModel.GetAllItemsURL = CoreConstants.LoginServiceURL.GET_ALL_USERS_URL;
+                _self.OperationsModel.GetItemByIDURL = CoreConstants.LoginServiceURL.GET_USER_LOGGED_INFO_BY_ID_URL;
                 _self.OperationsModel.SaveItemURL = CoreConstants.LoginServiceURL.SAVE_USER_URL;
                 _self.OperationsModel.DeleteAllItemsURL = CoreConstants.LoginServiceURL.DELETE_ALL_USERS_URL;
-                _self.OperationsModel.DeleteItemByIDURL = CoreConstants.LoginServiceURL.DELETE_USER_BY_ID_URL;
+                _self.OperationsModel.DeleteItemByIDURL = CoreConstants.LoginServiceURL.DELETE_USER_LOGGED_INFO_BY_ID_URL;
                 _self.OperationsModel.DeleteItemsSelectedURL = CoreConstants.LoginServiceURL.DELETE_USERS_SELECTED_URL;
                 _self.OperationsModel.UpdateItemByIDURL = CoreConstants.LoginServiceURL.UPDATE_USER_LOGGED_INFO_BY_ID_URL;
 

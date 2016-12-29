@@ -53,7 +53,7 @@
 						return;
 					}
 
-					GetAllOrders();
+					GetAllUsers();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {
@@ -85,7 +85,7 @@
 						return;
 					}
 					
-					GetAllOrders();
+					GetAllUsers();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
 				error => {
@@ -117,7 +117,7 @@
 						return;
 					}
 
-					GetAllOrders();
+					GetAllUsers();
 					vm.loginModel.PaginatorModel.ClearItemsSelected();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
