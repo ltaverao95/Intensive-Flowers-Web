@@ -32,6 +32,7 @@
 
 		UserAdminRole: {
 			ADMINISTRATION: 'admin',
+			CONTRIBUTOR: 'contributor',
 			EDITOR: 'editor',
 			READER: 'reader'
 		}
@@ -190,6 +191,10 @@
 		{
 			Label: 'Administración',
 			Value: UtilsConstants.UserAdminRole.ADMINISTRATION
+		},
+		{
+			Label: 'Contribuidor',
+			Value: UtilsConstants.UserAdminRole.CONTRIBUTOR
 		},
 		{
 			Label: 'Editor',

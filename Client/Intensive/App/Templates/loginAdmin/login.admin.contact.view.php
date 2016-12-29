@@ -14,7 +14,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
-                            <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+                            <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin' || $_SESSION['user_auth'][3] == 'contributor'?>">
                                 <input type="checkbox" ng-model="vm.contactModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllContacts()">
                             </th>
                             <th>Nombre</th>
@@ -24,7 +24,7 @@
                             <th></th>
                         </thead>
                         <tbody ng-repeat="user in vm.contactModel.ContactsList | filter: vm.searchContact | pagination: vm.contactModel.PaginatorModel.CurrentPage * vm.contactModel.PaginatorModel.PageSize | limitTo: vm.contactModel.PaginatorModel.PageSize" ng-class="{'tableTdColor': $index % 2 != 0}">
-                            <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+                            <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin' || $_SESSION['user_auth'][3] == 'contributor'?>">
                                 <input type="checkbox" ng-model="user.Selected" ng-change="vm.ContactSelectedChanged(user)">
                             </td>
                             <td>{{user.Name}}</td>
@@ -34,7 +34,7 @@
                             <td>
                                 <button class="btn btn-danger glyphicon glyphicon-trash" 
                                         ng-click="vm.DeleteContactByID(user)"
-                                        ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+                                        ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin' || $_SESSION['user_auth'][3] == 'contributor'?>">
                                 </button>
                                 <button class="btn btn-success glyphicon glyphicon-edit" 
                                         ng-click="vm.EditUserByID(user)"
@@ -59,7 +59,7 @@
                       ng-click="vm.contactModel.PaginatorModel.CurrentPageChanged(true)">Siguiente &gt;
                 </button>
             </div>
-            <div ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+            <div ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'  || $_SESSION['user_auth'][3] == 'contributor'?>">
                 <button class="btn btn-success" ng-click="vm.DeleteAllContacts()">Borrar todos</button>
                 <button class="btn btn-success" ng-click="vm.DeleteContactsSelected()">Borrar Seleccionados</button>
             </div>       

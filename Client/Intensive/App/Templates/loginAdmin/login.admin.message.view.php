@@ -14,7 +14,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
-                            <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+                            <th ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'  || $_SESSION['user_auth'][3] == 'contributor'?>">
                                 <input type="checkbox" ng-model="vm.messageModel.PaginatorModel.SelectAllItems" ng-click="vm.CheckAllMessages()">
                             </th>
                             <th>Nombre</th>
@@ -22,7 +22,7 @@
                             <th>Acciones</th>
                         </thead>
                         <tbody ng-repeat="message in vm.messageModel.MessagesList  | pagination: vm.messageModel.PaginatorModel.CurrentPage * vm.messageModel.PaginatorModel.PageSize | limitTo: vm.messageModel.PaginatorModel.PageSize | filter: vm.searchMessage"> 
-                            <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+                            <td ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'  || $_SESSION['user_auth'][3] == 'contributor'?>">
                                 <input type="checkbox" ng-model="message.Selected" ng-change="vm.MessageSelectedChanged(message)">
                             </td>
                             <td>
@@ -35,7 +35,7 @@
                                 <button class="btn btn-danger glyphicon glyphicon-trash" 
                                         ng-click="vm.DeleteMessageByID(message)"
                                         title="Borrar mensaje actual"
-                                        ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+                                        ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'  || $_SESSION['user_auth'][3] == 'contributor'?>">
                                 </button>
                                 <button class="btn btn-success glyphicon glyphicon-edit" 
                                         ng-click="vm.EditMessageById(message)"
@@ -64,7 +64,7 @@
                       ng-click="vm.messageModel.PaginatorModel.CurrentPageChanged(true)">Siguiente &gt;
                 </button>
             </div>
-            <div ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'?>">
+            <div ng-if="<?php echo $_SESSION['user_auth'][3] == 'admin'  || $_SESSION['user_auth'][3] == 'contributor'?>">
                 <button class="btn btn-success" ng-click="vm.DeleteAllMessages()">Borrar todos</button>
                 <button class="btn btn-success" ng-click="vm.DeleteMessagesSelected()">Borrar Seleccionados</button>
             </div>         
