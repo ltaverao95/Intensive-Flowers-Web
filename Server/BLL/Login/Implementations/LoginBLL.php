@@ -46,6 +46,29 @@
             return $responseDTO;
         }
 
+        public function UpdateUserPassword($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidatePassword($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->UpdateUserPassword($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function ValidateUserIfExists($itemDTO)
         {
             $responseDTO = new ResponseDTO();
@@ -354,6 +377,26 @@
                 if($itemDTO->UserName == null)
                 {
                     $responseDTO->SetError("El campo de usuario no puede estar vacío");
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidatePassword($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if($itemDTO->Password == null)
+                {
+                    $responseDTO->SetError("La contraseña no puede estar vacía");
                     return $responseDTO;
                 }
             }

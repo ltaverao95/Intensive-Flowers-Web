@@ -8,12 +8,14 @@
 
 	LoginMessageAdminController.$inject = [
 		'$uibModal',
+		'$scope',
 		'Intensive.Core.Models.MessageModel',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Blocks.Utils.UtilitiesFactory'
 	];	
 
 	function LoginMessageAdminController($uibModal,
+										 $scope,
 										 MessageModel,
 								 		 UserMessagesFactory,
 										 UtilitiesFactory)
@@ -26,6 +28,8 @@
 		vm.messageModel = new MessageModel();
 
 		vm.searchMessage = '';
+
+		$scope.$on("MessageChanged", GetAllMessages);
 
 		vm.DeleteMessageByID = DeleteMessageByID;
 		vm.DeleteAllMessages = DeleteAllMessages;

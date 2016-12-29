@@ -8,12 +8,14 @@
 
 	LoginContactAdminController.$inject = [
 		'$uibModal',
+		'$scope',
 		'Intensive.Core.Models.ContactModel',
 		'Intensive.Blocks.Utils.UtilitiesFactory',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
 	function LoginContactAdminController($uibModal,
+										 $scope,
 										 ContactModel,
 								 		 UtilitiesFactory,
 								 		 UserMessagesFactory)
@@ -25,6 +27,8 @@
 		vm.contactModel = new ContactModel();
 
 		vm.searchContact = '';
+
+		$scope.$on("ContactChanged", GetAllContacts);
 
 		vm.DeleteContactByID = DeleteContactByID;
 		vm.DeleteAllContacts = DeleteAllContacts;

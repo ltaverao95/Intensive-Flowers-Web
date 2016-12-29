@@ -36,6 +36,7 @@
                 IDLoginUser: null,
                 UserName: null,
                 Password: null,
+                PasswordConfirmation: null,
                 UserRole: UtilsConstants.UserAdminRole.READER,
                 IsValidCurrentUserName: false,
 
@@ -51,9 +52,11 @@
 
                 SignIn: SignIn,
                 LogOut: LogOut,
+                UpdateUserPassword: UpdateUserPassword,
                 ValidateUserIfExists: ValidateUserIfExists,
                 ValidateUser: ValidateUser,
-                ValidateCompleteUser: ValidateCompleteUser
+                ValidateCompleteUser: ValidateCompleteUser,
+                ValidatePasswordChanged: ValidatePasswordChanged
 
             }, dataDTO);
 
@@ -77,6 +80,18 @@
                 {
                     url: CoreConstants.LoginServiceURL.LOG_OUT_URL,
                     method: 'GET'
+                };
+
+                return DoRequestToServer(requestParamsObj);
+            }
+
+            function UpdateUserPassword(userPasswordObj)
+            {
+                var requestParamsObj = 
+                {
+                    url: CoreConstants.LoginServiceURL.UPDATE_USER_PASSWORD_URL,
+                    method: 'POST',
+                    data: angular.toJson(userPasswordObj)
                 };
 
                 return DoRequestToServer(requestParamsObj);
@@ -134,6 +149,19 @@
                 var actionResultModel = _self.UserAdminModel.ValidateUserAdminModel();
                 if(actionResultModel.HasError)
                 {
+                    return actionResultModel;
+                }
+
+                return actionResultModel;
+            }
+
+            function ValidatePasswordChanged()
+            {
+                var actionResultModel = new ActionResultModel();
+
+                if(_self.Password !== _self.PasswordConfirmation)
+                {
+                    actionResultModel.SetError("Las contraseñas no coinciden");
                     return actionResultModel;
                 }
 

@@ -8,7 +8,7 @@
 
 	LoginOrderModalAdminController.$inject = [
 		'$uibModalInstance',
-		'$window',
+		'$rootScope',
 		'OrderObjData',
 		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.Constants',
@@ -16,11 +16,11 @@
 	];	
 
 	function LoginOrderModalAdminController($uibModalInstance,
-											  $window,
-											  OrderObjData,
-											  StoreModel,
-											  UtilsConstants,
-											  UserMessagesFactory)
+											$rootScope,
+											OrderObjData,
+											StoreModel,
+											UtilsConstants,
+											UserMessagesFactory)
 	{
 		//####################### Instance Properties #######################
 
@@ -56,7 +56,7 @@
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					CloseModal();
-					$window.location.reload();
+					$rootScope.$broadcast('OrderChanged');
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});

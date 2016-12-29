@@ -85,9 +85,63 @@
             <div class="panel-body" style="margin: 5px;">
                 <div class="row">
                     <p>
-                        En esta sección podrás eliminar tu cuenta, recuerda que una vez borrada 
-                        no podrás volver a iniciar sesión en el sitio.
+                        Administración de la cuenta, aquí podrás:
                     </p>
+                    <ul>
+                        <li>
+                            Actualizar tus datos personales
+                        </li>
+                        <li>
+                            Actualizar tu contraseña
+                        </li>
+                        <li>
+                            Eliminar tu cuenta (recuerda que una vez borrada no podrás volver a iniciar sesión en el sitio.)
+                        </li>
+                    </ul>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Administración de Contraseñas</h3>
+                            </div>
+                            <div class="panel-body" style="margin: 5px;">
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form name="user_update_password_form">
+                                            <div class="form-group col-lg-5">
+                                                <label for="">Contraseña Nueva</label>
+                                                <input type="password"
+                                                       class="form-control"
+                                                       ng-model="vm.loginPasswordModel.Password"
+                                                       required>
+                                            </div>
+                                            <div class="form-group col-lg-5">
+                                                <label for="">Confirmación de Contraseña</label>
+                                                <input type="password"
+                                                       class="form-control"
+                                                       ng-model="vm.loginPasswordModel.PasswordConfirmation"
+                                                       required>
+                                            </div>
+                                            <br>
+                                            <div class="form-group col-lg-2">
+                                                <button type="button" 
+                                                        class="btn btn-default"
+                                                        ng-disabled="!user_update_password_form.$valid"
+                                                        ng-click="vm.UpdateCurrentUserPassword()">
+                                                        Actualizar
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">

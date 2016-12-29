@@ -7,7 +7,7 @@
 		.controller('Intensive.App.LoginContactModalAdminController', LoginContactModalAdminController);
 
 	LoginContactModalAdminController.$inject = [
-		'$window',
+		'$rootScope',
 		'$uibModalInstance',
 		'ContactObjData',
 		'Intensive.Core.Models.ContactModel',
@@ -15,7 +15,7 @@
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginContactModalAdminController($window,
+	function LoginContactModalAdminController($rootScope,
 											  $uibModalInstance,
 											  ContactObjData,
 											  ContactModel,
@@ -52,7 +52,7 @@
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					CloseModal();
-					$window.location.reload();
+					$rootScope.$broadcast('ContactChanged');
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});

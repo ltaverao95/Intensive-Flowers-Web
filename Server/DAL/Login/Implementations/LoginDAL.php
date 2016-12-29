@@ -20,6 +20,22 @@
             return $responseDTO;
         }
 
+        public function UpdateUserPassword($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->UpdateCurrentUserPassword($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
         public function ValidateUserIfExists($itemDTO)
         {
             $responseDTO = new ResponseDTO();
@@ -89,7 +105,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante el guardado de los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -154,7 +170,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -339,7 +355,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;
@@ -374,7 +390,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;
@@ -407,7 +423,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la obtención de los datos", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -456,7 +472,7 @@
             }
             catch (Exception $e)
             {
-                $actionResultDTO->SetErrorAndStackTrace("Ocurrió un problema durante la creación del usuario", $e->getMessage());	
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la creación del usuario", $e->getMessage());	
             }
 
             return $responseDTO;
@@ -495,6 +511,54 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function UpdateCurrentUserPassword($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $responseDTO = $this->GetCurrentLoggedUser($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                if($responseDTO->ResponseData[0]->Password === $itemDTO->Password)
+                {
+                    $responseDTO->SetError("La contraseña no puede ser igual a la anterior");
+                    return $responseDTO;
+                }
+
+                $query = 
+                "UPDATE login ".
+                "SET password = :password ".
+                "WHERE id_login_user = :id_login_user; ";
+                $dataBaseServicesBLL->ArrayParameters = array(
+                    ':id_login_user' => $itemDTO->IDLoginUser,
+                    ':password' => $itemDTO->Password
+                );
+
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Contraseña actualizada!";
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
             }
 
             return $responseDTO;

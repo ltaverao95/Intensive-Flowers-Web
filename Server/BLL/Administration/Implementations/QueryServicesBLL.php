@@ -12,6 +12,11 @@
         {
         }
 
+        public function UpdateUserPassword($itemDTO)
+        {
+            
+        }
+
         public function ValidateUserIfExists($itemDTO)
         {
             

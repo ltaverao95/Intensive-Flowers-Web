@@ -27,8 +27,10 @@
 		var vm = this;
 
 		vm.loginModel = new LoginModel();
+		vm.loginPasswordModel = new LoginModel();
 
 		vm.UpdateLoggedUserByID = UpdateLoggedUserByID;
+		vm.UpdateCurrentUserPassword = UpdateCurrentUserPassword;
 		vm.DeleteCurrentAccount = DeleteCurrentAccount;
 		
 		//####### Public Methods
@@ -45,6 +47,39 @@
 					}
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
+		}
+
+		function UpdateCurrentUserPassword()
+		{
+			var actionResultModel = vm.loginPasswordModel.ValidatePasswordChanged();
+			if(actionResultModel.HasError)
+			{
+				UserMessagesFactory.ShowErrorMessage({ Message: actionResultModel.UIMessage });
+				return;
+			}
+
+			vm.loginModel.UpdateUserPassword(
+				{
+					IDLoginUser: vm.loginModel.IDLoginUser,
+					Password: vm.loginPasswordModel.Password
+				}
+			).then(
+				responseDTO =>
+				{
+					if(responseDTO.HasError)
+					{
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+						return;
+					}
+
+					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+					vm.loginPasswordModel = new LoginModel();
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });

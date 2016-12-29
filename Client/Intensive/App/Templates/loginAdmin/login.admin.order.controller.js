@@ -8,6 +8,7 @@
 
 	LoginOrderAdminController.$inject = [
 		'$uibModal',
+		'$scope',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Core.Models.StoreModel',
 		'Intensive.Blocks.Utils.ActionResultModel',
@@ -15,6 +16,7 @@
 	];	
 
 	function LoginOrderAdminController($uibModal,
+									   $scope,
 							 		   UserMessagesFactory,
 									   StoreModel,
 									   ActionResultModel,
@@ -27,6 +29,8 @@
 		vm.storeModel = new StoreModel();
 
 		vm.searchOrder = '';
+
+		$scope.$on("OrderChanged", GetAllOrders);
 
 		vm.DeleteOrderByID = DeleteOrderByID;
 		vm.DeleteAllOrders = DeleteAllOrders;

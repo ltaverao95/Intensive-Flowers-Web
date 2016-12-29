@@ -7,14 +7,14 @@
 		.controller('Intensive.App.LoginMessageModalAdminController', LoginMessageModalAdminController);
 
 	LoginMessageModalAdminController.$inject = [
-		'$window',
+		'$rootScope',
 		'$uibModalInstance',
 		'MessageObjData',
 		'Intensive.Core.Models.MessageModel',
 		'Intensive.Blocks.Messages.UserMessagesFactory'
 	];	
 
-	function LoginMessageModalAdminController($window,
+	function LoginMessageModalAdminController($rootScope,
 											  $uibModalInstance,
 											  MessageObjData,
 											  MessageModel,
@@ -51,7 +51,7 @@
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					CloseModal();
-					$window.location.reload();
+					$rootScope.$broadcast('MessageChanged');
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});
