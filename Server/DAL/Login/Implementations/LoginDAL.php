@@ -177,12 +177,6 @@
             
             try
             {
-                $responseDTO = $this->ValidateIfCurrentUserIsAdminRole($itemDTO);
-                if($responseDTO->HasError)
-                {
-                    return $responseDTO;
-                }
-
                 $responseDTO = $this->DeleteCurrentItem($itemDTO);
                 if($responseDTO->HasError)
                 {
@@ -207,7 +201,37 @@
 
         public function DeleteItemsSelected($itemDTO)
         {
+            $responseDTO = new ResponseDTO();
             
+            try
+            {
+                $responseDTO = $this->DeleteCurrentItemsSelected($itemDTO);      
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                if(count($itemDTO) > 1)
+                {
+                    $responseDTO->UIMessage = "Registros eliminados!";
+                }
+                else
+                {
+                    $responseDTO->UIMessage = "Registro eliminado!";
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function ValidateLastRecordToResetAutoIncement()
@@ -647,6 +671,34 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se actualizaban de los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function DeleteCurrentItemsSelected($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                for ($i=0; $i < count($itemDTO); $i++) 
+                {
+                    $responseDTO = $this->DeleteCurrentItem($itemDTO[$i]);
+                    if($responseDTO->HasError)
+                    {
+                        return $responseDTO;
+                    }
+                }
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;

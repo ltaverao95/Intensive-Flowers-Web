@@ -65,6 +65,11 @@
 						return;
 					}
 
+					if(userObj.IDLoginUser == localStorageService.get(CoreConstants.UserLoggedInfoKey))
+					{
+						LogOut();
+					}
+
 					GetAllUsers();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
@@ -99,26 +104,7 @@
 					
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 
-					vm.loginModel.LogOut().then(
-						responseDTO => {
-
-							if(responseDTO.HasError)
-							{
-								localStorageService.clearAll();
-								UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
-								return;
-							}
-
-							localStorageService.remove(CoreConstants.UserLoggedInfoKey);
-							$state.go('intensive.home');
-							$window.location.reload();
-						},
-						error => {
-							UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de cerrar la sesión"});
-							localStorageService.clearAll();
-							console.log(error);
-						}
-					);
+					LogOut();
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
@@ -149,7 +135,45 @@
 						return;
 					}
 
-					GetAllUsers();
+					vm.loginModel.OperationsModel.GetAllItems().then(
+						responseDTO =>
+						{
+							if(responseDTO.HasError)
+							{
+								vm.loginModel.UsersList = [];
+								UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage });
+								
+								vm.loginModel.LogOut().then(
+									responseDTO => {
+
+										if(responseDTO.HasError)
+										{
+											localStorageService.clearAll();
+											UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+											return;
+										}
+
+										localStorageService.remove(CoreConstants.UserLoggedInfoKey);
+										$state.go('intensive.home');
+										$window.location.reload();
+									},
+									error => {
+										UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de cerrar la sesión"});
+										localStorageService.clearAll();
+										console.log(error);
+									}
+								);
+								return;
+							}
+
+							vm.loginModel.UsersList = responseDTO.ResponseData;
+						},
+						error => {
+							UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+							console.log(error);
+						}
+					);
+
 					vm.loginModel.PaginatorModel.ClearItemsSelected();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
 				},
@@ -307,6 +331,30 @@
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de obtener los datos" });
+					console.log(error);
+				}
+			);
+		}
+
+		function LogOut()
+		{
+			vm.loginModel.LogOut().then(
+				responseDTO => {
+
+					if(responseDTO.HasError)
+					{
+						localStorageService.clearAll();
+						UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+						return;
+					}
+
+					localStorageService.remove(CoreConstants.UserLoggedInfoKey);
+					$state.go('intensive.home');
+					$window.location.reload();
+				},
+				error => {
+					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de cerrar la sesión"});
+					localStorageService.clearAll();
 					console.log(error);
 				}
 			);

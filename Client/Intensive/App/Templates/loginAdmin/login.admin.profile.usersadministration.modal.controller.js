@@ -96,7 +96,7 @@
 
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					CloseModal();
-					$rootScope.$broadcast('UserUpdated');
+					$rootScope.$broadcast('UserChanged');
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de actualizar los datos"});

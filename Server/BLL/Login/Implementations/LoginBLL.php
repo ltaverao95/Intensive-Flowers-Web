@@ -256,7 +256,25 @@
 
         public function DeleteItemsSelected($itemDTO)
         {
-            
+            $responseDTO = new ResponseDTO();
+            $loginDAL = new LoginDAL();
+
+            try
+            {
+                $responseDTO = $this->ValidateItemsSelected($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO = $loginDAL->DeleteItemsSelected($itemDTO);
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         //##### Private Methods #####
@@ -416,6 +434,27 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateItemsSelected($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                if(count($itemDTO) == 0 ||
+                   $itemDTO == null)
+                {
+                    $responseDTO->SetError("No hay registros para eliminar");
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se validaban los datos", $e->getMessage());	
             }
 
             return $responseDTO;
