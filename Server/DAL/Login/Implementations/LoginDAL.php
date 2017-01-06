@@ -145,7 +145,30 @@
 
         public function DeleteAllItems()
         {
+            $responseDTO = new ResponseDTO();
+            
+            try
+            {
+                $responseDTO = $this->DeleteCurrentItems();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
 
+                $responseDTO = $this->ValidateLastRecordToResetAutoIncement();
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $responseDTO->UIMessage = "Registros eliminados!";
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la eliminación de los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteItemByID($itemDTO)
@@ -154,6 +177,12 @@
             
             try
             {
+                $responseDTO = $this->ValidateIfCurrentUserIsAdminRole($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
                 $responseDTO = $this->DeleteCurrentItem($itemDTO);
                 if($responseDTO->HasError)
                 {
@@ -396,6 +425,39 @@
             return $responseDTO;
         }
 
+        private function DeleteCurrentItems()
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $dataBaseServicesBLL = new DataBaseServicesBLL();
+                $getDataServiceDAL = new GetDataServiceDAL();
+
+                $query = "TRUNCATE TABLE user_logued_info";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $query = "DELETE FROM login;";
+                $responseDTO = $dataBaseServicesBLL->ExecuteQuery($query);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                $dataBaseServicesBLL->connection = null;
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se borraban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
         private function GetUsers()
         {
             $responseDTO = new ResponseDTO();
@@ -473,6 +535,32 @@
             catch (Exception $e)
             {
                 $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la creación del usuario", $e->getMessage());	
+            }
+
+            return $responseDTO;
+        }
+
+        private function ValidateIfCurrentUserIsAdminRole($itemDTO)
+        {
+            $responseDTO = new ResponseDTO();
+
+            try
+            {
+                $responseDTO = $this->GetCurrentLoggedUser($itemDTO);
+                if($responseDTO->HasError)
+                {
+                    return $responseDTO;
+                }
+
+                if($responseDTO->ResponseData[0]->UserRole == "admin")
+                {
+                    $responseDTO->SetError("No puedes eliminar tu propia cuenta de administrador");
+                    return $responseDTO;
+                }
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema durante la verificación de los datos", $e->getMessage());
             }
 
             return $responseDTO;

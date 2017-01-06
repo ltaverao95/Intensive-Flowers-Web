@@ -44,10 +44,13 @@
         <div ui-view> 
 
             <div >
-                <div class="jumbotron" style="text-align: center; width: 35%">
+                <div class="jumbotron">
                     <h3>
                         Home principal de la administración
                     </h3>
+                    <p>
+                        Acá podrás:
+                    </p>
                     <ul>
                         <li>
                             Realizar consultas de los pedidos hechos por los usuarios.

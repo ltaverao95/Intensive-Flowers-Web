@@ -214,7 +214,20 @@
 
         public function DeleteAllItems()
         {
+            $responseDTO = new ResponseDTO();
 
+            try
+            {
+                $loginDAL = new LoginDAL();
+
+                $responseDTO = $loginDAL->DeleteAllItems();
+            }
+            catch (Exception $e)
+            {
+                $responseDTO->SetErrorAndStackTrace("Ocurrió un problema mientras se eliminaban los datos", $e->getMessage());	
+            }
+
+            return $responseDTO;
         }
 
         public function DeleteItemByID($itemDTO)

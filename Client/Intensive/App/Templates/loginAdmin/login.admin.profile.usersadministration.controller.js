@@ -9,6 +9,10 @@
 	LoginProfileUsersAdminController.$inject = [
 		'$uibModal',
 		'$scope',
+		'$state',
+		'$window',
+		'localStorageService',
+		'Intensive.Core.Constants',
 		'Intensive.Core.Models.LoginModel',
 		'Intensive.Blocks.Messages.UserMessagesFactory',
 		'Intensive.Blocks.Utils.UtilitiesFactory'
@@ -16,6 +20,10 @@
 
 	function LoginProfileUsersAdminController($uibModal,
 											  $scope,
+											  $state,
+											  $window,
+											  localStorageService,
+											  CoreConstants,
 											  LoginModel,
 											  UserMessagesFactory,
 											  UtilitiesFactory)
@@ -89,8 +97,28 @@
 						return;
 					}
 					
-					GetAllUsers();
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage });
+
+					vm.loginModel.LogOut().then(
+						responseDTO => {
+
+							if(responseDTO.HasError)
+							{
+								localStorageService.clearAll();
+								UserMessagesFactory.ShowErrorMessage({ Message: responseDTO.UIMessage});
+								return;
+							}
+
+							localStorageService.remove(CoreConstants.UserLoggedInfoKey);
+							$state.go('intensive.home');
+							$window.location.reload();
+						},
+						error => {
+							UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de cerrar la sesión"});
+							localStorageService.clearAll();
+							console.log(error);
+						}
+					);
 				},
 				error => {
 					UserMessagesFactory.ShowErrorMessage({ Message: "Ha ocurrido un problema tratando de borrar los datos" });
@@ -239,7 +267,6 @@
 				vm.loginModel.PaginatorModel.SelectAllItems = false;
 			}
 		}
-
 
 		//####### Private Methods
 

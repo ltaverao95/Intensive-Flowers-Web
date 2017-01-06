@@ -45,7 +45,7 @@
 						return;
 					}
 
-					localStorageService.remove(CoreConstants.UserLoggedInfoKey)
+					localStorageService.remove(CoreConstants.UserLoggedInfoKey);
 					UserMessagesFactory.ShowSuccessMessage({ Message: responseDTO.UIMessage});
 					$state.go('intensive.home');
 					$window.location.reload();
