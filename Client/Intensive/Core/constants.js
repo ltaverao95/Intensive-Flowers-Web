@@ -4,7 +4,8 @@
 
 	var CoreConstants = {
 
-		SERVER_API_RELATIVE_PATH: 'http://localhost:81/Intensive-Flowers-Web/Server/api/',
+		//SERVER_API_RELATIVE_PATH: 'http://localhost:81/Intensive-Flowers-Web/Server/api/',
+		SERVER_API_RELATIVE_PATH: 'http://ltavera-pc/Intensive-Flowers-Web/Server/api/',
 
 		MESSAGE_FILES_BASE_PATH: 'Message/',
 		STORE_FILES_BASE_PATH: 'Store/',
